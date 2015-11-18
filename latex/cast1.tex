@@ -64,21 +64,23 @@ We say minimization problem is Quadratically Constrained Quadratic Program (or s
 \begin{equation}
 \label{qcqp} 
 \begin{array}{ll}
-\mbox{minimize}& x^TA_0x + a_0^Tx \\
-\mbox{subject to}& x^TA_kx + a_k^Tx + \alpha_k \leq 0, \  (k = 1,\dots ,m)
+\mbox{minimize}& x^TP_0x + q_0^Tx +r_0 \\
+\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)
 \end{array} 
+\tag{QCQP}
 \end{equation}
-Where $x\in \mathbb{R}^n$ is variable, and symmetric $n\times n$ matrices $A_0, A_1, \dots ,A_m \in S^n$, vectors $a_0,\dots ,a_m \in \mathbb{R}^n$ and scalars $\alpha_1,\dots ,\alpha_m\in \mathbb{R}$ are given.
+Where $x\in \mathbb{R}^n$ is variable, and symmetric $n\times n$ matrices $P_0, P_1, \dots ,P_m \in S^n$, vectors $q_0,\dots ,q_m \in \mathbb{R}^n$ and scalars $r_1,\dots ,r_m\in \mathbb{R}$ are given.
 
-Matrices $A_0, A_1, \dots A_m$ are not necessarily positive semidefinite. Therefore the objective function as well as constraints may be nonconvex. Generally this problem is hard to solve. For example, 0-1 constraint $x_i\in \{0,1\}$ can be reformulated as $x^Te_ie_i^Tx - e_i^Tx =0$. Thus QCQP includes 0-1 programming, which describes various NP-hard problems, such as knapsack, stable set, max cut etc. On the other hand, this suggests that QCQP has many applications and is worth solving.
+Matrices $P_0, P_1, \dots P_m$ are not necessarily positive semidefinite. Therefore the objective function as well as constraints may be nonconvex. Generally this problem is hard to solve. For example, 0-1 constraint $x_i\in \{0,1\}$ can be reformulated as $x^Te_ie_i^Tx - e_i^Tx =0$. Thus QCQP includes 0-1 programming, which describes various NP-hard problems, such as knapsack, stable set, max cut etc. On the other hand, this suggests that QCQP has many applications and is worth solving.
 
-To this end, often used approach is relaxing QCQP to obtain problems which can be solved in polynomial time, namely semidefinite programming (SDP) or second order cone programming  (SOCP). 
+To this end, often used approach is relaxing QCQP to obtain problems which can be solved in polynomial time, namely linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). 
 %Let us define these two classes and see why are they easier to solve.
 
 \section{Conic optimization classes}
 
-
-
+In this section we will introduce basic optimization problems (LP, SOCP, SDP) in standard forms and their duals.
+However, duals will be only mentioned here, we will derive them in the next section. 
+We will also note their relations to QCQP and each other.
 
 
 
@@ -378,7 +380,7 @@ The last term is added to take account of the conic constraint $x\in \mathcal{K}
 +\infty & \mbox{ otherwise.}
 \end{array}\right. 
 \end{equation}
-Now let 
+The Lagrange dual function is 
 \begin{eqnarray}
 g(y,s) &=& \min_x \ \mathcal{L}(x,y,s) \\
 %&=& \min_x \ c^Tx + y^T(b-Ax) - s^Tx \\
@@ -403,20 +405,46 @@ Substition of appropriate cone (nonegative orthant, second order cone or semidef
 
 \subsection{Duality in QCQP}
 
+We will derive dual form of standard QCQP
+\begin{equation}
+\begin{array}{ll}
+\mbox{minimize}& x^TP_0x + q_0^Tx + r_0 \\
+\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)
+\end{array} 
+\end{equation}
 
+The Lagrangian of the problem is given by
+\begin{eqnarray}
+\mathcal{L}(x,y) &=&  x^TP_0x + q_0^Tx + r_0 + \sum_{k=1}^m y_k(x^TP_kx + q_k^Tx + r_k) \\
+ &=& x^TP(y)x + q(y)^Tx + r(y),
+\end{eqnarray}
+where $y\geq 0$ and
+\begin{equation} 
+P(y) = P_0 + \sum_{k = 1}^m y_kP_k, \ \ \  q(y) = q_0 + \sum_{k = 1}^m y_kq_k, \ \ \ r(y) = r_0 + \sum_{k =1}^m y_kr_k. 
+\end{equation}
 
-The dual form of standard convex quadratic programming problem is 
+It holds that $\inf_x\mathcal{L}(x,y) > -\infty$ if and only if $P(y)\succeq 0$ and there exists $\hat{x}$ such that  $P(y)\hat{x} + q(y) = 0.$
+
+Thus, the Lagrange dual function is 
+\begin{eqnarray}
+g(y) &=& \min_x \ \mathcal{L}(x,y) \\
+&=& \left\lbrace \begin{array}{ll} 
+-\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y) & \mbox{ if } P(y)\succeq 0,\ \ q(y)\in\mathcal{R}(P(y))\\ 
+-\infty & \mbox{ otherwise.}
+\end{array}\right. 
+\end{eqnarray}
+Where $P^\dagger$ denotes pseudoinverse of $P$.
+Finally, dual form of standard QCQP problem is 
 \begin{equation}
 \label{QCQD} 
 \begin{array}{ll}
-\mbox{maximize} & -q(y)^TP(y)^{\dagger}q(y) + r(y) \\
+\mbox{maximize} & -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y) \\
 \mbox{subject to}&  y \geq 0\\
 & P(y )\succeq 0 \\
 & \mathcal{R}(q(y)) \subseteq \mathcal{R}(P(y)).
 \end{array} 
 \tag{QCQP Dual}
 \end{equation}
-Where $P^\dagger$ denotes pseudoinverse of $P$, $$ P(y) = P_0 + \sum_{k = 1}^m y_kP_k, \ \ \ \  q(y) = q_0 + \sum_{k = 1}^m y_kq_k, \ \ \ \ r(y) = r_0 + \sum_{k =1}^m y_kr_k. $$
 Where $y\in R^m$ is variable; and problem data $P_0,P_1\dots ,P_m$, $q_0,q_1\dots ,q_m$, $r_0,r_1\dots , r_m$ are given from the primal QCQP above.
 
 
@@ -424,7 +452,7 @@ This dual problem is basically a SDP (in the LMI form). We first rewrite the obj
 \begin{equation}
 \begin{array}{ll}
 \mbox{maximize} & t \\
-\mbox{subject to}&  t\leq -q(y)^TP(y)^{\dagger}q(y) + r(y) \\
+\mbox{subject to}&  t\leq -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y) \\
 &y \geq 0\\
 & P(y )\succeq 0\\
 & \mathcal{R}(q(y)) \subseteq \mathcal{R}(P(y)).
@@ -436,8 +464,8 @@ Thanks to Schur complement lemma \ref{SchurCompl} the above is equivalent to
 \begin{array}{ll}
 \mbox{maximize} & t \\
 \mbox{subject to}& M:=\left(\begin{array}{ll}
-r(y)-t & q(y)^T \\
-q(y) & P(y)
+r(y)-t & \frac{1}{2}q(y)^T \\
+\frac{1}{2}q(y) & P(y)
 \end{array}\right)\succeq 0,
  \\
 &y \geq 0\\
@@ -450,7 +478,7 @@ M=M(t) + \sum_{k=1}^n M(y_k);
 Where
 \begin{equation}
 M(t) = \left(\begin{array}{rr} -t& 0\\ 0 & 0 \end{array}\right) ; \ \ \ 
-M(y_k) = \left(\begin{array}{rr} r(y_k)& q(y_k)^T\\ q(y_k) & P(y_k) \end{array}\right) . 
+M(y_k) = \left(\begin{array}{ll} r(y_k)& \frac{1}{2}q(y_k)^T\\ \frac{1}{2}q(y_k) & P(y_k) \end{array}\right) . 
 \end{equation}
 
 
