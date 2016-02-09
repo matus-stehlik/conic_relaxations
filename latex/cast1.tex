@@ -1,4 +1,3 @@
-
 \documentclass[10pt,oneside]{book}
 \usepackage[utf 8]{inputenc}
 \usepackage[english]{babel}
@@ -15,6 +14,9 @@
 \usepackage{float}
 \usepackage{dsfont}
 
+\usepackage[toc,page]{appendix}
+
+
 
 \author{Matúš Stehlík}
 
@@ -23,16 +25,16 @@
 \renewcommand\baselinestretch{1.05} % riadkovanie jeden a pol
 
 
-\newtheorem{thm}{Theorem}[chapter]
-\newtheorem{lema}{Lemma}[chapter]
-\newtheorem{cor}{Corollary}
-\newtheorem{prop}{Proposition}
-\newtheorem{hyp}{Hypothesis}
+\newtheorem{thm}[equation]{Theorem}
+\newtheorem{lema}[equation]{Lemma}
+\newtheorem{cor}[equation]{Corollary}
+\newtheorem{prop}[equation]{Proposition}
+\newtheorem{hyp}[equation]{Hypothesis}
 \theoremstyle{definition}
-\newtheorem{defi}{Definition}[chapter]
+\newtheorem{defi}[equation]{Definition}
 %\newtheorem*{proof}{Proof}
-\newtheorem*{rem}{Remark}
-\newtheorem{ex}{Example}
+\newtheorem{rem}[equation]{Remark}
+\newtheorem{ex}[equation]{Example}
 
 
 \begin{document}
@@ -58,30 +60,32 @@ WLOG - Without Loss Of Generality
 \chapter{Introduction}
 
 In this thesis we will study quadratically constrained quadratic programs (QCQP)
-\defi[QCQP] 
+\defi 
 \label{defQCQP}
-We say minimization problem is Quadratically Constrained Quadratic Program (or shortly just QCQP) if it has the form of
+The Quadratically Constrained Quadratic Program (QCQP) in the standard form is
 \begin{equation}
 \label{qcqp} 
 \begin{array}{ll}
 \mbox{minimize}& x^TP_0x + q_0^Tx +r_0 \\
-\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)
+\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m),
 \end{array} 
-\tag{QCQP}
 \end{equation}
-Where $x\in \mathbb{R}^n$ is variable, and symmetric $n\times n$ matrices $P_0, P_1, \dots ,P_m \in S^n$, vectors $q_0,\dots ,q_m \in \mathbb{R}^n$ and scalars $r_1,\dots ,r_m\in \mathbb{R}$ are given.
+where $x\in \mathbb{R}^n$ is a variable, and symmetric $n\times n$ matrices $P_0, P_1, \dots ,P_m \in S^n$, vectors $q_0,\dots ,q_m \in \mathbb{R}^n$ and scalars $r_1,\dots ,r_m\in \mathbb{R}$ are given.
 
-Matrices $P_0, P_1, \dots P_m$ are not necessarily positive semidefinite. Therefore the objective function as well as constraints may be nonconvex. Generally this problem is hard to solve. For example, 0-1 constraint $x_i\in \{0,1\}$ can be reformulated as $x^Te_ie_i^Tx - e_i^Tx =0$. Thus QCQP includes 0-1 programming, which describes various NP-hard problems, such as knapsack, stable set, max cut etc. On the other hand, this suggests that QCQP has many applications and is worth solving.
+The matrices $P_0, P_1, \dots P_m$ are not necessarily positive semidefinite. Therefore the objective function as well as the constraints may be nonconvex. Generally, this problem is hard to solve. For example, the 0-1 constraint $x_i\in \{0,1\}$ can be reformulated as $x^Te_ie_i^Tx - e_i^Tx =0$. Thus QCQP includes 0-1 programming, which describes various NP-hard problems, such as knapsack, stable set, max cut etc. 
+%Similarly. $\{-1,1\}$ constrained programming, which contains graph partitioning problems.
+On the other hand, the above examples suggest that QCQP has many applications and is worth solving.
 
-To this end, often used approach is relaxing QCQP to obtain problems which can be solved in polynomial time, namely linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). 
+One of the possible approaches is relaxing QCQP to obtain problems which can be solved in polynomial time, namely linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). 
 %Let us define these two classes and see why are they easier to solve.
 
 \section{Conic optimization classes}
+\label{ConicOptClasses}
 
-In this section we will introduce basic optimization problems (LP, SOCP, SDP) in standard forms and their duals.
-However, duals will be only mentioned here, we will derive them in the next section. 
-We will also note their relations to QCQP and each other.
-
+In this section we will introduce basic optimization classes mentioned above, in particular the  linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). We will state the problems in standard forms and their duals. The dual problems will be only mentioned here and will be derived in the next section. We will also show that LP is subclass of convex QCQP, convex QCQP is subclass of SOCP, and SOCP is subclass of SDP, i.e.
+\begin{equation}
+LP\subseteq \mbox{convex } QCQP \subseteq SOCP \subseteq SDP.
+\end{equation}
 
 
 
@@ -96,38 +100,38 @@ We will also note their relations to QCQP and each other.
 
 \subsection{Linear programming}
 
-When both objective and constraint functions are linear (affine), the problem is called linear program or shortly LP.
-In this section we will introduce standard and dual form of LP, and few important properties. For reference and more information about this topic please see [\ref{BoydCvxOpt}, \ref{FreundIntroSDP},  ] .
+When both, the objective and the constraint functions are linear (affine), the problem is called a linear program and it belongs to the Linear Programming class, or shortly LP.
+In this section we will introduce the standard form of LP and its dual. For reference and more information about this topic see i.e. [\ref{BoydCvxOpt}] .
 
 \defi
 \label{defLP}
-We say minimization problem is Linear program (or shortly LP) if it has form of 
+The primal--dual pair of linear programs in standard form is 
 \begin{equation}
 \label{LP} 
-\begin{array}{c|c}
+\begin{array}{cc}
 Primal & Dual \\
+% \hline \\
 \begin{array}{ll}
-\mbox{minimize} & c^Tx \\
+\mbox{minimize} & c^Tx, \\
 \mbox{subject to}& Ax = b ,  \\
-& x \in \mathbb{R}^n_+\\
+& x \in \mathbb{R}^n_+,\\
 
 \end{array} 
 \ \ \ \ \ & \ \ \ \ \ 
 \begin{array}{ll}
-\mbox{maximize} & b^Ty \\
+\mbox{maximize} & b^Ty, \\
 \mbox{subject to}& A^Ty +s = c ,  \\
-& s\in \mathbb{R}^n_+ \\
+& s\in \mathbb{R}^n_+, \\
 \end{array}
 \end{array} 
-\tag{LP}
 \end{equation}
-Where $x\in R^n$, $y\in \mathbb{R}^m$ , $s\in \mathbb{R}^n$ are variables; the real $m\times n$ matrix $A$ and vectors $b \in \mathbb{R}^m, c\in \mathbb{R}^n$ are given problem data.
+where $x\in R^n$, $y\in \mathbb{R}^m$ , $s\in \mathbb{R}^n$ are the variables; the real $m\times n$ matrix $A$ and vectors $b \in \mathbb{R}^m, c\in \mathbb{R}^n$ are given problem data.
 
 \bigskip
 
-\rem Problems of linear programming can be introduced in various forms (including $\geq , \leq$ inequalities, free variables, possibly some linear fractions in objective) but they all can be transformed to standard form.
+\rem Linear programs can be formulated in various forms (including $\geq , \leq$ inequalities, free variables, possibly some linear fractions in objective) but all of them can be transformed to the standard form.
 
-\paragraph{Relation to previous classes:}
+\subsubsection{Relation to previous classes}
 Linear programming is a special case of QCQP, when all matrices in quadratic forms are 0.
 
 
@@ -135,75 +139,119 @@ Linear programming is a special case of QCQP, when all matrices in quadratic for
 \label{SectionSOCP}
 
 
-SOCP is another convex optimization problem which can be solved with great efficiency by interior point methods. Let us first define second order cone.
+The second order cone programming (SOCP) is a convex optimization class which can be solved with great efficiency using interior point methods. 
+In this section we will introduce the standard form of SOCP and its dual. For reference and more information about this topic see [\ref{BoydCvxOpt}] .
 
+
+Let us first define second order cone.
 \defi[Second order cone]
 \label{defSOC} We say $Q_n$ is second order cone of dimension $n$ if 
-$$Q_n=\{x = (x_0,\bar{x}) \in \mathbb{R}^n|\ ||\bar{x}||\leq x_0\},$$
-where $||.|| $ is standard euclidean norm and $x_0\in \mathbb{R}$, $\bar{x}\in \mathbb{R}^{n-1}$.
+\begin{equation}
+Q_n=\{x\in \mathbb{R}^n \ | \ x = (x_0,\bar{x}) \in \mathbb{R}\times\mathbb{R}^{n-1}, \|\bar{x}\|_2\leq x_0\}.
+\end{equation}
 
-One can define SOCP problem as LP with additional second order cone constraints.
 
 \defi[SOCP]
 \label{defSOCP}
-We say minimization problem is Second Order Cone Program (or shortly SOCP) if it has form of
+The primal--dual pair of the Second Order Cone Program (SOCP) in the standard form is
 \begin{equation}
 \label{socp} 
-\begin{array}{c|c}
+\begin{array}{cc}
 Primal & Dual \\
+%\hline \\
 \ \ \ \begin{array}{ll}
-\mbox{minimize} & c^Tx\\
-\mbox{subject to}& Ax = b\\
-& x \in Q_n
+\mbox{minimize} & c^Tx,\\
+\mbox{subject to}& Ax = b,\\
+& x \in Q,
 \end{array} 
  \ \ \ \ \ & \ \ \ \ \ 
  \begin{array}{ll}
-\mbox{maximize} & b^Ty\\
-\mbox{subject to}& A^Ty + s = c\\
-& s \in Q_n
+\mbox{maximize} & b^Ty,\\
+\mbox{subject to}& A^Ty + s = c,\\
+& s \in Q,
 \end{array}
 \end{array}
-\tag{SOCP}
 \end{equation}
-Where $x\in \mathbb{R}^n$ , $y\in \mathbb{R}^m$ and $s\in \mathbb{R}^n$ are variables; and $m\times n$ real matrix $A$, vectors $c\in \mathbb{R}^n$, $b\in \mathbb{R}^{m},$ $c\in \mathbb{R}^n$, and second order cone $Q_n$ are given problem data.
+where $x\in \mathbb{R}^n$ , $y\in \mathbb{R}^m$ and $s\in \mathbb{R}^n$ are the variables; and $m\times n$ real matrix $A$, vectors $c\in \mathbb{R}^n$, $b\in \mathbb{R}^{m},$ $c\in \mathbb{R}^n$, and second order cone $Q$ are given problem data.
+
+\rem Second order cone programs can be formulated in various forms (including quadratic objective or several second order cone constraints of the affine functions), but all of them can be transformed to the standard form. 
+
+\rem In general, any program of the form 
+\begin{equation}
+\begin{array}{cc}
+Primal & Dual \\
+%\hline \\
+\begin{array}{ll}
+\mbox{min} &  c^{1T}x^1+\cdots + c^{kT}x^k,\\
+\mbox{s.t.}& A^1x^1+ \cdots + A^kx^k = b, \\
+& x^i \in Q_{n_i}, \ (i = 1,\dots ,k),
+\end{array} 
+ & 
+ \begin{array}{ll}
+\mbox{max} & b^Ty,\\
+\mbox{s.t.}& A^{iT}y + s^i = c^i, \\ %\ (i = 1,\dots ,k)
+& s^i \in Q_{n_i}, \ (i = 1,\dots ,k),
+\end{array}
+\end{array}
+\label{genSOCP}
+\end{equation}
+is considered to be SOCP.
+The second order cone constraints can be also formulated as, $x = (x^1,\dots ,x^k) \in Q,$ where $Q$ is Cartesian product of second order cones, 
+\begin{equation}
+Q = Q_{n_1}\times Q_{n_2}\times \cdots \times Q_{n_k},
+\end{equation}
+ Since, such Q has all important properties of second order cone (see appendix), 
+and algorithmic aspects of solving standard SOCP also work for this more general case [\ref{GoldfarbSOCP},\ref{PokornaSOCPDipl}].
+In order to keep things simple, we will sometimes consider only the standard form stated in the Definition \ref{defSOCP},
+but all the details can be also done for this more general form.
 
 
-\paragraph{Relation to previous classes:}
+\subsubsection{Relation to previous classes}
+\label{SectionRelBtwSOCPandQCQP}
 
-Second Order Cone Programming includes convex LP as special case (in case of LP, $Q_n$ is nonegative orthant).
-SOCP also includes convex QP. We will demonstrate procedure proposed in [\ref{KimKojimaSOCPofNoncvxQOP}] used to reformulate convex QP as SOCP.
+Second Order Cone Programming includes convex LP as special case.
+We will show that SOCP in fact includes convex QP as a subclass. We will demonstrate procedure proposed in [\ref{KimKojimaSOCPofNoncvxQOP}] used to reformulate convex QP as SOCP.
 
 Let us have convex QCQP. In other words, suppose that $n\times n$ matrices $A_k$, $k=0,\dots ,m$ are positive semidefinite. 
 \begin{equation}
 \begin{array}{ll}
-\mbox{minimize}& x^TP_0x + q_0^Tx + r_0 \\
-\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)
+\mbox{minimize}& x^TP_0x + q_0^Tx + r_0, \\
+\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m),
 \end{array} 
 \end{equation}
-First of all, we can get rid of quadratic objective function by introducing new variable $t\in \mathbb{R}$ and constraint $x^TP_0x + q_0^Tx +r_0 \leq t$ and then rewrite the whole program in variable $(t,x)\in \mathbb{R}^{n+1}$, with objective minimize $t$. To avoid tedious notation WLOG suppose that considered program already has linear objective function (i.e. $P_0 = 0$).  Also suppose that we have separated all the linear constraints (ones where $P_k = 0$) and arrange them into more compact form $Ax=b$. Even if we did not, the following procedure will still be correct, but will result in more complicated formulation of linear constraints.
+First of all, rewrite problem equivalently as
+\begin{equation}
+\begin{array}{ll}
+\mbox{minimize}& t, \\
+\mbox{subject to} & x^TP_0x + q_0^Tx + r_0 \leq t,\\
+& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m).
+\end{array} 
+\end{equation}
 
-We will omit indices for simplicity and transform each convex quadratic constraint 
+To avoid tedious notation, without loss of generality, suppose that considered program already has linear objective function (i.e. $P_0 = 0$).  Also suppose that we have separated all the linear constraints (ones where $P_k = 0$) and arrange them into more compact form $Ax=b$. Even if we did not, the following procedure will still be correct, but will result in more complicated formulation of linear constraints.
+
+Each convex quadratic constraint 
 \begin{equation}
 \label{QuadConstraint}
 x^TPx + q^Tx + r \leq 0
 \end{equation} 
-into second order cone constraint.  Suppose that $\mbox{rank }P = h\geq 1.$ Then there exists $n\times h$ matrix $L$ such that $P=LL^T$. Such $L$ can be computed by Choelsky factorization of $P$. Now rewrite (\ref{QuadConstraint}) as 
+can be transformed into the second order cone constraint.  Suppose that $P\neq 0$ and rank $P = h.$ Then there exists $n\times h$ matrix $L$ such that $P=LL^T$. Such $L$ can be computed by Choelsky factorization of $P$. Now rewrite (\ref{QuadConstraint}) as 
 \begin{equation}
 \label{ConvertToSOCP1}
 (L^Tx)^T(L^Tx)\leq -q^Tx - r.
 \end{equation}
-It is known and also easily verified that $w\in \mathbb{R}^t$, $\xi \in \mathbb{R}$ and $\eta \in \mathbb{R}$ satisfy
+It can be easily verified that $w\in \mathbb{R}^t$, $\xi \in \mathbb{R}$ and $\eta \in \mathbb{R}$ satisfy
 $$w^Tw\leq \xi\eta, \ \ \xi\geq 0\ \mbox{ and } \ \eta\geq 0$$
 if and only if they satisfy
-$$\left|\left|\left( \begin{array}{c}
+$$\left\|\left( \begin{array}{c}
 \xi-\eta\\
 2w
-\end{array}\right)\right|\right|
+\end{array}\right)\right\|_2
 \leq \xi+\eta . $$
-If we take $w=L^Tx, \ \xi = 1$ and $\eta = -q^Tx - r$ we can convert inequality (\ref{ConvertToSOCP1}) into
+If we take $w=L^Tx, \ \xi = 1$ and $\eta = -q^Tx - r$, then inequality (\ref{ConvertToSOCP1}) is equivalent to the second order cone constraint
 \begin{equation}
 \label{ConvertedQCintoSOCC}
-\left(\begin{array}{c}
+ \|v\|_2\leq v_0, \ \mbox{  where  } \ \left(\begin{array}{c}
 v_0\\
 v
 \end{array}\right) = 
@@ -211,56 +259,94 @@ v
 1- q^Tx - r\\
 1 + q^Tx + r\\
 2L^Tx
-\end{array}\right)\in \mathbb{R}^{h+2}
-\mbox{  and  } ||v||\leq v_0.
+\end{array}\right)\in \mathbb{R}^{h+2}.
 \end{equation}
 
-Which is a second order cone constraint. Now the intersection of all such constraints is again second order cone, thus we have obtained problem of SOCP. 
+Now the intersection of all such second order cone constraints can be easily expressed as Cartesian product of second order cones, thus we have obtained problem of SOCP in form \ref{genSOCP}. 
 
 
 \subsection{Semidefinite programming}
 
 
-Firstly, let us introduce notation we will use to simplify the standard form..
 
-\defi Let $A,X$ be real $n\times m$ matrices, we will denote their inner product 
+
+The semidefinite programming (SDP) is a convex optimization class which can be solved efficiently using interior point methods. In this section we will introduce the standard form of SDP and its dual. For reference and more information about this topic see [\ref{BoydCvxOpt}] .
+
+
+Firstly, let us introduce notation we will use to simplify the standard form.
+
+\defi 
+\label{defBullet}
+Let $A,X$ be real $n\times m$ matrices, we will denote their inner product 
 $$A\bullet X = Tr(A^TX).$$
 Where $Tr(M)$ denotes trace of matrix $M$ i.e. sum of the diagonal elements of $M$.
 
 \defi[SDP]
 \label{defSDP}
-We say minimization problem is Semidefinite program (or shortly SDP) if it has form
+The primal--dual pair of the Semidefinite Program (SDP) in the standard form is
 \begin{equation}
 \label{sdp} 
-\begin{array}{c|c}
+\begin{array}{cc}
 Primal & Dual \\
 \begin{array}{ll}
-\mbox{minimize} & A_0\bullet X \\
+\mbox{minimize} & A_0\bullet X,\\
 \mbox{subject to}& A_k\bullet X  = b_k, \ \\
- & (\mbox{for } k = 1,\dots ,m) \\
-& X \in \mathbb{S}^n_+.
+ & (\mbox{for } k = 1,\dots ,m), \\
+& X \in \mathbb{S}^n_+,
 \end{array}
 \ \  &  \ \
 \begin{array}{ll}
-\mbox{maximize} & b^Ty \\
-\mbox{subject to}& \sum_{k=1}^m y_kA_k + S  = A_0 \\
-& S \in \mathbb{S}^n_+.
+\mbox{maximize} & b^Ty, \\
+\mbox{subject to}& \sum_{k=1}^m y_kA_k + S  = A_0 ,\\
+& S \in \mathbb{S}^n_+,
 \end{array}
 \end{array}
- \tag{SDP}
 \end{equation}
 
-Where $X\in \mathbb{S}^n_+$, $y = (y_1,\dots ,y_m)^T\in \mathbb{R}^m$ and $S\in \mathbb{S}^n$ are the variables; and matrices $A_0 , A_1,\dots , A_m \in \mathbb{S}^n$ and scalars $b_1,\dots, b_m \in \mathbb{R}$ are given.
+where $X\in \mathbb{S}^n_+$, $y = (y_1,\dots ,y_m)^T\in \mathbb{R}^m$ and $S\in \mathbb{S}^n$ are the variables; and symmetric matrices $A_0 , A_1,\dots , A_m \in \mathbb{S}^n$ and scalars $b_1,\dots, b_m \in \mathbb{R}$ are given.
 
 
+Surprisingly, the variable in SDP is a symmetric matrix (not a vector). 
+In order to be consistent with other classes we will sometimes use a $svec$ operator.  
+
+\defi \label{svec}
+We define operator $svec: \mathbb{S}^n \rightarrow \mathbb{R}^{n(n+1)/2}$, such that for any $n\times n$ symmetric matrix $M$
+%\begin{equation}
+%svec(M) = (M_{11}, \frac{\sqrt{2}}{2}M_{12}, \dots, \frac{\sqrt{2}}{2}M_{1n}, M_{22}, \frac{\sqrt{2}}{2}M_{23}, \dots, \frac{\sqrt{2}}{2}M_{2n},  \dots, M_{nn})^T
+%\end{equation}
+\begin{equation}
+	svec(M) = ( \delta_{11}M_{11},\delta_{12}M_{12},\delta_{22}M_{22},\dots ,\delta_{1n}M_{1n},\dots ,\delta_{nn}M_{nn})^T,
+\end{equation}
+where
+\begin{equation}
+	\delta_{ij}= \left\lbrace 
+	\begin{array}{ll} 
+		1, &\mbox{ if }\ i=j, \\ 
+		\sqrt{2}/2, &\mbox{ otherwise.} 
+	\end{array} \right.
+\end{equation}
+
+Notice that $\delta_{ij}$ are defined cleverly, so that inner product of symmetric matrices is equivalent to the standard inner product of their images
+\begin{equation}
+A\bullet X= svec(A)^Tsvec(X), 
+\end{equation}
+for any pair of symmetric matrices $A,X\in \mathbb{S}^n.$  Now we can easily formulate the problems of SDP in terms of standard inner product over the space of real vectors. 
+\begin{equation}
+\label{svecSDP}
+\begin{array}{ll}
+\mbox{minimize} & svec(A_0)^T svec(X),\\
+\mbox{subject to}& svec(A_k)^T svec(X)  = b_k, \ (k = 1,\dots ,m), \\
+& svec(X) \in \mathcal{K}(\mathbb{S}^n_+),
+\end{array}
+\end{equation}
+where $svec(X)$ is variable,  $\mathcal{K}(\mathbb{S}^n_+) = \{svec(U)\in \mathbb{R}^{n(n+1)/2}\ |\ U\in \mathbb{S}^n_+\}$ 
+and problem data are from the standard SDP (\ref{sdp}).
 
 
-\paragraph{Relation to previous classes:}
-The  SDP primal-dual pair looks suspiciously similar to both pairs LP and SOCP primal-dual pairs. 
+\subsubsection{Relation to previous classes}
+The  SDP primal-dual pair looks suspiciously similar to the both LP and SOCP primal-dual pairs. 
 The only difference between LP and SOCP is the nonnegative orthant is replaced by second order cone. 
-The SDP further generalizes variable space from real vectors to symmetric matrices $X$, 
-therefore we also need to use different notation in the linear objective and linear constraints. 
-The cone constraint is provided by the semidefinite cone.
+The SDP, in the $svec$ form (\ref{svecSDP}), further generalizes the cone constraint with the semidefinite cone.
 
 In fact, SOCP is subclass of SDP. We will show how the standard SOCP can be rewritten as SDP.
 First of all, instead of minimizing $c^Tx$ we will minimize $t$ with additional constraint $t\geq c^Tx$. 
@@ -285,35 +371,45 @@ x_1 & \bar{x}^T\\
 \end{array}\right)\succeq 0.
 \label{arrowx}
 \end{eqnarray}
-Where last equivalence is provided by Schur complement lemma \ref{SchurCompl}.
-It can be rewritten as linear matrix inequality (LMI)
+Where last equivalence is provided by Schur complement lemma (see appendix, Theorem \ref{SchurCompl}).
+From here, it can be easy brought to the standard form (see appendix). 
+
+In case of more general standard form of SOCP (\ref{genSOCP}), the $x\in Q$ constraint 
+can be transformed similarly. 
 \begin{equation}
-x_1I_n + \sum_{k=2}^n x_kE_{1k} \succeq 0
+x = (x^1,\dots, x^k)^T \Leftrightarrow  M = diag(M_1,\dots, M_k) \succeq 0,
 \end{equation}
-The linear constraint $Ax = b$ can be easily cast to LMI form with
+where $M$ is a block diagonal matrix, with blocks $M_i$ of the form (\ref{arrowx}), for $i=1,\dots, k$,
+corresponding to the constraints $x^i\in Q_{n_i}$.
+
+%It can be rewritten as linear matrix inequality (LMI)
 %\begin{equation}
-% a_k^Tx = b_k \ \Leftrightarrow \ 
-% \left(\begin{array}{cc}
-% a_{k1}&\bar{a}_k^T/2\\
-% \bar{a}_k/2& 0
-% \end{array}\right)\bullet X = b_k,
-%\end{equation} 
-%where $a_k^T = (a_{k1}, \bar{a}_k^T)$ is the $k$-th row of $A$. 
-\begin{equation}
-Ax=b \ \Leftrightarrow \ diag(Ax-b,b-Ax)\succeq 0,
-\end{equation}
-where $diag(v)$ is the diagonal matrix with entries of $v$ on the main diagonal.
-The resulting 2 LMIs can be simply combined into single one as a block diagonal matrix. The resulting SDP is then
-\begin{equation} 
-\begin{array}{l}
-\mbox{maximize \ }  c^Tx \\
-\mbox{s.t. \ }
-% diag(0,Ax-b,b-Ax)+x_1diag(I_n,0,0) + \sum_{k=2}^n x_kdiag(E_{1k},0,0) \succeq 0.
- diag\left(\begin{array}{c} 0 \\ Ax-b \\b-Ax  \end{array}\right) 
- +  x_1diag\left(\begin{array}{c} I_n \\ 0 \\0  \end{array}\right)
- + \sum_{k=2}^n x_kdiag\left(\begin{array}{c} E_{1k} \\0 \\0  \end{array}\right)\succeq 0.
- \end{array}	
-\end{equation}  
+%x_1I_n + \sum_{k=2}^n x_kE_{1k} \succeq 0
+%\end{equation}
+%The linear constraint $Ax = b$ can be easily cast to LMI form with
+%%\begin{equation}
+%% a_k^Tx = b_k \ \Leftrightarrow \ 
+%% \left(\begin{array}{cc}
+%% a_{k1}&\bar{a}_k^T/2\\
+%% \bar{a}_k/2& 0
+%% \end{array}\right)\bullet X = b_k,
+%%\end{equation} 
+%%where $a_k^T = (a_{k1}, \bar{a}_k^T)$ is the $k$-th row of $A$. 
+%\begin{equation}
+%Ax=b \ \Leftrightarrow \ diag(Ax-b,b-Ax)\succeq 0,
+%\end{equation}
+%where $diag(v)$ is the diagonal matrix with entries of $v$ on the main diagonal.
+%The resulting 2 LMIs can be simply combined into single one as a block diagonal matrix. The resulting SDP is then
+%\begin{equation} 
+%\begin{array}{l}
+%\mbox{maximize \ }  c^Tx \\
+%\mbox{s.t. \ }
+%% diag(0,Ax-b,b-Ax)+x_1diag(I_n,0,0) + \sum_{k=2}^n x_kdiag(E_{1k},0,0) \succeq 0.
+% diag\left(\begin{array}{c} 0 \\ Ax-b \\b-Ax  \end{array}\right) 
+% +  x_1diag\left(\begin{array}{c} I_n \\ 0 \\0  \end{array}\right)
+% + \sum_{k=2}^n x_kdiag\left(\begin{array}{c} E_{1k} \\0 \\0  \end{array}\right)\succeq 0.
+% \end{array}	
+%\end{equation}  
 
 
 \subsection{Conic programming}
@@ -321,77 +417,95 @@ The resulting 2 LMIs can be simply combined into single one as a block diagonal 
 The previous mentioned classes are quite similar. 
 With respect to their variable space, all of them have linear objective, linear constraints and cone constraint.
 
-All cones we have talked about so far are proper cones (nonegative orthant $\mathbb{R}^n_+$, second order cone $Q_n$ and semidefinite cone $\mathbb{S}^n_+$ as a subset of $ \mathbb{R}^{n(n+1)/2}$ ).
-For proper cones it holds that their cartesian product is again proper cone. 
+In fact, they are special cases of the so called conic linear programs.
 
-With this in mind we can generalize LP, SOCP, SDP together by single class.
+
 
 
 %Now we can define conic program which generalizes all previous classes.
 \defi[Conic Programming] 
 \label{defConeProg}
-We say minimization problem is general Conic Program if it has form of
+The primal--dual pair of the Linear Conic Program in the standard form is  
 \begin{equation}
 \label{coneProg} 
-\begin{array}{c|c}
+\begin{array}{cc}
 Primal & Dual \\
 \ \ \ \begin{array}{ll}
-\mbox{minimize} & c^Tx\\
-\mbox{subject to}& Ax = b\\
-& x \in \mathcal{K}
+\mbox{minimize} & c^Tx,\\
+\mbox{subject to}& Ax = b,\\
+& x \in \mathcal{K},
 \end{array} 
  \ \ \ \ \ & \ \ \ \ \ 
  \begin{array}{ll}
-\mbox{maximize} & b^Ty\\
-\mbox{subject to}& A^Ty + s = c\\
-& s \in \mathcal{K}^*
+\mbox{maximize} & b^Ty,\\
+\mbox{subject to}& A^Ty + s = c,\\
+& s \in \mathcal{K}^*,
 \end{array}
 \end{array}
 \tag{Conic Program}
 \end{equation}
-Where $x\in \mathbb{R}^N$ , $y\in \mathbb{R}^M$ and $s\in \mathbb{R}^N$ are variables; and $M\times N$ real matrix $A$, vectors $c\in \mathbb{R}^N$, $b\in \mathbb{R}^{M},$ $c\in \mathbb{R}^N$, and proper cone $\mathcal{K}$ are given problem data. 
+where $x\in \mathbb{R}^n$ , $y\in \mathbb{R}^m$ and $s\in \mathbb{R}^n$ are the variables; and $m\times n$ real matrix $A$, vectors $c\in \mathbb{R}^n$, $b\in \mathbb{R}^{m},$ $c\in \mathbb{R}^n$, and the proper cone $\mathcal{K}$ are given problem data. The 
+\begin{equation}
+{K}^* = \{z\ |\ \forall x\in\mathcal{K}, \ x^Tz\geq 0\},
+\end{equation} 
+denotes the dual cone of $\mathcal{K}$ (see appendix \ref{Cones}).
 
-Conic programming contains any problems combined from LP, SOCP and SDP programs. If for the variable space we take a cartesian product of variables in these various programs and we take $\mathcal{K}$ as a cartesian product of the cones in their conic constraints.
+Conic programming contains, but is not limited to, any problems combined from LP, SOCP and SDP programs. 
+For example 
+\begin{equation}
+\begin{array}{ll}
+\mbox{minimize} & c^Tx,\\
+\mbox{subject to}&A^ix^i=b^i, \ (i = 1,\dots ,k),\\
+& x=(x^1,\dots ,x^k) \in \mathcal{K} = (\mathcal{K}^1,\dots ,\mathcal{K}^k),
+\end{array} 
+\end{equation}
+where the variable $x=(x^1, \dots, x^k)^T$ is the Cartesian product of the variables $x^i$, constrained by various LP, SOCP or SDP constraints 
+$A^ix^i=b$, $x_i\in \mathcal{K}^i$, where each $\mathcal{K}^i$ is either nonegative orthant, second order cone or semidefinite cone.
 
-QUESTION: is there any conic program which cannot be written as SDP?
+
+This is due to the fact, that all cones we have talked about so far are proper cones (nonegative orthant $\mathbb{R}^n_+$, second order cone $Q_n$ and semidefinite cone $\mathbb{S}^n_+$ as a subset of $ \mathbb{R}^{n(n+1)/2}$ ). 
+For proper cones it holds that their Cartesian product is again proper cone (see Section \ref{Cones} in appendix).  
 
 \section{Duality}
 
 
 \subsection{Duality in conic programming}
 
-We will derive the dual forms of LP, SOCP, SDP all at once by deriving lagrange dual of general conic program
+We will derive the dual forms of LP, SOCP, SDP all at once by deriving Lagrange dual of general conic program
 \begin{equation}
+\label{startForConicDuality}
 \begin{array}{ll}
-\mbox{minimize} & c^Tx\\
-\mbox{subject to}& Ax = b\\
-& x \in \mathcal{K}
+\mbox{minimize} & c^Tx,\\
+\mbox{subject to}& Ax = b,\\
+& x \in \mathcal{K}.
 \end{array} 
 \end{equation}
-The Lagrangian of the problem is given by 
+The Lagrangian of the problem is given by $\mathcal{L}:\mathbb{R}^n\times\mathbb{R}^m\times\mathcal{K}^*\rightarrow \mathbb{R},$
 \begin{equation}
-\mathcal{L}(x,y,s) = c^Tx + y^T(b-Ax) - s^Tx, \ \ \ \mbox{where } s\in \mathcal{K}^*
+\mathcal{L}(x,y,s) = c^Tx + y^T(b-Ax) - s^Tx. %\ \ \ \mbox{where } s\in \mathcal{K}^*
 \end{equation}
-The last term is added to take account of the conic constraint $x\in \mathcal{K}$. From the very definition of dual cone:
+The last term (notice that $s\in\mathcal{K}^*$) is added to take account of the conic constraint $x\in \mathcal{K}$.  
+It is with negative sign in order to have $\mathcal{L}(x,\cdot,\cdot)\leq c^Tx$ for all $x$ feasible in (\ref{startForConicDuality}). 
+Indeed, from the very definition of dual cone:
 \begin{equation}
-\max_{s\in \mathcal{K}^*} \ -s^Tx = 
+\sup_{s\in \mathcal{K}^*} \ -s^Tx = 
 \left\lbrace \begin{array}{ll} 
 0 & \mbox{ if } x\in\mathcal{K},\\ 
 +\infty & \mbox{ otherwise.}
 \end{array}\right. 
 \end{equation}
-The Lagrange dual function is 
+Therefore, the Lagrange dual function is 
 \begin{eqnarray}
-g(y,s) &=& \min_x \ \mathcal{L}(x,y,s) \\
+g(y,s) &=& \inf_x \ \mathcal{L}(x,y,s) \\
 %&=& \min_x \ c^Tx + y^T(b-Ax) - s^Tx \\
-&=& \min_x \ y^Tb + (c+A^Ty -s)^Tx \\
+&=& \inf_x \ y^Tb + (c+A^Ty -s)^Tx \\
 &=& \left\lbrace \begin{array}{ll} 
 b^Ty & \mbox{ if } c-A^Ty - s = 0,\\ 
 -\infty & \mbox{ otherwise.}
 \end{array}\right. 
 \end{eqnarray}
 
-Hence, dual for the problem is 
+Hence, the dual problem of linear conic programming in the standard form is 
 \begin{equation}
  \begin{array}{ll}
 \mbox{maximize} & b^Ty\\
@@ -400,7 +514,10 @@ Hence, dual for the problem is
 \end{array}
 \end{equation}
 
-Substition of appropriate cone (nonegative orthant, second order cone or semidefinite cone) as $\mathcal{K}$ yelds earlier mentioned dual forms of the LP, SOCP and SDP.
+Since $\mathbb{R}^n_+$, $Q_n$ and $\mathbb{S}^n_+$ are self-dual, by replacing the $\mathcal{K}$ (and $\mathcal{K}^*$) with any of these cones, we get 
+the dual of standard LP, SOCP and SDP as given in the Section \ref{ConicOptClasses}.
+
+%Substition of appropriate cone (nonegative orthant, second order cone or semidefinite cone) as $\mathcal{K}$ yelds earlier mentioned dual forms of the LP, SOCP and SDP.
 
 
 \subsection{Duality in QCQP}
@@ -413,12 +530,12 @@ We will derive dual form of standard QCQP
 \end{array} 
 \end{equation}
 
-The Lagrangian of the problem is given by
+The Lagrangian of the problem is given by $\mathcal{L}: \mathbb{R}^n\times\mathbb{R}^m_+ \rightarrow \mathbb{R},$
 \begin{eqnarray}
 \mathcal{L}(x,y) &=&  x^TP_0x + q_0^Tx + r_0 + \sum_{k=1}^m y_k(x^TP_kx + q_k^Tx + r_k) \\
  &=& x^TP(y)x + q(y)^Tx + r(y),
 \end{eqnarray}
-where $y\geq 0$ and
+where %$y\geq 0$ and
 \begin{equation} 
 P(y) = P_0 + \sum_{k = 1}^m y_kP_k, \ \ \  q(y) = q_0 + \sum_{k = 1}^m y_kq_k, \ \ \ r(y) = r_0 + \sum_{k =1}^m y_kr_k. 
 \end{equation}
@@ -430,54 +547,54 @@ Thus, the Lagrange dual function is
 g(y) &=& \min_x \ \mathcal{L}(x,y) \\
 &=& \left\lbrace \begin{array}{ll} 
 -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y) & \mbox{ if } P(y)\succeq 0,\ \ q(y)\in\mathcal{R}(P(y))\\ 
--\infty & \mbox{ otherwise.}
+-\infty & \mbox{ otherwise,}
 \end{array}\right. 
 \end{eqnarray}
-Where $P^\dagger$ denotes pseudoinverse of $P$.
+where $P^\dagger$ denotes Moore-Penrose pseudoinverse of $P$ (see appendix).
 Finally, dual form of standard QCQP problem is 
 \begin{equation}
 \label{QCQD} 
 \begin{array}{ll}
-\mbox{maximize} & -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y) \\
-\mbox{subject to}&  y \geq 0\\
-& P(y )\succeq 0 \\
-& \mathcal{R}(q(y)) \subseteq \mathcal{R}(P(y)).
+\mbox{maximize} & -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y), \\
+\mbox{subject to}&  y \geq 0,\\
+& P(y )\succeq 0, \\
+& \mathcal{R}(q(y)) \subseteq \mathcal{R}(P(y)),
 \end{array} 
 \tag{QCQP Dual}
 \end{equation}
-Where $y\in R^m$ is variable; and problem data $P_0,P_1\dots ,P_m$, $q_0,q_1\dots ,q_m$, $r_0,r_1\dots , r_m$ are given from the primal QCQP above.
+where $y\in R^m$ is variable; and problem data $P_0,P_1\dots ,P_m$, $q_0,q_1\dots ,q_m$, $r_0,r_1\dots , r_m$ are given from the primal QCQP above.
 
 
-This dual problem is basically a SDP (in the LMI form). We first rewrite the objective as linear function $t$ and additional constraint.
+This dual problem is basically a SDP (in the LMI form). We first rewrite the objective as linear function $t$ with additional constraint.
 \begin{equation}
 \begin{array}{ll}
-\mbox{maximize} & t \\
-\mbox{subject to}&  t\leq -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y) \\
-&y \geq 0\\
-& P(y )\succeq 0\\
+\mbox{maximize} & t ,\\
+\mbox{subject to}&  t\leq -\frac{1}{4}q(y)^TP(y)^{\dagger}q(y) + r(y), \\
+&y \geq 0,\\
+& P(y )\succeq 0,\\
 & \mathcal{R}(q(y)) \subseteq \mathcal{R}(P(y)).
 \end{array} 
 \end{equation}
 
-Thanks to Schur complement lemma \ref{SchurCompl} the above is equivalent to
+Due to the Schur complement lemma (see appendix, Theorem \ref{SchurCompl}) the above is equivalent to
 \begin{equation}
 \begin{array}{ll}
-\mbox{maximize} & t \\
+\mbox{maximize} & t, \\
 \mbox{subject to}& M:=\left(\begin{array}{ll}
 r(y)-t & \frac{1}{2}q(y)^T \\
 \frac{1}{2}q(y) & P(y)
 \end{array}\right)\succeq 0,
  \\
-&y \geq 0\\
+&y \geq 0,\\
 \end{array} 
 \end{equation}
-Where the matrix $M$ is easily expanded as 
+where the matrix $M$ is easily expanded as 
 \begin{equation}
-M=M(t) + \sum_{k=1}^n M(y_k); 
+M=M(t) + \sum_{k=1}^n M(y_k) 
 \end{equation}
-Where
+with
 \begin{equation}
-M(t) = \left(\begin{array}{rr} -t& 0\\ 0 & 0 \end{array}\right) ; \ \ \ 
+M(t) = \left(\begin{array}{rr} -t& 0\\ 0 & 0 \end{array}\right) , \ \ \ 
 M(y_k) = \left(\begin{array}{ll} r(y_k)& \frac{1}{2}q(y_k)^T\\ \frac{1}{2}q(y_k) & P(y_k) \end{array}\right) . 
 \end{equation}
 
@@ -495,51 +612,68 @@ M(y_k) = \left(\begin{array}{ll} r(y_k)& \frac{1}{2}q(y_k)^T\\ \frac{1}{2}q(y_k)
 
 \section{Relaxations}
 
-As mentioned in the beginning, our strategy is to relax nonconvex QCQPs (\ref{qcqp}) to easier problem. Let us first explore what is relaxation and how can it be useful.
+As mentioned in the beginning, our strategy is to relax the nonconvex QCQPs (\ref{qcqp}) to easier problem. Let us first explore what is relaxation and how can it be useful. 
 
-\defi[Relaxation]{ Relaxation of minimization problem 
-$z = \mbox{min}\{c(x)| x\in X\subseteq \mathbb{R}^n\}$ 
+Relaxation is usually freely understood as an optimization problem which is obtained by relaxing (loosening) some constraints or even by approximating objective function with a different one. The goal is to obtain a problem which is easier to solve, but still carries some kind of information about the original problem. For example, solving the relaxation may give an approximation of the original problem solution.
+
+One could say, that relaxation of minimization problem 
+\begin{equation}
+\begin{array}{ll}
+\mbox{minimize} & f(x), \\
+\mbox{subject to} & x\in X,
+\end{array}
+\end{equation}
 is another minimization problem  
-$z_R = \mbox{min}\{c_R(x)| x\in X_R\subseteq \mathbb{R}^n\},$
-with properties: $X\subseteq X_R$ and $c_R(x)\leq c(x) \forall x\in X$.}
+\begin{equation}
+\begin{array}{ll}
+\mbox{minimize} & f_R(x), \\
+\mbox{subject to} & x\in X_R,
+\end{array}
+\end{equation}
+with properties $X\subseteq X_R$ and $c_R(x)\leq c(x) \forall x\in X$.
+It easily follows, that solving the relaxed problem will provide a lower bound on the optimal value of original problem. In some cases we can also extract a feasible solution of the original problem from solution of the relaxation. In that case we obtain an upper bound for the optimal value. 
 
-It easily follows, that solving relaxed problem will provide a lower bound on the optimal value of original problem. Sometimes we can from relaxation extract also some feasible solution of original problem and obtain upper bound for optimal value. Moreover, these bounds may not only give us an idea about the optimal value, but can provide a means to find optimal solution of original problem. 
+Moreover, these bounds may not only give us an idea about the optimal value, but also, may provide means to find an optimal solution of the original problem. 
 
-\section{SDP relaxation}
-Consider QCQP (\ref{qcqp}). Using identity $x^TA_kx = A_k\bullet xx^T$ it can be rewritten as follows
+\section{SDP relaxation of QCQP}
+Consider QCQP (\ref{qcqp}). Using identity $x^TP_kx = P_k\bullet xx^T$, which follows from the Definiton \ref{defBullet}, it can be rewritten as follows
 \begin{equation} 
 \label{1stStepToSDPr}
 \begin{array}{ll}
-\mbox{minimize}& A_0\bullet X + a_0^Tx \\
-\mbox{subject to}& A_k\bullet X+ a_k^Tx + \alpha_k \leq 0, \  (k = 1,\dots ,m)\\
-& X = xx^T
+\mbox{minimize}& P_0\bullet X + q_0^Tx +r_0, \\
+\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k  \leq 0, \  (k = 1,\dots ,m)\\
+& X = xx^T.
 \end{array} 
 \end{equation}
-Since matrices $A_k$ $k=0,\dots, m$ are symmetric, we can WLOG suppose that $X$ is also symmetric. In order to get form similar to SDP (\ref{sdp}), we need to hide linear terms $a_k^Tx$. This can be done by lifting problem into higher dimension. Introducing $n+1\times n+1$ matrices
-$$M_k = \left(
+Notice, that variable $X$ is symmetric $n\times n$ matrix. 
+ The problem can be reformulated in the following way:
+ \begin{equation} 
+\label{2ndStepToSDPr}
+\begin{array}{ll}
+\mbox{minimize}& M_0\bullet Y, \\
+\mbox{subject to}& M_k\bullet Y \leq 0, \  (k = 1,\dots ,m),\\
+& X = xx^T,
+\end{array} 
+\end{equation}
+ where , 
+\begin{equation}
+M_k = \left(
 \begin{array}{cc}
-\alpha_k & {1\over 2}a_k^T \\
-{1\over 2}a_k & A_k
+\alpha_k & {1\over 2}q_k^T \\
+{1\over 2}q_k & P_k
 \end{array}\right), 
 \ \ \ \ \ \ \
 Y =  \left(
 \begin{array}{cc}
 1 & x^T \\
 x & X
-\end{array}\right), 
-$$
-where $k=0,\dots ,m$, $\alpha_0=0$ and $X=xx^T$. We also suppose that $Y\in S^{n+1}$ (since we suppose $X\in S^n$).  Using this notation (\ref{1stStepToSDPr}) can be written as
-\begin{equation} 
-\label{2ndStepToSDPr}
-\begin{array}{ll}
-\mbox{minimize}& M_0\bullet Y \\
-\mbox{subject to}& M_k\bullet Y \leq 0, \  (k = 1,\dots ,m)\\
-& X = xx^T
-\end{array} 
+\end{array}\right).
 \end{equation}
-This problem looks almost like SDP but the last constraint is not quite what we need. Following lemma shows how to write it in more suitable form.
-
-\lema Let us have a vector $x\in \mathbb{R}^n$, $n\times n$ symmetric matrix $X$, and $n+1\times n+1$ symmetric matrix $Y$ such that 
+ This problem still has a non-convex constraint $X = xx^T$, which can be relaxed by a convex constraint, as stated in the following lemma.
+  
+\lema 
+\label{relaxRank1Lemma}
+Let $x\in \mathbb{R}^n$, an $n\times n$ symmetric matrix $X$, and $n+1\times n+1$ symmetric matrix $Y$ such that 
 $$Y =  \left(
 \begin{array}{cc}
 1 & x^T \\
@@ -550,9 +684,9 @@ $$  Then
 \item[(i)] $X\succeq xx^T$ if and only if $Y\succeq 0$.
 \item[(ii)] $X=xx^T$ holds if and only if $Y\succeq 0$ and \rm $\mbox{ rank } Y=1$. 
 \end{itemize}
-\proof Part (i) follows from Schur complement lemma for PSD (see Theorem \ref{SchurCompl} in appendices) To apply the this theorem we only need symmetry of $Y$ and $1\succ 0$ which holds. 
+\proof (i) The statement follows from Schur complement lemma for PSD (see appendix, Theorem \ref{SchurCompl} in appendices) 
 
-Part (ii). $(\Rightarrow)$ If $X=xx^T$, then also $X\succeq xx^T$, thus $Y\succeq 0$ holds by (i). And since $X=xx^T$,
+(ii) $(\Rightarrow)$ If $X=xx^T$, then also $X\succeq xx^T$, thus $Y\succeq 0$ holds by (i). And since $X=xx^T$,
 $$Y=\left(
 \begin{array}{cc}
 1 & x^T\\
@@ -565,19 +699,14 @@ x
 (1,\ x^T).
 $$
 Hence $\mbox{rank } Y=1$.\\
-$(\Leftarrow)$ Let $Y\succeq 0$ and $\mbox{rank } Y=1$. Since $\mbox{rank } Y=1$, each row of $Y$ must be scalar multiple of first (nonzero) row $(1,\ x^T)$. To match the first column 
-%$\left(\begin{array}{c}
-%1\\
-%x
-%\end{array}\right)$, 
-it must be that $(i+1)$-th row of $Y$ is $x_i(1,\ x^T)$, for $i=1,\dots , n$.
+$(\Leftarrow)$ Let $Y\succeq 0$ and $\mbox{rank } Y=1$. Since $\mbox{rank } Y=1$, each row of $Y$ must be scalar multiple of the first (obviously nonzero) row $(1,\ x^T)$. To match the first column the $(i+1)$-st row of $Y$ must be $x_i(1,\ x^T)$, for $i=1,\dots , n$.
 Therefore, $X=xx^T.$
 \qed
 
-\rem Notice that we have proven last implication of (ii) without using $Y\succeq 0$. In fact it is redundant. It also holds that $X=xx^T$ $\Leftrightarrow$ $\mbox{ rank } Y=1$. 
-However, this redundant constraint $Y\succeq 0$ $\Leftrightarrow$ $X\succeq xx^T$ will let us keep something from the rank 1 constraint after relaxing it.
+\rem Notice that we have proven last implication of (ii) without using $Y\succeq 0$. In fact it is redundant. It also holds that $X=xx^T$ $\Leftrightarrow$ $\mbox{ rank } Y=1$. In fact, there are only 2 options for $Y$ of rank 1: $Y = vv^T$ or $Y = -vv^T$. The second option is easily excluded, because $Y_{11}=1>0$. However, this redundant constraint $Y\succeq 0$ $\Leftrightarrow$ $X\succeq xx^T$ will 
+let us keep something from the rank 1 constraint after relaxing it. This approach of adding the redundant constraints (also known as valid inequalities) is often usefull for strengthening the relaxation. For more about valid inequalities see [\ref{HandbookSDP}, \ref{InexactSDPandValidIneq}, \ref{onValidIneqforQP}].
 
-Using the lemma and relaxing the nonconvex rank 1 constrain we obtain SDP relaxation of (\ref{qcqp})
+Using the Lemma \ref{relaxRank1Lemma} and relaxing the nonconvex rank 1 constrain we get the following SDP relaxation of (\ref{qcqp})
 \begin{equation} 
 \label{SDPrelax1}
 \begin{array}{ll}
@@ -586,25 +715,25 @@ Using the lemma and relaxing the nonconvex rank 1 constrain we obtain SDP relaxa
 & Y\succeq 0.
 \end{array} 
 \end{equation}
-Or expanding terms $M_k\bullet Y$ to see the original problem variable and data we have
+Expanding the terms $M_k\bullet Y$ we obtain
 \begin{equation}
 \label{SDPrelax2} 
 \begin{array}{ll}
-\mbox{minimize}& A_0\bullet X + a_0^Tx \\
-\mbox{subject to}& A_k\bullet X+ a_k^Tx + \alpha_k \leq 0, \  (k = 1,\dots ,m)\\
+\mbox{minimize}& P_0\bullet X + q_0^Tx + r_0\\
+\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
 & X\succeq xx^T.
 \end{array} 
 \end{equation}
 
-Looking back to definition of relaxation we see, that above problem is not a relaxation of QCQP, because it has different variable space $(X,x)\in \mathbb{R}^{n\times n}\times \mathbb{R}^n$ instead of $x\in \mathbb{R}^n$. However, it can be resolved by constructing equivalent problem to (\ref{1stStepToSDPr}) by adding new redundant variable and constraint.
- 
-\prop Problem (\ref{SDPrelax2}) is relaxation of QCQP (\ref{qcqp}) with additional varibale $X$ and additional constraint $X=xx^T$ (wich is equivalent to original QCQP).
-\proof Described QCQP with additional variable and constraint can be reformulated as (\ref{1stStepToSDPr}). Comparing with SDP relaxation (\ref{SDPrelax2}) these problems are equal up to the last constraint where $X=xx^T$ is replaced by $X\succeq xx^T$. The first one implies the second, because $$X=xx^T \ \Rightarrow \ X-xx^T = 0 \succeq 0 \ \Rightarrow X\succeq xx^T.$$  Hence feasible set of (\ref{1stStepToSDPr}) is subset of feasible set of (\ref{SDPrelax2}). Same objective function then implies the second property of relaxation.\qed   
+The above relaxed problem has different variable space $(X,x)\in \mathbb{R}^{n\times n}\times \mathbb{R}^n$ than original problem $x\in \mathbb{R}^n$. 
+In other words, the variable space increased from $O(n)$ to $O(n^2)$ variables.
 
-\bigskip 
-
-Semidefinite program relaxations can provide tight bounds, but they can also be expensive to solve by classical interior point methods.
+Semidefinite program relaxations can provide tight bounds, but they can also be expensive to solve by classical interior point methods (because of the $O(n^2)$ variables).
 Many researchers have suggested various alternatives to interior point methods for improving solution times. Others have studied different types of relaxations, for example, ones based on LP or SOCP. [\ref{BurerKimKojimaFasterWeakerRelax}]
+
+
+
+	
 
 \section{SOCP relaxation}
 These relaxations are expected to provide weaker bounds in less time compared to SDP relaxations. In fact, SOCP relaxations are often constructed as further relaxations of SDP relaxations. So, in certain sense, one can see that SOCP relaxations are never tighter than their SDP counterparts. [\ref{BurerKimKojimaFasterWeakerRelax}]
@@ -643,10 +772,12 @@ x^TA_k^-x & \leq z_k.
 \end{equation}
 Finally, $z_k$ must be bounded in some fashion, say as $z_k\leq \mu \in \mathbb{R}$, or else the relaxation would be useless. In this way convex QCQP relaxation is constructed and it is simply transformed to SOCP using procedure from [\ref{KimKojimaSOCPofNoncvxQOP}] described in section \ref{SectionSOCP}.
 
+\rem Technically it is convex QCQP relaxation, but it is usually solved in SOCP form by algorithms for SOCP, hence it is referred to as SOCP relaxation. 
+
 \subsection{SOCP relaxation of semidefinite constraint}
 
-Semidefinite constraint $X-xx^T\succeq 0$  in (\ref{SDPrelax2}) is equivalent to $C\bullet(X-xx^T)\geq 0$ for all $C\in S^n_+$. Using this, in [\ref{KimKojimaSOCPofNoncvxQOP}] authors propose SOCP relaxation of the semidefinite constraint $X-xx^T\succeq 0$ by replacing it with multiple constraints of the form 
-$$X^TC_ix-C\bullet X \leq 0 \ \ \ (i=1,\dots ,l).$$ 
+Semidefinite constraint $X-xx^T\succeq 0$  in (\ref{SDPrelax2}) is equivalent to $C\bullet(X-xx^T)\geq 0$ for all $C\in S^n_+$. Using this fact, authors of  [\ref{KimKojimaSOCPofNoncvxQOP}] propose SOCP relaxation of the semidefinite constraint $X-xx^T\succeq 0$ by replacing it with multiple constraints of the form 
+$$x^TC_ix-C\bullet X \leq 0 \ \ \ (i=1,\dots ,l).$$ 
 Since $C_i\succeq 0$, these are convex quadratic constraints and using the procedure described earlier (in section \ref{SectionRelBtwSOCPandQCQP}) one can formulate them as second order cone constraints of the form
 \begin{equation}
 \label{SOCPRelaxOfPSDconstraint}
@@ -665,7 +796,7 @@ For further details about strength of this approach and suggested choice of matr
 
 \section{Mixed SOCP-SDP relaxation}
 
-In [\ref{BurerKimKojimaFasterWeakerRelax}] authors have introduced compromise, relaxation of QCQP (\ref{qcqp}) somewhere between SDP and SOCP. We will describe their approach on specific case they provide as gentle introduction.
+In [\ref{BurerKimKojimaFasterWeakerRelax}] authors have introduced compromise, relaxation of the QCQP (\ref{qcqp}) somewhere between SDP and SOCP. We will describe their approach with the specific case they provide as gentle introduction.
 We are dealing with (\ref{qcqp})
 \begin{equation}
 \begin{array}{ll}
@@ -675,12 +806,12 @@ We are dealing with (\ref{qcqp})
 \end{equation}
 Let  $y_{min}(A_k)$ denote smallest eigenvalue of $A_k$.
 For all $k=0,\dots ,m$ define $y_k=-y_{min}(A_k)$ so that $A_k + Iy_k\succeq 0$. Then (\ref{qcqp}) is equivalent to 
-\begin{equation*}
+\begin{equation}
 \begin{array}{ll}
 \mbox{minimize}& -y_0 x^Tx +  x^T(A_0+y_0 I)x + a_0^Tx \\
 \mbox{subject to}& -y_kx^Tx +  x^T(A_k+y_kI)x + a_k^Tx + \alpha_k \leq 0, \  (k = 1,\dots ,m)
 \end{array} 
-\end{equation*}
+\end{equation}
 which has following SOCP-SDP relaxation
 \begin{equation}
 \label{InBetweenSOCPSDP1}
@@ -712,7 +843,7 @@ Compared to SDP relaxation (\ref{SDPrelax2}), which has $O(n^2)$ variables, prob
 In the paper [\ref{BurerKimKojimaFasterWeakerRelax}] is this approach further generalized and explored. Splitting $A= -D + (A+D)$ (instead of $-y_kI + (A +y_kI$)) with clever choice of $C$-block diagonal matrix $D$. 
 
 
-\section{Using relaxations to solve original problem }
+\section{Using relaxations to solve the original problem }
 
 \subsection{Branch and bound}
 
@@ -727,9 +858,18 @@ There are 3 basics steps we will do repeatedly. Branch, compute lower bound, com
 
 One can use more or less clever techniques to decide when, how and which subproblems to branch or how and when to compute bounds.
 
+%\newpage
+%\appendix
+%\chapter{Ch1}
+%\section{appendix1}
+%\defi blablba
+%\thm blablbalb
+
+\begin{appendix}
 
 
-\chapter{Appendices}
+\chapter{ }
+\section{Schur complement}
 
 \thm[Schur complement lemma for PSD] 
 \label{SchurCompl}
@@ -751,6 +891,7 @@ Where $A^\dagger$ denotes pseudoinverse of $A$ and $\mathcal{R}(B)$ denotes colu
 
 
 \section{Cones}
+\label{Cones}
 
 \defi[Cone]
 \label{defCone}
@@ -769,8 +910,23 @@ The cone $\mathcal{K}\subseteq \mathbb{R}^n$ is a proper cone if it has followin
 \defi[Dual cone]
 \label{defDualCone}
 For any cone $\mathcal{K}$ we define its dual cone $\mathcal{K}^*$ as a set
-$$\mathcal{K}^* = \{z\ |\ \forall x\in\mathcal{K}, \ x^Tz\geq 0\}.$$
+\begin{equation}
+\mathcal{K}^* = \{z\ |\ \forall x\in\mathcal{K}, \ x^Tz\geq 0\}.
+\end{equation}
 If  $\mathcal{K} =  \mathcal{K}^*$ we say cone $\mathcal{K}$ is selfdual.
+
+TODO: 
+\begin{itemize}
+\item carthesian product of proper/self-dual cones
+\item $\mathbb{R}^n_+$, $Q_n$, $ \mathbb{S}^n_+$ are proper, self-dual cones + figures.
+\item example of converting SOCP to SDP
+\item example of converting QP to SOCP
+\item Moore-Penrose pseudoinverse
+
+\end{itemize}
+
+
+\end{appendix}
 
 \chapter*{References}
 \addcontentsline{toc}{chapter}{References}
@@ -802,6 +958,9 @@ If  $\mathcal{K} =  \mathcal{K}^*$ we say cone $\mathcal{K}$ is selfdual.
 \item R. M. Freund, \it Introduction to Semidefinite Programming (SDP), \rm 2009 \\ \url{http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-251j-introduction-to-mathematical-programming-fall-2009/readings/MIT6_251JF09_SDP.pdf}
 \label{FreundIntroSDP}
 %
+\item F. Alizadeh, D. Goldfarb,  \it Second-order cone programming, \rm Springer, 2002 \\
+\label{GoldfarbSOCP}
+%
 \item K. Pokorná, \it Second order cone programing, (Master's thesis), \rm 2013 \\
 \url{http://www.iam.fmph.uniba.sk/studium/efm/diplomovky/2013/pokorna/diplomovka.pdf}
 \label{PokornaSOCPDipl}
@@ -814,10 +973,25 @@ If  $\mathcal{K} =  \mathcal{K}^*$ we say cone $\mathcal{K}$ is selfdual.
 \url{http://www.cis.upenn.edu/~jean/schur-comp.pdf}
 \label{GallierSchurCompl}
 %
-\item R.Grone, C. Johnson, E. Sá, H. Wolkowicz, \it Positive definite completions of partial hermitian matrices, \rm 
+\item R. Grone, C. Johnson, E. Sá, H. Wolkowicz, \it Positive definite completions of partial hermitian matrices, \rm 
 Linear Algebra Applications, 58:109-124, 1984.
 \label{GronePSDcompletions}
 %
+\item H. Wolkowicz, R. Saigal,L. Vandenberghe, \it Handbook of Semidefinite Programming: Theory, Algorithms, and Applications, \rm
+ISBN 978-1-4615-4381-7, second printing 2003
+\label{HandbookSDP}
+%
+\item B. Kocuk, S. S. Dey, X. A. Sun, \it Inexactness of SDP Relaxation and Valid Inequalities for Optimal Power Flow, \rm
+IEEE Transactions on Power Systems, 2014
+\label{InexactSDPandValidIneq}
+%
+\item H. Dong, J. Linderoth, \it On Valid Inequalities for Quadratic Programming with Continuous Variables and Binary Indicators \rm
+Springer Volume 7801 of the series Lecture Notes in Computer Science pp 169-180,
+\label{onValidIneqforQP}
+%
+
+
+
 \end{enumerate}
 
 
@@ -949,7 +1123,7 @@ Where $P^\dagger$ denotes pseudoinverse of $P$, $$ P(y) = P_0 + \sum_{k = 1}^m y
 Where $y\in R^m$ is variable; and problem data $P_0,P_1\dots ,P_m$, $q_0,q_1\dots ,q_m$, $r_0,r_1\dots , r_m$ are given from the primal QCQP above.
 \bigskip
 
-\paragraph{Relation to previous classes:}
+\subsubsection{Relation to previous classes}
 
 Convex quadratic programs include LP as a special case, by taking matrices $P_0,P_1,\dots ,P_m = 0$.
 Also it is easy to see that LP is a proper subclass of convex QCQP, since it does not include quadratic constraints. 
