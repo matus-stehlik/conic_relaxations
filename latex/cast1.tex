@@ -72,14 +72,24 @@ The Quadratically Constrained Quadratic Program (QCQP) in the standard form is
 \end{equation}
 where $x\in \mathbb{R}^n$ is a variable, and symmetric $n\times n$ matrices $P_0, P_1, \dots ,P_m \in S^n$, vectors $q_0,\dots ,q_m \in \mathbb{R}^n$ and scalars $r_1,\dots ,r_m\in \mathbb{R}$ are given.
 
-The matrices $P_0, P_1, \dots P_m$ are not necessarily positive semidefinite. Therefore the objective function as well as the constraints may be nonconvex. Generally, this problem is hard to solve. For example, the 0-1 constraint $x_i\in \{0,1\}$ can be reformulated as $x^Te_ie_i^Tx - e_i^Tx =0$. Thus QCQP includes 0-1 programming, which describes various NP-hard problems, such as knapsack, stable set, max cut etc. 
+The matrices $P_0, P_1, \dots P_m$ are not necessarily positive semidefinite. Therefore the objective function as well as the constraints may be nonconvex. Problem (\ref{qcqp}) has been proved to be NP-hard in general [\ref{PardalosQPisNPHard}], while several special subclasses
+of QCQP have been identified to be polynomially solvable (see [\ref{KimKojimaExactSolViaSDPandSOCP}]).
+
+For example, the 0-1 constraint $x_i\in \{0,1\}$ can be reformulated as $x^Te_ie_i^Tx - e_i^Tx =0$. Thus QCQP includes 0-1 programming, which describes various NP-hard problems, such as knapsack, stable set, max cut etc. 
 %Similarly. $\{-1,1\}$ constrained programming, which contains graph partitioning problems.
 On the other hand, the above examples suggest that QCQP has many applications and is worth solving.
 
-One of the possible approaches is relaxing QCQP to obtain problems which can be solved in polynomial time, namely linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). 
+One of the possible approaches is relaxing QCQP to obtain convex problems which can be solved in polynomial time, namely linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). 
 %Let us define these two classes and see why are they easier to solve.
 
-\section{Conic optimization classes}
+
+
+
+
+
+
+
+\chapter{Conic optimization classes}
 \label{ConicOptClasses}
 
 In this section we will introduce basic optimization classes mentioned above, in particular the  linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). We will state the problems in standard forms and their duals. The dual problems will be only mentioned here and will be derived in the next section. We will also show that LP is subclass of convex QCQP, convex QCQP is subclass of SOCP, and SOCP is subclass of SDP, i.e.
@@ -98,7 +108,7 @@ LP\subseteq \mbox{convex } QCQP \subseteq SOCP \subseteq SDP.
 
 
 
-\subsection{Linear programming}
+\section{Linear programming}
 
 When both, the objective and the constraint functions are linear (affine), the problem is called a linear program and it belongs to the Linear Programming class, or shortly LP.
 In this section we will introduce the standard form of LP and its dual. For reference and more information about this topic see i.e. [\ref{BoydCvxOpt}] .
@@ -131,11 +141,11 @@ where $x\in R^n$, $y\in \mathbb{R}^m$ , $s\in \mathbb{R}^n$ are the variables; t
 
 \rem Linear programs can be formulated in various forms (including $\geq , \leq$ inequalities, free variables, possibly some linear fractions in objective) but all of them can be transformed to the standard form.
 
-\subsubsection{Relation to previous classes}
+\subsection{Relation to previous classes}
 Linear programming is a special case of QCQP, when all matrices in quadratic forms are 0.
 
 
-\subsection{Second order cone programing}
+\section{Second order cone programing}
 \label{SectionSOCP}
 
 
@@ -206,7 +216,7 @@ In order to keep things simple, we will sometimes consider only the standard for
 but all the details can be also done for this more general form.
 
 
-\subsubsection{Relation to previous classes}
+\subsection{Relation to previous classes}
 \label{SectionRelBtwSOCPandQCQP}
 
 Second Order Cone Programming includes convex LP as special case.
@@ -265,7 +275,7 @@ v
 Now the intersection of all such second order cone constraints can be easily expressed as Cartesian product of second order cones, thus we have obtained problem of SOCP in form \ref{genSOCP}. 
 
 
-\subsection{Semidefinite programming}
+\section{Semidefinite programming}
 
 
 
@@ -343,10 +353,10 @@ where $svec(X)$ is variable,  $\mathcal{K}(\mathbb{S}^n_+) = \{svec(U)\in \mathb
 and problem data are from the standard SDP (\ref{sdp}).
 
 
-\subsubsection{Relation to previous classes}
+\subsection{Relation to previous classes}
 The  SDP primal-dual pair looks suspiciously similar to the both LP and SOCP primal-dual pairs. 
 The only difference between LP and SOCP is the nonnegative orthant is replaced by second order cone. 
-The SDP, in the $svec$ form (\ref{svecSDP}), further generalizes the cone constraint with the semidefinite cone.
+The SDP, in the $svec$-operator form (\ref{svecSDP}), further generalizes the cone constraint with the semidefinite cone.
 
 In fact, SOCP is subclass of SDP. We will show how the standard SOCP can be rewritten as SDP.
 First of all, instead of minimizing $c^Tx$ we will minimize $t$ with additional constraint $t\geq c^Tx$. 
@@ -412,7 +422,7 @@ corresponding to the constraints $x^i\in Q_{n_i}$.
 %\end{equation}  
 
 
-\subsection{Conic programming}
+\section{Conic programming}
 
 The previous mentioned classes are quite similar. 
 With respect to their variable space, all of them have linear objective, linear constraints and cone constraint.
@@ -517,10 +527,14 @@ Hence, the dual problem of linear conic programming in the standard form is
 Since $\mathbb{R}^n_+$, $Q_n$ and $\mathbb{S}^n_+$ are self-dual, by replacing the $\mathcal{K}$ (and $\mathcal{K}^*$) with any of these cones, we get 
 the dual of standard LP, SOCP and SDP as given in the Section \ref{ConicOptClasses}.
 
-%Substition of appropriate cone (nonegative orthant, second order cone or semidefinite cone) as $\mathcal{K}$ yelds earlier mentioned dual forms of the LP, SOCP and SDP.
+
+\rem \label{doubleDualConeProg} For a closed cone $\mathcal{K}$ it holds that $\mathcal{K}^{**} = \mathcal{K}$ (where $\mathcal{K}^{**}$ denotes dual cone of the dual cone). Therefore, repeating the above procedure, one can easily show that dual of this dual problem is the original primal program (\ref{startForConicDuality}).
+
+
 
 
 \subsection{Duality in QCQP}
+\label{sectionDuality}
 
 We will derive dual form of standard QCQP
 \begin{equation}
@@ -590,12 +604,57 @@ r(y)-t & \frac{1}{2}q(y)^T \\
 \end{equation}
 where the matrix $M$ is easily expanded as 
 \begin{equation}
-M=M(t) + \sum_{k=1}^n M(y_k) 
+M= M_0 + \sum_{k=1}^m y_kM_k  - tE
 \end{equation}
 with
 \begin{equation}
-M(t) = \left(\begin{array}{rr} -t& 0\\ 0 & 0 \end{array}\right) , \ \ \ 
-M(y_k) = \left(\begin{array}{ll} r(y_k)& \frac{1}{2}q(y_k)^T\\ \frac{1}{2}q(y_k) & P(y_k) \end{array}\right) . 
+M_0 = \left(\begin{array}{rr} r_0& \frac{1}{2}q_0^T\\ \frac{1}{2}q_0 & P_0 \end{array}\right) , \ \ 
+M_k = \left(\begin{array}{ll} r_k & \frac{1}{2}q_k^T\\ \frac{1}{2}q_k & P_k \end{array}\right), \ \ 
+E =  \left(\begin{array}{ll} 1 & 0_n^T\\ 0_n & 0_{n\times n} \end{array}\right). 
+\end{equation}
+
+Now the whole process can be repeated. Create Lagrangian 
+$\mathcal{L}_d: \mathbb{R}\times\mathbb{R}^m_+\times\mathbb{S}^{n+1}_+\times\mathbb{R}^m_+ \rightarrow \mathbb{R},$
+\begin{equation}
+\mathcal{L}_d(t,y,Y,u) = t + Y\bullet M_0 + \sum_{k=1}^m y_kY\bullet M_k - tY\bullet E  + u^Ty,
+\end{equation}
+where
+\begin{equation}
+Y = \left(\begin{array}{ll}
+x_0 & x^T \\
+x & X
+\end{array}\right)\succeq 0.
+\end{equation}
+
+The Lagrange dual function is 
+\begin{eqnarray}
+g_d(Y,u) &=& \sup_{t,y} \mathcal{L}_d(t,y,Y,u) \\
+&=&  \left\lbrace\begin{array}{ll}
+Y\bullet M_0, & \mbox{ if } \left[\begin{array}{l} 
+		 					 Y\bullet M_k \leq 0, \ k = 1,\dots ,m, \\
+		 					 x_0 = 1 \ \mbox{ and } \
+			 				 u = 0_m, 
+			 				 \end{array}\right. \\
+\infty, & \mbox{otherwise.} 
+\end{array}\right. 
+\end{eqnarray}
+
+It is easy to see that with $x_0 = 1$ and Schur complement lemma we have
+\begin{eqnarray}
+Y\bullet M_0 &=& P_0\bullet X + q_0^Tx + r_0, \\
+Y\bullet M_k \leq 0 \ &\Leftrightarrow& \ P_k\bullet X+ q_k^Tx + r_k \leq 0,\\
+Y\succeq 0 \ &\Leftrightarrow& \ X\succeq xx^T.
+\end{eqnarray}
+
+Thus we obtain the following SDP as second dual of QCQP
+
+\begin{equation}
+\label{qcqpSecondDual} 
+\begin{array}{ll}
+\mbox{minimize}& P_0\bullet X + q_0^Tx + r_0\\
+\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
+& X\succeq xx^T.
+\end{array} 
 \end{equation}
 
 
@@ -605,16 +664,11 @@ M(y_k) = \left(\begin{array}{ll} r(y_k)& \frac{1}{2}q(y_k)^T\\ \frac{1}{2}q(y_k)
 
 
 
-
-
-
-
-
-\section{Relaxations}
+\chapter{Relaxations}
 
 As mentioned in the beginning, our strategy is to relax the nonconvex QCQPs (\ref{qcqp}) to easier problem. Let us first explore what is relaxation and how can it be useful. 
 
-Relaxation is usually freely understood as an optimization problem which is obtained by relaxing (loosening) some constraints or even by approximating objective function with a different one. The goal is to obtain a problem which is easier to solve, but still carries some kind of information about the original problem. For example, solving the relaxation may give an approximation of the original problem solution.
+Relaxation is usually freely understood as an optimization problem which is obtained by relaxing (loosening) some constraints or even by approximating objective function with a different one. The goal is to obtain a problem which is easier to solve, but still carries some kind of information about the original one. For example, solving the relaxation may give an approximation of the original problem solution.
 
 One could say, that relaxation of minimization problem 
 \begin{equation}
@@ -635,7 +689,20 @@ It easily follows, that solving the relaxed problem will provide a lower bound o
 
 Moreover, these bounds may not only give us an idea about the optimal value, but also, may provide means to find an optimal solution of the original problem. 
 
+In the following we will explore the well known SDP  relaxation which is basically casting the nonconvex QCQP into the convex SDP class.
+Furthermore, we will introduce some of the approaches for either loosening the SDP relaxation (in order to gain more speed) or strengthening these resulting SDP, SOCP, convex QP and LP relaxations (in order to obtain tighter bounds).
+
+
+
 \section{SDP relaxation of QCQP}
+
+
+Since Goemans and Williamson proposed a SDP relaxation of the max-cut problem [\ref{GoemansWilliamsonMaxCut}] that could yield a very good approximation
+algorithm, lots of work have been focused on solving the nonconvex QP problems using SDP relaxation methods. In this section we will derive the standard SDP relaxation of QCQP. 
+
+
+
+
 Consider QCQP (\ref{qcqp}). Using identity $x^TP_kx = P_k\bullet xx^T$, which follows from the Definiton \ref{defBullet}, it can be rewritten as follows
 \begin{equation} 
 \label{1stStepToSDPr}
@@ -704,9 +771,22 @@ Therefore, $X=xx^T.$
 \qed
 
 \rem Notice that we have proven last implication of (ii) without using $Y\succeq 0$. In fact it is redundant. It also holds that $X=xx^T$ $\Leftrightarrow$ $\mbox{ rank } Y=1$. In fact, there are only 2 options for $Y$ of rank 1: $Y = vv^T$ or $Y = -vv^T$. The second option is easily excluded, because $Y_{11}=1>0$. However, this redundant constraint $Y\succeq 0$ $\Leftrightarrow$ $X\succeq xx^T$ will 
-let us keep something from the rank 1 constraint after relaxing it. This approach of adding the redundant constraints (also known as valid inequalities) is often usefull for strengthening the relaxation. For more about valid inequalities see [\ref{HandbookSDP}, \ref{InexactSDPandValidIneq}, \ref{onValidIneqforQP}].
+let us keep something from the rank 1 constraint after relaxing it. This approach of adding the redundant constraints (also known as valid inequalities) is often usefull for strengthening the relaxation. For more on valid inequalities see [\ref{HandbookSDP}, \ref{InexactSDPandValidIneq}, \ref{onValidIneqforQP}].
 
-Using the Lemma \ref{relaxRank1Lemma} and relaxing the nonconvex rank 1 constrain we get the following SDP relaxation of (\ref{qcqp})
+
+
+
+Using the Lemma \ref{relaxRank1Lemma} we obtain another equivalent formulation of the original QCQP
+\begin{equation} 
+\label{3rdStepToSDPr}
+\begin{array}{ll}
+\mbox{minimize}& M_0\bullet Y \\
+\mbox{subject to}& M_k\bullet Y \leq 0, \  (k = 1,\dots ,m)\\
+& Y\succeq 0, \ \ \ \mbox{rank }Y = 1.
+\end{array} 
+\end{equation}
+
+ relaxing the nonconvex rank 1 constrain we get the following SDP relaxation of (\ref{qcqp})
 \begin{equation} 
 \label{SDPrelax1}
 \begin{array}{ll}
@@ -715,7 +795,7 @@ Using the Lemma \ref{relaxRank1Lemma} and relaxing the nonconvex rank 1 constrai
 & Y\succeq 0.
 \end{array} 
 \end{equation}
-Expanding the terms $M_k\bullet Y$ we obtain
+Expanding the terms $M_k\bullet Y$ we obtain the standard SDP relaxation
 \begin{equation}
 \label{SDPrelax2} 
 \begin{array}{ll}
@@ -725,59 +805,59 @@ Expanding the terms $M_k\bullet Y$ we obtain
 \end{array} 
 \end{equation}
 
+\rem Notice that this is exactly the second dual of QCQP (\ref{qcqpSecondDual}).
+
+
+
+
 The above relaxed problem has different variable space $(X,x)\in \mathbb{R}^{n\times n}\times \mathbb{R}^n$ than original problem $x\in \mathbb{R}^n$. 
 In other words, the variable space increased from $O(n)$ to $O(n^2)$ variables.
 
-Semidefinite program relaxations can provide tight bounds, but they can also be expensive to solve by classical interior point methods (because of the $O(n^2)$ variables).
-Many researchers have suggested various alternatives to interior point methods for improving solution times. Others have studied different types of relaxations, for example, ones based on LP or SOCP. [\ref{BurerKimKojimaFasterWeakerRelax}]
 
+\section{Convex QP and SOCP relaxation}
 
-
-	
-
-\section{SOCP relaxation}
 These relaxations are expected to provide weaker bounds in less time compared to SDP relaxations. In fact, SOCP relaxations are often constructed as further relaxations of SDP relaxations. So, in certain sense, one can see that SOCP relaxations are never tighter than their SDP counterparts. [\ref{BurerKimKojimaFasterWeakerRelax}]
 
-Using the procedure from section \ref{SectionSOCP}, any convex QCQP relaxation can be easily formulated as SOCP relaxation. Therefore we can consider any convex QCQP relaxation as SOCP relaxation. 
-Specifically, such a convex QCQP relaxation may be represented as 
+
+In this section we will introduce some approaches for further loosening of SDP relaxation. There are 2 main reasons why SDP is expensive to solve. The $O(n^2)$ variable space and semidefinite constraint. 
+
+
+Using the procedure from section \ref{SectionSOCP}, any convex instance of QCQP can be formulated as SOCP. Therefore we can consider any convex quadratic relaxation as SOCP relaxation. 
+Specifically, a convex QCQP relaxation may be represented as 
 \begin{equation}
 \label{CvxQCQP} 
 \begin{array}{ll}
-\mbox{minimize}& x^TB_0x + b_0^Tx \\
+\mbox{minimize}& x^TB_0x + b_0^Tx + \beta_0\\
 \mbox{subject to}& x^TB_kx + b_k^Tx + \beta_i \leq 0, \  (k = 1,\dots ,l)
 \end{array} 
 \end{equation}
-where all $B_k\succeq 0$ for $k=0,\dots ,l$. We say that (\ref{CvxQCQP}) is SOCP relaxation of (\ref{qcqp}) if that $x$ is feasible for (\ref{qcqp}) implies that $x$ is feasible for (\ref{CvxQCQP}) and $x^TB_0x+b_0^Tx \leq x^TA_0x+a_0^Tx$ holds.
+where all $B_k\succeq 0$ for $k=0,\dots ,l$. We say that (\ref{CvxQCQP}) is SOCP relaxation of QCQP (\ref{qcqp}) if any $x$ feasible in (\ref{qcqp}) is also feasible in (\ref{CvxQCQP}) and $x^TB_0x+b_0^Tx + \beta_0 \leq x^TP_0x+q_0^Tx+r_0$ holds.
 
-It is well known that SOCPs can also be solved as SDP. In [\ref{KimKojimaSOCPofNoncvxQOP}] it is shown, that (\ref{CvxQCQP}) is equivalent to the SDP 
-\begin{equation}
-\label{SDPofCvxQCQP} 
-\begin{array}{ll}
-\mbox{minimize}& B_0\bullet X + b_0^Tx \\
-\mbox{subject to}& B_k\bullet X + b_k^Tx + \beta_i \leq 0, \  (k = 1,\dots ,l)\\
-& X\succeq xx^T.
-\end{array} 
-\end{equation}
 
-In [\ref{KimKojimaSOCPofNoncvxQOP}] authors provided SOCP relaxation of QCQP (\ref{qcqp}) in original variable space $x\in \mathbb{R}^n$. First they WLOG assume that objective function is linear (otherwise we can introduce new variable $t\geq x^TA_0x + a_0^T$ and then minimize $t$). Then each $A_k$ is written as 
-$$A_k=A_k^+ -A_k^-, \ \ \mbox{where } \ A_k^+, A_k^- \succeq 0, \ \ k=1,\dots ,m.$$ 
+
+\subsection{Reducing the number of variables}
+In [\ref{KimKojimaSOCPofNoncvxQOP}] authors introduce SOCP relaxation of QCQP (\ref{qcqp}) in original variable space $x\in \mathbb{R}^n$. First they assume that objective function is linear (otherwise we can add new variable $t\geq x^TP_0x + q_0^T + r_0$ and then minimize $t$). Then each $P_k$ is written as 
+$$P_k=P_k^+ -P_k^-, \ \ \mbox{where } \ P_k^+, P_k^- \succeq 0, \ \ k=1,\dots ,m.$$ 
 So that each constraint can be expressed as 
-$$x^TA_k^+x + a_k^Tx + \alpha_k \leq x^TA_k^-x.$$
-Then an auxiliary variable $z_k\in \mathbb{R}$ is introduced to represent $x^TA_k^-x = z_k$, but also immediately relaxed as $x^TA_k^-x \leq z_k$, resulting in covnex system
+$$x^TP_k^+x + q_k^Tx + r_k \leq x^TP_k^-x.$$
+Then an auxiliary variable $z_k\in \mathbb{R}$ is introduced to represent $x^TP_k^-x = z_k$, but also immediately relaxed as $x^TP_k^-x \leq z_k$, resulting in covnex system
 \begin{equation}
 \begin{array}{rl}
-x^TA_k^+x + a_k^Tx + \alpha_k &\leq z_k  \\
-x^TA_k^-x & \leq z_k.
+x^TP_k^+x + q_k^Tx + r_k &\leq z_k  \\
+x^TP_k^-x & \leq z_k.
 \end{array} 
 \end{equation}
-Finally, $z_k$ must be bounded in some fashion, say as $z_k\leq \mu \in \mathbb{R}$, or else the relaxation would be useless. In this way convex QCQP relaxation is constructed and it is simply transformed to SOCP using procedure from [\ref{KimKojimaSOCPofNoncvxQOP}] described in section \ref{SectionSOCP}.
+Finally, $z_k$ must be bounded in some fashion, say as $z_k\leq \mu \in \mathbb{R}$, or else the relaxation would be useless. In this way convex QCQP relaxation is constructed and it is simply transformed to SOCP using the procedure from [\ref{KimKojimaSOCPofNoncvxQOP}] described in section \ref{SectionSOCP}.
 
-\rem Technically it is convex QCQP relaxation, but it is usually solved in SOCP form by algorithms for SOCP, hence it is referred to as SOCP relaxation. 
+\rem Technically it is convex quadratic relaxation. However, it is usually solved in SOCP form by (better developed) algorithms for SOCP, hence it is referred to as SOCP relaxation. 
+
+TODO: (convex QP vs SOCP formulation) That was about 15 years ago.  Find out which one is faster in cvx!
+
 
 \subsection{SOCP relaxation of semidefinite constraint}
 
 Semidefinite constraint $X-xx^T\succeq 0$  in (\ref{SDPrelax2}) is equivalent to $C\bullet(X-xx^T)\geq 0$ for all $C\in S^n_+$. Using this fact, authors of  [\ref{KimKojimaSOCPofNoncvxQOP}] propose SOCP relaxation of the semidefinite constraint $X-xx^T\succeq 0$ by replacing it with multiple constraints of the form 
-$$x^TC_ix-C\bullet X \leq 0 \ \ \ (i=1,\dots ,l).$$ 
+$$x^TC_ix-C_i\bullet X \leq 0 \ \ \ (i=1,\dots ,l).$$ 
 Since $C_i\succeq 0$, these are convex quadratic constraints and using the procedure described earlier (in section \ref{SectionRelBtwSOCPandQCQP}) one can formulate them as second order cone constraints of the form
 \begin{equation}
 \label{SOCPRelaxOfPSDconstraint}
@@ -791,7 +871,62 @@ v^i
 2L_i^Tx
 \end{array}\right), \ \ \ ||v^i||\leq v^i_0, \ \ (i  = 1,\dots ,l)
 \end{equation}
-For further details about strength of this approach and suggested choice of matrices $C_i$ based on problem data see [\ref{KimKojimaSOCPofNoncvxQOP}].
+
+The cost of solving the resulting SOCP depends very much on the ranks of $C_i \in \mathbb{S}^n_+$, 
+the larger their ranks are, the more auxiliary variables we need to 
+introduce and the more expensive the cost of solving the resulting SOCP becomes. In an
+attempt to keep the amount of computation small, low rank $C_i$ are
+reasonable. Authors of [\ref{KimKojimaSOCPofNoncvxQOP}] suggest that among many candidates, the simplest and reasonable choice is
+\begin{equation}
+x_i^2 - X_{ii} \leq 0.
+\end{equation}
+They also employ rank-1 convex quadratic inequalities 
+\begin{equation}
+x^Tu_iu_i^Tx - u_iu_i^T\bullet X \leq 0 \ (i = 1,\dots ,l),
+\end{equation}
+where $u_i$ are chosen as eigenvectors of the matrices $P_k$ from the quadratic inequality constraints of original QCQP. 	
+This choice of $C_i$ is also essential for reducing the number of variables. 
+
+Authors of [\ref{KimKojimaSOCPofNoncvxQOP}] 
+propose following relaxation of $k$-th constraint. For simplicity we will omit the indexing by $k$. 
+Let \begin{equation}
+P = \sum_{j = 1}^{h}\lambda_j u_ju_j^T, \ \ \ \mbox{ with } \ \ \ P^+ =  \sum_{j=1}^p\lambda_j u_ju_j^T.
+\end{equation}
+%\begin{equation}
+% \lambda_1 \geq \dots \geq \lambda_p \geq 0 > \lambda_{p+1} \geq \dots \geq \lambda_h 
+%\end{equation}
+then we may rewrite the quadratic inequality constraint $x^TPx + q^Tx + r \leq 0$ as 
+\begin{equation}
+\begin{array}{l}
+\label{kthConstraintReformulation}
+x^TP^+x + \sum_{j = p + 1}^h \lambda_j z_j + q^Tx + r \leq 0, \\
+x^T(u_ju_j^T)x - z_j = 0, \ ( j= p+1, \dots ,h), 
+\end{array}
+\end{equation}
+and relaxing the last $h-p$ inequalities we have a set of convex inequalities 
+\begin{equation}
+\begin{array}{l}
+\label{SOCPrelax2}
+x^TP^+x + \sum_{j = p + 1}^h \lambda_j z_j + q^Tx + r \leq 0 \\
+x^T(u_ju_j^T)x - z_j \leq 0, \ ( j= p+1, \dots ,h) 
+\end{array}
+\end{equation}
+It is necessary to add the appropriate constraints on the variables $z_j$ to bound them from above, authors 
+show that $\sum_{j=p+1}^h z_j \leq \Vert x\Vert^2$ follows from (\ref{kthConstraintReformulation}).
+
+Now consider the following relaxation of the quadratic constraint  $x^TPx + q^Tx + r \leq 0$
+together with valid inequalities relaxing the semidefinite constraint
+\begin{equation}
+\begin{array}{l}
+\label{SOCPrelax3}
+P\bullet X + q^Tx + r \leq 0,\\
+x^TP^+x - P^+\bullet X \leq 0, \\
+x^Tu_ju_j^Tx - u_ju_j^T\bullet X \leq 0, \ (j = p+1,\dots ,h).
+\end{array}
+\end{equation}
+Suppose $(x,X) \in \mathbb{R}^n\times \mathbb{S}^n$ satisfy this relaxation, then $x$ and $z_j = u_j^TXu_j$ for $j = p+1,\dots ,h$ satisfy (\ref{SOCPrelax2}). So we may see (\ref{SOCPrelax2}) as further relaxation of (\ref{SOCPrelax3}). 
+For further details about this approach see  [\ref{KimKojimaSOCPRelaxOfPSDconstr}, \ref{KimKojimaSOCPofNoncvxQOP}].
+
 
 
 \section{Mixed SOCP-SDP relaxation}
@@ -800,30 +935,30 @@ In [\ref{BurerKimKojimaFasterWeakerRelax}] authors have introduced compromise, r
 We are dealing with (\ref{qcqp})
 \begin{equation}
 \begin{array}{ll}
-\mbox{minimize}& x^TA_0x + a_0^Tx \\
-\mbox{subject to}& x^TA_kx + a_k^Tx + \alpha_k \leq 0, \  (k = 1,\dots ,m)
+\mbox{minimize}& x^TP_0x + q_0^Tx + r_0 \\
+\mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)
 \end{array} 
 \end{equation}
-Let  $y_{min}(A_k)$ denote smallest eigenvalue of $A_k$.
-For all $k=0,\dots ,m$ define $y_k=-y_{min}(A_k)$ so that $A_k + Iy_k\succeq 0$. Then (\ref{qcqp}) is equivalent to 
+Let  $\lambda_{min}(P_k)$ denote smallest eigenvalue of $P_k$.
+For all $k=0,\dots ,m$ define $\lambda_k=-\lambda_{min}(P_k)$ so that $P_k + I\lambda_k\succeq 0$. Then (\ref{qcqp}) is equivalent to 
 \begin{equation}
 \begin{array}{ll}
-\mbox{minimize}& -y_0 x^Tx +  x^T(A_0+y_0 I)x + a_0^Tx \\
-\mbox{subject to}& -y_kx^Tx +  x^T(A_k+y_kI)x + a_k^Tx + \alpha_k \leq 0, \  (k = 1,\dots ,m)
+\mbox{minimize}& -\lambda_0 x^Tx +  x^T(P_0+\lambda_0 I)x + q_0^Tx + r_0\\
+\mbox{subject to}& -\lambda_kx^Tx +  x^T(P_k+\lambda_kI)x + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)
 \end{array} 
 \end{equation}
 which has following SOCP-SDP relaxation
 \begin{equation}
 \label{InBetweenSOCPSDP1}
 \begin{array}{ll}
-\mbox{minimize}& -y_0 Tr(X) +  x^T(A_0+y_0 I)x + a_0^Tx \\
-\mbox{subject to}& -y_k Tr(X) +  x^T(A_k+y_kI)x + a_k^Tx + \alpha_k \leq 0, \\  
+\mbox{minimize}& -\lambda_0 Tr(X) +  x^T(P_0+\lambda_0 I)x + q_0^Tx +r_0 \\
+\mbox{subject to}& -\lambda_k Tr(X) +  x^T(P_k+\lambda_kI)x + q_k^Tx + r_k \leq 0, \\  
 &(k = 1,\dots ,m) \\
 & X\succeq xx^T
 \end{array} 
 \end{equation}
 Notice that other than $X\succeq xx^T$, the only variables in $X$ to appear in the program are diagonal elements $X_{jj}$.
-Also, one can see that with fixed $x$ the diagonal entries of $X$ can be made arbitrarily large to satisfy all constraints with $y_k>0$, as well as drive objective to $-\inf$ if $y_0>0$. Therefore, in general, $X_{jj}$ should be bounded to form a sensible relaxation. In the paper they use $x_j\in [0,1]$ and $X_jj\leq x_j$ to establish boundedness.
+Also, one can see that with fixed $x$ the diagonal entries of $X$ can be made arbitrarily large to satisfy all constraints with $\lambda_k>0$, as well as drive objective to $-\inf$ if $\lambda_0>0$. Therefore, in general, $X_{jj}$ should be bounded to form a sensible relaxation. In the paper they suppose that $x_j\in [0,1]$ and use $X_{jj}\leq x_j$ to establish boundedness.
 
 Next proposition from [\ref{GronePSDcompletions}] gives equivalent formulation of $X\succeq xx^T$ constraint, only in terms of $x$ and diagonal entries of $X$.
 \prop Given a vector $x$ and scalars $X_{11},\dots ,X_{nn}$, there exists
@@ -840,23 +975,216 @@ Thus, in light of this proposition, the problem with additional bounding constra
 \end{equation}
 Compared to SDP relaxation (\ref{SDPrelax2}), which has $O(n^2)$ variables, problem (\ref{InBetweenSOCPSDP2}) has only $O(n)$ and hence is much faster to solve. On the other hand bound should be generally weaker than the SDP bound.
 
-In the paper [\ref{BurerKimKojimaFasterWeakerRelax}] is this approach further generalized and explored. Splitting $A= -D + (A+D)$ (instead of $-y_kI + (A +y_kI$)) with clever choice of $C$-block diagonal matrix $D$. 
+This approach is further generalized and explored in [\ref{BurerKimKojimaFasterWeakerRelax}]. 
+%Splitting $A= -D + (A+D)$ (instead of $-\lambda_kI + (A +\lambda_kI$)) with clever choice of $C$-block diagonal matrix $D$. 
 
 
-\section{Using relaxations to solve the original problem }
+
+\section{LP relaxation of QCQP}
+
+Semidefinite program relaxations can provide tight bounds, but they can also be expensive to solve by classical interior point methods (because of the $O(n^2)$ variables and semidefinite constraint). 
+
+Many researchers have studied different types of relaxations, for example, ones based on LP or SOCP. 
+As we have seen in the first chapter, SDP is the broadest of the introduced classes, therefore the SDP relaxation will be generally stronger than LP or SOCP relaxation. However the advantage of LP may be the speed. 
+
+Simple LP relaxation may be obtained from SDP relaxation (\ref{SDPrelax2}) replacing the semidefinite constraint $X\succeq xx^T$ with symmetry constraint $X = X^T$.
+\begin{equation}
+\label{LPrelax1} 
+\begin{array}{ll}
+\mbox{minimize}& P_0\bullet X + q_0^Tx + r_0\\
+\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
+& X = X^T.
+\end{array} 
+\end{equation}
+
+Suppose that the feasible set is bounded and we can formulate box constraints for each variable - either explicitly included (i.e.  $P_k=0$ for some $k$) or implied from the quadratic constraints (for example in combinatorial problems where constraint $x_i\in \{0,1\}^n$ is included as $x_i(x_i-1) = 0$ we may also include $0\leq x_i \leq 1$ box constraint). We will separate all such box constraints in the next formulation. 
+
+\begin{equation}
+\label{LPrelax2} 
+\begin{array}{ll}
+\mbox{minimize}& P_0\bullet X + q_0^Tx + r_0\\
+\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
+ 				& l_i\leq x_i \leq u_i, \ (i = 1,\dots ,n)\\
+& X = X^T.
+\end{array} 
+\end{equation}
+
+This is also referred to as lift and project LP relaxation. 
+
+\subsection{Reformulation Linearization Technique (RLT)}
+
+
+The optimal value of (\ref{LPrelax2}) is usually weak lower bound as no constraint links the values of $x$ and $X$ variables.
+The main approach to provide these links and strengthen the relaxation is the Reformulation Linearization Technique (RLT) relaxation [\ref{SheraliAdamsRLT1},\ref{AnstreicherSDPvsRLT},\ref{MargotLPRelax}].
+It adds linear inequalities to (\ref{LPrelax2}). These inequalities are derived from the variable bounds and 
+constraints of the original problem as follows: multiply together two original constraints or bounds and relax 
+each product term $x_ix_j$ with the variable $X_{ij}$. Note that this will be a valid inequality, since the original constraint $X=xx^T$ implies $x_ix_j = X_{ij}$. For instance, let $x_i, x_j$ , $i,j\in \{1, 2,\dots ,n\}$ be two variables from
+(\ref{LPrelax2}). By taking into account only the four original bounds $x_i - l_i \geq 0,$ $x_i - u_i \leq 0 ,$ $ x_j - l_j \geq 0,$  $ x_j - u_j \leq 0,$ we get the RLT inequalities
+\begin{equation}
+\begin{array}{lcl}
+X_{ij} - u_ix_j - u_jx_i  &\geq & -u_iu_j ,\\
+X_{ij} - u_ix_j - l_jx_i  &\leq & -u_il_j ,\\
+X_{ij} - l_ix_j - u_jx_i  &\leq & -l_iu_j ,\\
+X_{ij} - l_ix_j - l_jx_i   &\geq & -l_il_j .
+\end{array}
+\end{equation}
+ Note that these constraints also hold when $i = j$, in which case the upper bounds are identical. Denote $l = (l_1,\dots ,l_n)^T$ and $u = (u_1,\dots u_n)^T.$
+ Using the vector and matrix inequalities (meaning that inequality holds in each coordinate) the resulting RLT relaxation can be written as 
+ 
+ \begin{equation}
+\label{RLTrelax1} 
+\begin{array}{ll}
+\mbox{minimize}&\ \ P_0\bullet X + q_0^Tx + r_0\\
+\mbox{subject to}&\ \ P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
+		& \begin{array}{lcl}
+		 X - lx^T - xl^T & \geq & -ll^T, \\
+		 X - ux^T - xu^T & \geq & -uu^T, \\
+		 X - lx^T - xu^T & \leq & -lu^T, 
+		 \end{array}\\
+ 		&\ \ l\leq x \leq u, \ \  X = X^T,
+\end{array} 
+\end{equation}
+In fact it is known that the original bound constraints $l\leq x\leq u$ are redundant and could be removed.
+If the QCQP contains linear constraints other than simple box constraints (i.e. $P_k=0$ for some $k$) then additional constraints on $X$ can be imposed.
+
+
+\subsection{PSD cuts}
+
+In the above LP relaxations we have relaxed nonconvex $X = xx^T$ constraint in (\ref{1stStepToSDPr}) with simple symmetry and later added RLT constraints to link the variables $x$ and $X$. In fact we can go further in strengthening the LP relaxation. 
+
+Let us begin with SDP relaxation in the form (\ref{SDPrelax1}), i.e. 
+\begin{equation} 
+\begin{array}{ll}
+\mbox{minimize}& M_0\bullet Y \\
+\mbox{subject to}& M_k\bullet Y \leq 0, \  (k = 1,\dots ,m)\\
+& Y\succeq 0,
+\end{array} 
+\end{equation}
+where 
+\begin{equation}
+M_k = \left(
+\begin{array}{cc}
+\alpha_k & {1\over 2}q_k^T \\
+{1\over 2}q_k & P_k
+\end{array}\right), 
+\ \ \ \ \ \ \
+Y =  \left(
+\begin{array}{cc}
+1 & x^T \\
+x & X
+\end{array}\right).
+\end{equation}
+
+It is well known, that 
+\begin{equation}
+Y\succeq 0 \ \Leftrightarrow \ v^TYv \geq 0, \ \forall v\in\mathbb{R}^{n+1}.
+\end{equation}
+Notice that inequalities $ v^TYv \geq 0$ are linear in $Y$ therefore linear in both $x$ and $X$.
+In order to obtain a linear program, the semidefinite constraint cannot be replaced by the infinite number of constraints  $v^TYv \geq 0$.
+However, it is possible to relax it with the finite number of these linear inequalities. 
+
+The vectors $v$ may be chosen as eigenvectors corresponding to negative eigenvalues of a arbitrary matrix $\bar{Y}$.
+In [\ref{MargotLPRelax}] authors note two weaknesses of such approach. Firstly, only one cut is
+obtained from each eigenvector, while computing the spectral decomposition requires non trivial investment of time. Secondly,
+such cuts are usually very dense, i.e. almost all entries of $\bar{v}\bar{v}^T$ are nonzero, adding such inequalities might considerably slow down the computation. 
+
+They propose an efficient algorithm to generate sparse cuts from given matrix $\bar{Y}$ and initial vector $\bar{v}$ with $\bar{v}^{T}\bar{Y}\bar{v} \leq 0,$.
+
+TODO: it might be interesting to find out what is the good choice of such $\bar{Y}$ and $\bar{v}$. 
+(1 - based on problem data, i.e. matrices from quadratic inequalities, 
+2 - iteratively, always take $\bar{Y}$ as optimal solution of previous relaxation and strengthen by cutting it off, until we reach precision of SDP bound)
+
+
+\section{Strengthening the SDP relaxation}
+
+\subsection{SDP + RLT relaxation}
+It is not surprising that adding RLT valid inequalities into LP relaxation will significantly strengthen the relaxation. 
+On the other hand, it is quite surprising that RLT inequalities may also help when added to SDP relaxation. 
+In fact Anstreicher in \ref{AnstreicherSDPvsRLT} showed that following RLT + SDP relaxation is stronger than both SDP and RLT relaxations.
+ \begin{equation}
+\label{SDP+RLTrelax1} 
+\begin{array}{ll}
+\mbox{minimize}&\ \ P_0\bullet X + q_0^Tx + r_0\\
+\mbox{subject to}&\ \ P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
+		& \begin{array}{lcl}
+		 X - lx^T - xl^T & \geq & -ll^T, \\
+		 X - ux^T - xu^T & \geq & -uu^T, \\
+		 X - lx^T - xu^T & \leq & -lu^T, 
+		 \end{array}\\
+ 		&\ \ l\leq x \leq u, \ \  X \succeq xx^T.
+\end{array} 
+\end{equation}
+
+However, in terms of computational cost, in his experiments each RLT or SDP bound for the tested problems required approximately 1
+second of computation, but each SDP+RLT bound required over 200 seconds of computation. It
+is well known that “mixed” SDP/LP problems involving large numbers of inequality constraints
+are computationally challenging, and reducing the work to solve such problems is an area of ongoing
+algorithmic research. In [\ref{SheraliEnhancingRLT}] they propose enhancing the RLT relaxation with PSD cuts as linear relaxations of the semidefinite constraint. Also adding a SOCP relaxation of semidefinite constraint into lift and project LP relaxation proposed in [\ref{KimKojimaSOCPofNoncvxQOP}] offers a way to avoid the cost of combining SDP and LP constraints.
+
+\subsection{Best D.C. decompositions}
+TODO: reconsider completing or deleting this subsection
+
+Another interesting approach for strengthening the SDP relaxation was proposed in [\ref{ZhengDCdecomp}]. 
+They restrict to the problems with convex quadratic constraints and nonconvex objective (they suppose 
+that $P_k\succeq 0$ for $k = 1\dots m$). 
+Let $v_i$ for $i=1,\dots ,p$ be nonzero vectors in $\mathbb{R}^n$ and suppose that there exists $\lambda \in \mathbb{R}^p_+$ and $\mu \in \mathbb{R}^m_+$ such that 
+\begin{equation}
+P_0 + \sum_{i = 1}^p\lambda_i v_iv_i^T  - \sum_{i = 1}^m \mu_i P_i \succeq 0,
+\end{equation}
+Then they decompose the nonconvex objective $f_0(x) = x^TP_0x + q_0^Tx + r_0 $ as D.C. (difference of convex functions) 
+\begin{equation}
+%f_0(x) = 
+x^T\left( P_0 + \sum_{i = 1}^p\lambda_i v_iv_i^T  + \sum_{i = 1}^m \mu_i P_i\right)x + q_0^Tx + r_0^T - \sum_{i = 1}^p\lambda_i (v_i^Tx)^2  - \sum_{i = 1}^m \mu_i x^TP_ix.
+\end{equation}
+After that they convexify the objective by underestimating the nonconvex terms $-\sum_{i = 1}^p\lambda_i (v_i^Tx)^2$ and  $ - \sum_{i = 1}^m \mu_i x^TP_ix$ with a (convex) piecewise linear function, 
+
+
+and show that optimal choice of parameters $\lambda, \mu$ can be reduced to semidefinite program and show that the resulting SDP has dual equivalent to 
+standard SDP (\ref{SDPrelax2}) strengthened with additional valid inequalities.
+
+
+
+%\section{Using relaxations to solve the original problem }
+
+
 
 \subsection{Branch and bound}
 
-The basic idea of this method is to divide and conquer.
-There are 3 basics steps we will do repeatedly. Branch, compute lower bound, compute upper bound and prune.
+
+
+We will first describe a general idea of the branch and bound algorithms.  uppose we are dealing with minimization problem.
+
+The basic idea of this method is to divide and conquer. There are 3 basics steps we will do repeatedly. Branch, compute bounds and prune.
 \begin{itemize}
-\item Branch. First divide by branching original problem into smaller subproblems i.e. by partition of the feasible set. One can do this for example by adding box constraints $l^j_i\leq x_i \leq u^j_i$, obtaining a new subproblem for each $j\in J$.  It is important that union of feasible sets of all subproblems covers whole feasible set of original problem.
-\item Compute lower bound. Compute lower bounds for each subproblem (i.e. by solving relaxed problem). 
-\item Compute upper bound and prune. Compute some upper bound for the optimal value (i.e. compute feasible solution for chosen subproblem or try to extract it from solution of relaxed problem). Having both lower and upper bounds, we can conquer by pruning all the branches with lower bound greater then this upper bound. The optimal solution is surely not in these branches.
-\item Repeat. This process is repeated by branching remaining subproblems, computing new bounds for smaller problems, improving bounds and further pruning the tree of problems.
+\item Branch. First divide by branching the original problem into the smaller subproblems i.e. by partitioning the feasible set. 
+ In combinatorial (discrete) problems this can be done by fixing a variable. For example if $x_l \in \{0,1\}$, then by fixing $x_l=1$ and $x_l=0$ respectively, the problem is divided into two subproblems with one less free variable. 
+
+Although, the branch and bound algorithms are mostly developed and used for solving combinatorial problems, it is also possible to adapt then for general QCQP. Whenever the feasible set is compact, the branching can be done by subdividing the feasible region into the Cartesian product of triangles and rectangles (see [\ref{LinderothSimplicialBranchAndBound}, \ref{RaberSimplicialBranchAndBound}]). 
+
+
+\item Compute bounds. The lower bounds should be established for each branch. Usually this is done by solving the relaxed problem for each subproblem. 
+An upper bound is computed on the optimal value, this can be done by finding a feasible solution for chosen subproblem. It is often extracted from the solution of the relaxed problem using a projection or rounding procedure.
+
+\item Prune. Having both lower and upper bounds, conquer by pruning all the branches with lower bound greater then global upper bound. The optimal solution is surely not in these branches.
+
+\item Repeat. This process is repeated by branching the remaining subproblems, computing the new (better) lower bounds for these smaller problems, improving the upper bound and further pruning the problem tree.
 \end{itemize}
 
 One can use more or less clever techniques to decide when, how and which subproblems to branch or how and when to compute bounds.
+Using stronger relaxations for bounding steps results in increased computation time, but hopefully less iterations are needed since better bounds allow to cut branches earlier.  On the other hand weaker relaxations are computed faster so they let us do more iterations and explore much greater portion of the problem tree. The greater number of iterations increases chances for guessing the optimal solution as well as obtaining good lower bounds for problems that are small enough.
+
+
+
+
+\chapter{The survey of max-cut}
+This is the problem that made SDP relaxation famous. In this chapter we are going to explore
+
+
+
+\chapter{Computational comparison of the relaxations}
+
+A great comparison of various LP and SDP branch and bound algorithms for the minimum graph bisection problem was done in [\ref{ComparativeBNBStudyForGP}].
+
 
 %\newpage
 %\appendix
@@ -931,6 +1259,8 @@ TODO:
 \chapter*{References}
 \addcontentsline{toc}{chapter}{References}
 
+TODO: Unified refeference (same formats and orderings for source, year, pages, volume, journal names )
+
 \begin{enumerate}
 \renewcommand*\labelenumi{[\theenumi]}
 
@@ -989,8 +1319,47 @@ IEEE Transactions on Power Systems, 2014
 Springer Volume 7801 of the series Lecture Notes in Computer Science pp 169-180,
 \label{onValidIneqforQP}
 %
+\item M. X. Goemans, D. P. Williamson, \it Improved approximation algorithms for maximum cut and satisfiability problems using semidefinite programming \rm J. ACM, 42(6):1115-1145, 1995
+\label{GoemansWilliamsonMaxCut}
+%
+\item K. M. Anstreicher, \it Semidefinite Programming versus the Reformulation Linearization Technique for Nonconvex Quadratically Constrained Quadratic Programming \rm Optimization Online, May 2007\\
+\url{http://www.optimization-online.org/DB HTML/2007/05/1655.html}
+\label{AnstreicherSDPvsRLT}
+%
+\item A. Qualizza , P. Belotti, F. Margot, \it Linear Programming Relaxations of Quadratically Constrained Quadratic Programs \rm 
+IMA Volume Series 2010 \\
+\url{http://wpweb2.tepper.cmu.edu/fmargot/PDF/sdp.pdf}
+\label{MargotLPRelax}
+%
+\item H. D. Sherali, W. P. Adams, \it A reformulation-linearization technique for solving discrete and continuous nonconvex problems \rm
+ Kluwer, Dordrecht 1998
+ \label{SheraliAdamsRLT1}
+%
+\item H.D. Sherali, B.M.P. Fraticelli, \it Enhancing RLT relaxations via a new class of semidefinite
+cuts \rm J. Global Optim. 22 (2002), 233-261
+\label{SheraliEnhancingRLT}
+%
+\item X. Zheng, X. Sun, D. Li, \it Nonconvex quadratically constrained quadratic programming: best d.c. decompositions and their sdp representations \rm Journal of Global Optimization, 50:695-712, 2011
+\label{ZhengDCdecomp}
+%
+
+%%%%%%%%% branch and cut
+\item J. Linderoth, \it A simplicial branch-and-bound algorithm for solving quadratically constrained quadratic programs \rm 
+Mathematical Programming, 103, 251–282 (2005)
+\label{LinderothSimplicialBranchAndBound}
+%
+\item U. Raber, \it A Simplicial Branch-and-Bound Method for Solving Nonconvex All-Quadratic Programs \rm
+Journal of Global Optimization 13: 417–432, 1998
+\label{RaberSimplicialBranchAndBound}
+%
+\item M. Armbruster, M. Fügenschuh, Ch. Helmberg, A. Martin, \it LP and SDP branch-and-cut algorithms for the minimum graph bisection problem: a computational comparison \rm
+Math. Prog. Comp. (2012) 4:275–306
+\label{ComparativeBNBStudyForGP}
 
 
+%%%%%%%%% miscellaneous
+\item P.M. Pardalos, S.A. Vavasis, \it Quadratic programming with one negative eigenvalue is NP-hard \rm J. Global Optim. 1, 15–22, 1991
+\label{PardalosQPisNPHard}
 
 \end{enumerate}
 

@@ -28,4 +28,14 @@ for i = 1:m, %1:m
     [lb0,ub0; lb1, ub1]
     
 end
+
+%% TODO: 
+% 1) Skusit len branch rule tak, aby sme cim skor rozpolili graf na 
+% mensie casti a na nich riesit uz samostatne (pripadne znova rovnakou
+% metodou) 
+
+% 2) Vyskusat zmenit aktualny sposob tak, aby sme neseparovali pos a neg
+% ale nejakym sposobom delili graf na mensie (najlepsie priblizne rovnake)
+% casti - myslienka: zvacsit vsetky vahy a robit min_cut pre nahodny vrchol
+
     
