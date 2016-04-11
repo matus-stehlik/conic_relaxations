@@ -1,4 +1,4 @@
-\documentclass[10pt,oneside]{book}
+\documentclass[12pt]{book}
 \usepackage[utf 8]{inputenc}
 \usepackage[english]{babel}
 %\usepackage[IL2]{fontenc}
@@ -16,7 +16,15 @@
 
 \usepackage[toc,page]{appendix}
 
-
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ %	total={170mm,257mm},
+ left = 3cm,
+ top = 2.5cm,
+ right = 3cm,
+ bottom = 2.5cm
+ }
 
 \author{Matúš Stehlík}
 
@@ -42,9 +50,17 @@
 \section*{Notation}
 
 $\mathbb{R}$ - Set of real numbers \\
-$S^n$ - Set of symmetric $n\times n$ matrices \\
-$S^n_+$ - Set of symmetric positive semidefinite $n\times n$ matrices \\
-$S^n_{++}$ - Set of symmetric positive definite $n\times n$ matrices \\
+$\mathbb{R}_+$ - Set of non-negative real numbers \\
+$\mathbb{R}^n$ - Set of $n$-dimensional real vectors   \\
+$\mathbb{R}^n_{+}$ -  Set of $n$-dimensional real vectors with non-negative entries  \\
+
+$S^n$ - Unit sphere in $\mathbb{R}^n$ \\
+
+
+$\mathbb{S}^n$ - Set of symmetric $n\times n$ matrices \\
+$\mathbb{S}^n_+$ - Set of symmetric positive semidefinite $n\times n$ matrices \\
+$\mathbb{S}^n_{++}$ - Set of symmetric positive definite $n\times n$ matrices \\
+
 $M\succ 0$ - M is symmetric and positive definite \\
 $M\succeq 0$ - M is symmetric and positive semidefinite \\
 $C\bullet X$ - Matrix inner product $=Tr(C^TX)$\\
@@ -54,8 +70,8 @@ PSD - Positive Semidefinite \\
 QCQP - Quadratically Constrained Quadratic Program \\
 SDP - Semidefinite program \\
 SOCP - Second Order Cone Program \\
+LP - Linear Program
 
-WLOG - Without Loss Of Generality
 
 \chapter{Introduction}
 
@@ -94,7 +110,7 @@ One of the possible approaches is relaxing QCQP to obtain convex problems which 
 
 In this section we will introduce basic optimization classes mentioned above, in particular the  linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). We will state the problems in standard forms and their duals. The dual problems will be only mentioned here and will be derived in the next section. We will also show that LP is subclass of convex QCQP, convex QCQP is subclass of SOCP, and SOCP is subclass of SDP, i.e.
 \begin{equation}
-LP\subseteq \mbox{convex } QCQP \subseteq SOCP \subseteq SDP.
+LP\subset \mbox{convex } QCQP \subset SOCP \subset SDP \subset QCQP .
 \end{equation}
 
 
@@ -695,7 +711,7 @@ Furthermore, we will introduce some of the approaches for either loosening the S
 
 
 \section{SDP relaxation of QCQP}
-
+\label{SectionSDPRelax}
 
 Since Goemans and Williamson proposed a SDP relaxation of the max-cut problem [\ref{GoemansWilliamsonMaxCut}] that could yield a very good approximation
 algorithm, lots of work have been focused on solving the nonconvex QP problems using SDP relaxation methods. In this section we will derive the standard SDP relaxation of QCQP. 
@@ -1176,10 +1192,218 @@ Using stronger relaxations for bounding steps results in increased computation t
 
 
 
-\chapter{The survey of max-cut}
-This is the problem that made SDP relaxation famous. In this chapter we are going to explore
+\chapter{Motivation}
 
 
+ In this chapter we are going to explore one of the classical problems of combinatorial optimization - the maximum cut problem. First we will state the problem and show its famous SDP relaxation with 0.87856 approximation bound by Goemans and Williamson [\ref{GoemansWilliamsonMaxCut}].
+
+\section{The maximum cut problem}
+Let $G = (V, \mathcal{E} )$ be an undirected graph where $V = \{1, \dots , n\}$ and $\mathcal{E}$ are the sets of vertices
+and edges, respectively. We assume that a weight $w_{ij}$ is attached to each edge $[i, j] \in \mathcal{E}$.
+For a partition $(S, \bar{S})$ of $V$ , we define
+\begin{equation}
+w(S,\bar{S}) = \sum_{[i,j]\in\mathcal{E}, i\in S, j\in \bar{S}} w_{ij}.
+\end{equation}
+The maximum cut problem (or shortly max-cut) is to find a partition maximizing $w(S,\bar{S})$.
+
+\subsection{QCQP formulation of the max-cut}
+Let us assign zero weight to all the non edges $w_{ij} = 0$ for $[i,j]\notin \mathcal{E}$.
+For each $i \in V$, we put
+\begin{equation}
+x_i = \left\lbrace \begin{array}{rl}
+1 & \mbox{if } \ i \in S, \\
+-1 & \mbox{if } \ i \in \bar{S}.
+\end{array}\right.
+\end{equation}
+
+Because $\frac{1}{2}(1-x_ix_j ) = 1$ if $i$ and $j$ belong to different partitions and 0 otherwise, we see that
+problem is equivalent to 
+\begin{equation}
+\label{maxcut2}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{2}\sum_{i<j}w_{ij}(1-x_ix_j ), \\
+\mbox{subject to} &  x \in \{-1,1\}^n.
+\end{array}
+\end{equation}
+
+This can be easily rewritten in matrix form. Let $W$ be a $n\times n$ symmetric matrix of weights with entries $W_{ij} = w_{ij}$, and let
+\begin{equation}
+\label{LaplacianMatrix}
+L = diag(We) - W,
+\end{equation}
+ where $e$ is all ones vector and $diag(We)$ is the diagonal matrix with diagonal $We$.
+Then, using $x_i^2 = 1$ we have
+\begin{eqnarray}
+w(S,\bar{S}) & = & \frac{1}{2}\sum_{i<j}w_{ij}(1-x_ix_j )  \\
+			 & = & \frac{1}{4}\sum_{[i,j]\in V^2}w_{ij}(1-x_ix_j ) \\
+			 & = & \frac{1}{4}x^T(diag(We) - W)x  \\
+			 & = & \frac{1}{4}x^TLx.
+\end{eqnarray}
+%\begin{equation}
+%\begin{array}{lll}
+%w(S,\bar{S}) & = \frac{1}{2}\sum_{i<j}w_{ij}(1-x_ix_j )
+%			 & =  \frac{1}{4}\sum_{[i,j]\in V^2}w_{ij}(1-x_ix_j ) \\
+%			 & = \frac{1}{4}x^T(diag(We) - W)x 
+%			 & =  \frac{1}{4}x^TLx.
+%\end{array}
+%\end{equation}
+%\begin{equation}
+%w(S,\bar{S}) =  \frac{1}{4}x^T(diag(We) - W)x = \frac{1}{4}x^TLx.
+%\end{equation}
+Now, with $x_i \in \{0,1\}$ $\Leftrightarrow x_i^2 = x^Te_ie_i^Tx = 1$ constraint, we obtain a following problem
+\begin{equation}
+\label{maxcut3}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{4}x^TLx, \\
+\mbox{subject to} &  x^Te_ie_i^Tx = 1, \  (i = 1,\dots ,n).
+\end{array}
+\end{equation}
+Therefore max-cut is indeed an instance of QCQP.
+
+
+\subsection{The Goemans and Williamson analysis}
+
+In their famous article [\ref{GoemansWilliamsonMaxCut}] authors first relax the problem (\ref{maxcut2})
+by allowing $x_i$ to be represented by vector variables on the unit sphere $v_i\in S^n$ for $i\in V$. 
+And define objective function by replacing the $x_ix_j$ with scalar products $v_i^Tv_j$.
+In this way, the objective reduces to $ \frac{1}{2}\sum_{i<j}w_{ij}(1-x_ix_j )$ when all the $v_i$ are lying in 1-dimensional space.
+The resulting relaxation is 
+ 
+
+\begin{equation}
+\label{maxcutRelax1}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{2}\sum_{i<j}w_{ij}(1-v_i^Tv_j ), \\
+\mbox{subject to} &  v_i \in S^n \ (i = 1,\dots ,n).
+\end{array}
+\end{equation}
+We will show later that this relaxation can be solved using the semidefinite programming.
+
+They propose simple randomized algorithm, which we will refer to as GW-algorithm
+\begin{enumerate}
+\item Solve (\ref{maxcutRelax1}), obtaining an optimal set of vectors $v_i$.
+\item Generate $r$ uniformly distributed on the unit sphere $S^n$.
+\item Set $S = \{i\ | \ v_i^Tr \geq 0\}.$
+\end{enumerate}
+In other words in step 2, the random hyperplane through the origin is chosen. In step 3 we form a partitions based on the separation of the vectors $v_i$ by the hyperplane. The sets $S$ and $\bar{S}$ are formed by indices of vectors lying "above" and "bellow" the hyperplane, respectively.
+
+\prop 
+\label{maxcutProp}
+Let $\omega$ be the value of the cut produced by the above algorithm and $E[\omega]$ its expected value. Authors show that
+\begin{equation}
+\label{maxcutExp1}
+E[\omega] = 	\frac{1}{\pi}\sum_{i<j}w_{ij}\arccos(v_i^Tv_j ), 
+\end{equation}
+and 
+\begin{equation}
+\label{maxcutExp2}
+E[\omega]  \geq \alpha\frac{1}{2}\sum_{i<j}w_{ij}(1-v_i^Tv_j) \ \ \mbox{ for } \ \alpha = 0.87856.
+\end{equation}
+
+\begin{proof}
+First we will show (\ref{maxcutExp1}). 
+By definition and linearity of expected value in the first step, using symmetry in the second we have
+\begin{eqnarray}
+E[\omega] &=& \sum_{i<j} w_{ij} \ Pr\left[sgn(v_i^Tr) \neq sgn(v_j^Tr)\right]  \\
+		  &=& \sum_{i<j} w_{ij} \ 2Pr\left[v_i^Tr\geq 0 \ \wedge \ v_j^Tr < 0\right].
+		  \label{maxcutlemma1}
+\end{eqnarray}
+Fix the $i,j$ and let $\theta = \arccos(v_i^Tv_j)$ be the angle between $v_i$ and $v_j$.
+In the last expression, there is a probability that $v_i$ is above the hyperplane with normal vector $r$ and $v_j$ is bellow. 
+The set $\{r\ | \ v_i^Tr\geq 0 \ \wedge \ v_j^Tr < 0\}$ corresponds to the intersection of two half-spaces whose
+dihedral angle is precisely $\theta$ its intersection with the sphere is a spherical
+digon of angle $\theta$ and, by symmetry of the sphere, thus has measure equal to
+$\theta/2\pi$ times the measure of the full sphere. In other words, 
+\begin{equation}
+Pr\left[v_i^Tr\geq 0 \ \wedge \ v_j^Tr < 0\right] = \frac{\theta}{2\pi} = \frac{\arccos(v_i^Tv_j)}{2\pi}.
+\end{equation}
+ Plugging this identity into (\ref{maxcutlemma1}), the first part follows.
+ 
+ Secondly we will show (\ref{maxcutExp2}). It is enough to prove that  
+  \begin{equation}
+  \label{maxcutlemma2}
+\frac{1}{\pi}\arccos(v_i^Tv_j )  \geq \alpha\frac{1}{2}(1-v_i^Tv_j),
+ \end{equation}
+because multiplying by $w_{ij}$ and summing up these inequalities yelds  
+ \begin{equation}
+ E[\omega] = 	\frac{1}{\pi}\sum_{i<j}w_{ij}\arccos(v_i^Tv_j )  \geq \alpha\frac{1}{2}\sum_{i<j}w_{ij}(1-v_i^Tv_j),
+ \end{equation}
+ where the left hand side is equal to $E[\omega]$ from (\ref{maxcutExp1}).
+ 
+ Since $v_i,v_j\in S^n$ are unit vectors, the inner product is bounded by $v_i^Tv_j\in [-1,1]$. Thus, there exists $\theta\in[0,\pi]$ such that $v_i^Tv_j = \cos(\theta)$. Rearranging terms and substituting  $v_i^Tv_j = \cos(\theta)$ we can see that (\ref{maxcutlemma2}) reduces to 
+ \begin{equation}
+ 0.87856 = \alpha \leq \min_{\theta\in[0,\pi]} \frac{2}{\pi}\frac{\theta}{1-\cos(\theta)}.
+ \end{equation}
+ Which is just a simple exercise to prove.
+ 
+\end{proof}
+
+
+
+\rem Denote the objective values 
+\begin{eqnarray*}
+\omega_r &-& \mbox{value in the optimal solution of the relaxation (\ref{maxcutRelax1})} \\
+\omega^* &-& \mbox{value in the optimal solution of the maxcut problem (\ref{maxcut2})} \\
+\omega \  &-& \mbox{value in the feasible solution of (\ref{maxcut2}) obtained by the GW-algorithm} 
+\end{eqnarray*}
+Then the following inequality holds trivially, % by the definition of the optimal solution and its feasibility in relaxed problem,
+\begin{equation}
+\omega \leq \omega^*\leq \omega_.
+\end{equation}
+
+The proposition \ref{maxcutProp} further implies  
+\begin{equation}
+0.878 \ \omega_r < E[\omega] \leq \omega^*\leq \omega_r.
+\end{equation}
+Therefore, the bounds obtained by solving the relaxed problem are quite tight. What is more, the feasible solutions projected by GW-algorithm are also good in expectation. Generally, we need to solve the relaxation (\ref{maxcutRelax1}) only once and then repeat steps 2 and 3 of the algorithm couple of times. 
+Keeping only the best solution one will (probably) get the objective at least as good as the expected value.
+
+
+\subsection{Semidefinite relaxation of the max-cut}
+
+Now the last arising question is how do we solve the relaxed problem (\ref{maxcutRelax1})? 
+Let us remind the formulation of the relaxed problem
+\begin{equation}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{2}\sum_{i<j}w_{ij}(1-v_i^Tv_j ), \\
+\mbox{subject to} &  v_i \in S^n \ (i = 1,\dots ,n),
+\end{array}
+\end{equation}
+where $v_i\in S^n$ are the variables, the scalar weights $w_{ij}\in \mathbb{R}_+$ are given
+and the indices $i,j$ are in $\{1,\dots ,n\}$.
+
+Let $B := (v_1,\dots ,v_n)$ be the $n\times n$ matrix with vectors $v_i$ as columns. 
+It holds that matrix $X:= BB^T$ has elements $ X_{ij} = v_i^Tv_j $ for each $i,j\in (1,\dots,n)$, and $X$ is positive semidefinite.
+Since $v_i\in S^n$ are unit vectors, the diagonal entries of $X$ are ones, $X_{ii} = v_i^Tv_i = 1$.
+We can find such $X$ by solving following SDP and extract unit vectors $v_i$ from Choelsky decomposition $X = BB^T$.
+\begin{equation}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{4}L\bullet X, \\
+\mbox{subject to} & diag(X) = e \\
+&	X\succeq 0,
+\end{array}
+\end{equation} 
+where $X\in\mathbb{S}^n_+$ is variable, matrix $L$ is defined in (\ref{LaplacianMatrix}), $diag(X)$ is vector of diagonal entries of $X$, and $e$ is the $n$-dimensional vector of ones.
+
+\rem In fact, we would receive the same semidefinite relaxation by following the general scheme for QCQP described in Section \ref{SectionSDPRelax}.
+
+%Let us introduce new variable $X = xx^T$. The problem is then equivalent to 
+%\begin{equation}
+%\begin{array}{ll}
+%\mbox{maximize} & L\bullet X, \\
+%\mbox{subject to} & e_ie_i^T\bullet X = 1, \ (i = 1,\dots ,n), \\
+%				&	X\succeq 0, \ \ \mbox{rank }X = 1.
+%\end{array}
+%\end{equation}
+%However, each of the constraints $e_ie_i^T\bullet X = 1$ is equivalent to $X_{ii} = 1$, altogether giving $diag(X) = e$, here $diag(X)$ denotes the diagonal of the matrix $X$.
+%What is more, relaxing the nonconvex rank 1 constraint we obtain the SDP relaxation 
+%\begin{equation}
+%\begin{array}{ll}
+%\mbox{maximize} & L\bullet X, \\
+%\mbox{subject to} & diag(X) = e \\
+%&	X\succeq 0.
+%\end{array}
+%\end{equation} 
 
 \chapter{Computational comparison of the relaxations}
 
@@ -1209,8 +1433,8 @@ B^T & C
 The following conditions are equivalent:
 \begin{enumerate}
 \item $M\succeq 0$\ \ \ ($M$ is positive semidefinite).
-\item $A\succeq 0$, \ \ \ $(I-AA^\dagger)B = 0$,\ \ \ $C - B^TA^\dagger B \geq 0$.
-\item $A\succeq 0$, \ \ \ $\mathcal{R}(B)\subseteq \mathcal{R}(A)$,\ \ \ $C - B^TA^\dagger B \geq 0$.
+\item $A\succeq 0$, \ \ \ $(I-AA^\dagger)B = 0$,\ \ \ $C - B^TA^\dagger B \succeq 0$.
+\item $A\succeq 0$, \ \ \ $\mathcal{R}(B)\subseteq \mathcal{R}(A)$,\ \ \ $C - B^TA^\dagger B \succeq 0$.
 \end{enumerate}
 (The roles of $A$ and $C$ can be switched.)
 Where $A^\dagger$ denotes pseudoinverse of $A$ and $\mathcal{R}(B)$ denotes column range of $B$. \rm [\ref{GallierSchurCompl}, \ref{BoydCvxOpt}]
