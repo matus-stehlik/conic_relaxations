@@ -3,7 +3,7 @@ function xu = GW_ubound(Y, W, iter)
 n = size(Y,1) ;
 [U,p] = chol(Y);
 if p>0,
-    xu = bound.triv_ubound(Y(2:end,2:end));
+    xu = bound.triv_bound(Y(2:end,2:end));
     return;
 end
 
