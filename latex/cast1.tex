@@ -28,6 +28,7 @@
  }
  
  \usepackage[inline]{enumitem}
+ \usepackage[font=small,labelfont=bf]{caption}
 
 \author{Matúš Stehlík}
 
@@ -254,55 +255,11 @@ STEHLÍK, Matúš: {\it Conic relaxations}. Master thesis. Comenius University i
 \tableofcontents
 \listoffigures
 
-
-\newpage
-\section*{Notation}
-%TODO hlavicka Notation , to Contents
-
-$\mathbb{R}$ - Set of real numbers \\
-$\mathbb{R}_+$ - Set of non-negative real numbers \\
-$\mathbb{R}^n$ - Set of $n$-dimensional real vectors   \\
-$\mathbb{R}^n_{+}$ -  Set of $n$-dimensional real vectors with non-negative entries  \\
-
-$S^n$ - Unit sphere in $\mathbb{R}^n$ \\
-
-$\mathbb{Q}^n$ - Second order cone \\
-
-$\mathbb{S}^n$ - Set of symmetric $n\times n$ matrices \\
-$\mathbb{S}^n_+$ - Set of symmetric positive semidefinite $n\times n$ matrices (positive semidefinite cone) \\
-$\mathbb{S}^n_{++}$ - Set of symmetric positive definite $n\times n$ matrices \\
-
-$\mathbb{C}^n$ - Set of symmetric copositive $n\times n$ matrices (copositive cone) \\
-$\mathbb{P}^n$ - Set of symmetric completely positive $n\times n$ matrices (completely positive cone)\\
-$\mathbb{N}^n$ - Set of symmetric nonnegative $n\times n$ matrices (nonnegative cone) \\
-$\mathbb{S}^n_+ \cap \mathbb{N}^n$ - Doubly nonnegative cone (DNN)
-$\Gamma $ - Set of positive rank 1 matrices\\
-
-
-$M\succ 0$ - M is symmetric and positive definite \\
-$M\succeq 0$ - M is symmetric and positive semidefinite \\
-$M_1 \succeq M_2$ - $M_1 - M2\succeq 0$ \\
-$C\bullet X$ - Matrix inner product $=Tr(C^TX)$ \\
-
-$conv(K)$ - Convex hull of $K$ \\
-$svec(\cdot)$ - An operator transforming a symmetric $n\times n$ matrix into a vector vector of its entries in $\mathbb{R}^{n(n+1)/2}$.
-
-
-PSD - Positive Semidefinite \\
-
-QCQP - Quadratically Constrained Quadratic Program \\
-LP - Linear Program \\
-SOCP - Second Order Cone Program \\
-SDP - Semidefinite program \\
-CP - Copositive program \\
-CPP - Completely positive program \\
-
-
-
-
 \mainmatter
 
 \chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+\markboth{INTRODUCTION}{}
 %TODO hlavicka Introduction, to contents
 
 %%% problem statement
@@ -368,7 +325,7 @@ by Balas, Ceria, Cornuéjols [\ref{BalasLiftandProjectCuttingPlane}], Lovász, S
 
 
 
-%%%%% CP and CCP and DNN %TODO
+%%%%% CP and CCP and DNN 
 In 	2009, completely positive programming (CPP) relaxation for a class of binary quadratic problems was proposed
 by Burer [\ref{BurerCPPreprOfBinLCQP}]. 
 The class was extended to a more general class of QOPs by Eichfelder and
@@ -376,9 +333,63 @@ Povh [\ref{EichfelderPovhSetSDPreprOfQCQP}] and by Arima, Kim and Kojima [\ref{A
 their papers [\ref{ArimaKimKojimaQCQPforCPP}, \ref{BurerCPPreprOfBinLCQP}, \ref{EichfelderPovhSetSDPreprOfQCQP}] showing that the exact optimal values of QOPs in their classes coincide
 with the optimal values of their CPP relaxation problems.
 
+Despite the CCP programs are convex, they are computationally intractable. On the other hand equivalent CPP formulations offer new insights which can lead to improvements of relaxation methods. 
+
+A natural way of relaxing CPP is by doubly nonnegative program (DNN).
+However, solving a DNN relaxation using a standard SDP solver is computationally costly compared to SDP relaxation due to the high number of linear (nonnegative) constraints. In [\ref{KimKojimaLagrangianDNNRelaxation1}] authors Kim, Kojima and Toh developed a technique to obtain Lagrangian DNN relaxation primal-dual pair, with single variable in the dual. Furthermore, they proposed a fast algorithm for solving their relaxation based on combination of bisection method and first order methods. Recently (February 2016), Arima, Kim, Kojima and Toh [\ref{ArimaKimKojimaRobustLagrangianDNN}] designed an improvement of the algorithm which achieves better robustness and acceleration. %Their approach has been shown to provide tight bounds for combinatorial problems as binary QPs, multiple knapsack problems, maximal stable set problems and the quadratic assignment problems.
+
+%% in this thesis
+In this thesis we are going to...
 
 
 
+
+
+
+\newpage
+\section*{Notation}
+%TODO hlavicka Notation , to Contents
+\addcontentsline{toc}{section}{Notation}
+\markboth{INTRODUCTION}{NOTATION}
+
+$\mathbb{R}$ - Set of real numbers \\
+$\mathbb{R}_+$ - Set of non-negative real numbers \\
+$\mathbb{R}^n$ - Set of $n$-dimensional real vectors   \\
+$\mathbb{R}^n_{+}$ -  Set of $n$-dimensional real vectors with non-negative entries  \\
+
+$S^n$ - Unit sphere in $\mathbb{R}^n$ \\
+
+$\mathbb{Q}^n$ - Second order cone \\
+
+$\mathbb{S}^n$ - Set of symmetric $n\times n$ matrices \\
+$\mathbb{S}^n_+$ - Set of symmetric positive semidefinite $n\times n$ matrices (positive semidefinite cone) \\
+$\mathbb{S}^n_{++}$ - Set of symmetric positive definite $n\times n$ matrices \\
+
+$\mathbb{C}^n$ - Set of symmetric copositive $n\times n$ matrices (copositive cone) \\
+$\mathbb{P}^n$ - Set of symmetric completely positive $n\times n$ matrices (completely positive cone)\\
+$\mathbb{N}^n$ - Set of symmetric nonnegative $n\times n$ matrices (nonnegative cone) \\
+$\mathbb{S}^n_+ \cap \mathbb{N}^n$ - Doubly nonnegative cone (DNN)
+$\Gamma $ - Set of positive rank 1 matrices\\
+
+
+$M\succ 0$ - M is symmetric and positive definite \\
+$M\succeq 0$ - M is symmetric and positive semidefinite \\
+$M_1 \succeq M_2$ - $M_1 - M2\succeq 0$ \\
+$C\bullet X$ - Matrix inner product $=Tr(C^TX)$ \\
+
+$conv(K)$ - Convex hull of $K$ \\
+$svec(\cdot)$ - An operator transforming a symmetric $n\times n$ matrix into a vector vector of its entries in $\mathbb{R}^{n(n+1)/2}$.
+
+
+PSD - Positive Semidefinite \\
+
+QCQP - Quadratically Constrained Quadratic Program \\
+CQP - Convex Quadratic Program (a convex QCQP)
+LP - Linear Program \\
+SOCP - Second Order Cone Program \\
+SDP - Semidefinite program \\
+CP - Copositive program \\
+CPP - Completely positive program \\
 
 
 
@@ -390,8 +401,10 @@ with the optimal values of their CPP relaxation problems.
 
 In this section we will introduce basic optimization classes mentioned above, in particular the  linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). We will state the problems in standard forms and their duals. The dual problems will be only mentioned here and will be derived in the next section. We will also show that LP is subclass of convex QCQP, convex QCQP is subclass of SOCP, and SOCP is subclass of SDP, i.e.
 \begin{equation}
-LP\subset \mbox{convex } QCQP \subset SOCP \subset SDP \subset QCQP .
+LP\subset CQP \subset SOCP \subset SDP \subset QCQP .
 \end{equation}
+
+As a sources for this chapter we refer to [\ref{BoydCvxOpt},\ref{IntroToCvxOptBerkley}] as general sources and specifically to SOCP [\ref{KimKojimaSOCPofNoncvxQOP}, \ref{GoldfarbSOCP}, \ref{PokornaSOCPDipl}], SDP [\ref{HandbookSDP}, \ref{KimKojimaSOCPofNoncvxQOP}], CP and CPP [\ref{ArimaKimKojimaQCQPforCPP}, \ref{BurerCPPreprOfBinLCQP}, \ref{DurCopositiveSurvey}].
 
 
 
@@ -515,9 +528,9 @@ In order to keep things simple, we will sometimes consider only the standard for
 \label{SectionRelBtwSOCPandQCQP}
 
 Second Order Cone Programming includes convex LP as special case.
-We will show that SOCP in fact includes convex QP as a subclass. We will demonstrate procedure proposed in [\ref{KimKojimaSOCPofNoncvxQOP}] used to reformulate convex QP as SOCP.
+We will show that SOCP in fact includes CQP as a subclass. We will demonstrate procedure proposed in [\ref{KimKojimaSOCPofNoncvxQOP}] used to reformulate CQP as SOCP.
 
-Let us have convex QCQP. In other words, suppose that $n\times n$ matrices $A_k$, $k=0,\dots ,m$ are positive semidefinite. 
+Let us have a CQP. In other words, suppose that $n\times n$ matrices $P_k$, $k=0,\dots ,m$ are positive semidefinite. 
 \begin{equation}
 \begin{array}{ll}
 \mbox{minimize}& x^TP_0x + q_0^Tx + r_0, \\
@@ -627,7 +640,7 @@ where
 	\delta_{ij}= \left\lbrace 
 	\begin{array}{ll} 
 		1, &\mbox{ if }\ i=j, \\ 
-		\sqrt{2}/2, &\mbox{ otherwise.} 
+		\sqrt{2}, &\mbox{ otherwise.} 
 	\end{array} \right.
 \end{equation}
 
@@ -723,11 +736,12 @@ corresponding to the constraints $x^i\in \mathbb{Q}^{n_i}$.
 \section{Copositive and completely positive programming}
 
 
-The copositive programming (CP) and completely positive programming (CPP) are convex conic classes which are important mainly for theoretical interests since CCP and CP problems are numerically intractable. 
+The copositive programming (CP) and completely positive programming (CPP) are convex conic classes which are %important mainly for theoretical interests since CCP and CP problems are 
+numerically intractable. 
 In fact, it is known that determining whether a matrix is copositive is co-NP-complete 	[\ref{MurtyNPcompleteQP}]. 
 %Intuitively, checking that matrix is completely positive should have the same computational complexity. It seems, however, that a formal proof of this statement has not yet been given [\ref{DurCopositiveSurvey}].
 
-Even so, these optimization seem to play an important role in current research. Recently, multiple classes of QCQP have been equivalently reformulated as convex completely positive or copositive programs [\ref{ArimaKimKojimaQCQPforCPP}, \ref{BurerCPPreprOfBinLCQP}, \ref{EichfelderPovhSetSDPreprOfQCQP}]. While the restating of a problem as an optimization problem over one of these cones does not resolve
+However, these optimization classes seem to play an important role in current research. Recently, multiple classes of QCQP have been equivalently reformulated as convex completely positive or copositive programs [\ref{ArimaKimKojimaQCQPforCPP}, \ref{BurerCPPreprOfBinLCQP}, \ref{EichfelderPovhSetSDPreprOfQCQP}]. While the restating of a problem as an optimization problem over one of these cones does not resolve
 the difficulty of that problem, however, studying properties of $\mathbb{C}^n$ and $\mathbb{P}^n$ and
 using the conic formulations of quadratic and combinatorial problems does
 provide new insights and also computational improvements. (see the survey of Copositive programming [\ref{DurCopositiveSurvey}])
@@ -795,11 +809,7 @@ and say a matrix $M\in \mathbb{N}^n$ is nonnegative. Especially, when $M \in \ma
 
 
 
-A following proposition states the relations between positive semidefinite, copositive and completely positive matrices.
 
-\prop It holds that 
-\label{ConesInclusionsProp}
-$$\Gamma \ \subset \ \mathbb{P}^n \ \subset \ \mathbb{S}^n \cap \mathbb{N}^n \ \subset \ \mathbb{S}^n \ \subset \ \mathbb{S}^n + \mathbb{N}^n \ \subset \ \mathbb{C}^n. $$ \rm
 
 
 \lema
@@ -813,9 +823,21 @@ Therefore $M$ is positive semidefinite and since this is true for any $M\in \mat
 A positive semidefinite matrix $M\in\mathbb{S}^n_+$ suffices $x^TMx\geq 0$ for all $x\in \mathbb{R}^n$, therefore also 
 for all $x\in \mathbb{R}^n_+$. Hence $ \mathbb{S}^n_+ \subset \mathbb{C}^n. $
 \end{proof}
+
+A following proposition states the relations between positive semidefinite, copositive and completely positive matrices.
+
+\prop It holds that 
+\label{ConesInclusionsProp}
+$$\Gamma \ \subset \ \mathbb{P}^n \ \subset \ \mathbb{S}^n_+ \cap \mathbb{N}^n \ \subset \ \mathbb{S}^n_+ \ \subset \ \mathbb{S}^n_+ + \mathbb{N}^n \ \subset \ \mathbb{C}^n. $$ \rm
+
+\rem For $n\leq 4$ it hods that $\mathbb{P}^n = \mathbb{S}^n_+ \cap \mathbb{N}^n$ and $\mathbb{S}^n_+ + \mathbb{N}^n = \mathbb{C}^n.$
+
 \begin{proof}[Proof of Proposition \ref{ConesInclusionsProp}]
 We will proceed through inclusions from left to right. The first inclusion $\Gamma\subset \mathbb{P}^n$ is trivial. It is also easy to see that all matrices in $\mathbb{P}^n$ are nonnegative, therefore $\mathbb{P}^n \subset \mathbb{N}^n$. Together with $\mathbb{P}^n \subset \mathbb{S}_+^n$ from th lemma we have $\mathbb{P}^n \subset \mathbb{S}^n \cap \mathbb{N}^n$. The assertions $\mathbb{S}^n \cap \mathbb{N}^n \subset \mathbb{S}^n \subset \mathbb{S}^n + \mathbb{N}^n$ are trivial. Now we only need to prove that $\mathbb{S}^n + \mathbb{N}^n\subset \mathbb{C}^n. $ But this is an easy exercise since $\mathbb{C}^n$ contains both $\mathbb{S}^n$ and $\mathbb{N}^n$ (former by lemma, latter trivially), and $\mathbb{C}^n$ is convex (see Example \ref{ExClosedConvexCones} in the Appendix).
 \end{proof}
+
+
+
 
 \subsubsection{Relation to SDP}
 To establish that SDP is a subclass of copositive programming we only need to reformulate the semidefinite constraint $X\succeq 0$ in terms of linear and copositive cone constraints.
@@ -880,6 +902,7 @@ Also, it holds that $\sum \alpha_i = 1$, since
 \end{equation*}
 Therefore $X = \sum_{i=1}^l  \alpha_i y^i(y^i)^T$ is a convex combination of vectors from $\Gamma_1$, hence $X\in conv(\Gamma_1)$.
 
+We have shown that $\{X\in \mathbb{P}^n\ \vert \ ee^T\bullet X = 1\} \subseteq conv(\Gamma)$. Since the other inclusion is obvious, the proof is complete.
 
 \end{proof}
 
@@ -887,7 +910,7 @@ Therefore $X = \sum_{i=1}^l  \alpha_i y^i(y^i)^T$ is a convex combination of vec
 %TODO CCP reformulation of SDP dual?
 
 
-\section{Conic programming}
+\section{General conic programming approach}
 
 All of the previous mentioned classes are quite similar. 
 With respect to their variable space, all of them have linear objective, linear constraints and cone constraint.
@@ -919,11 +942,14 @@ Primal & Dual \\
 \end{array}
 \tag{Conic Program}
 \end{equation}
-where $x\in \mathbb{R}^n$ , $y\in \mathbb{R}^m$ and $s\in \mathbb{R}^n$ are the variables; and $m\times n$ real matrix $A$, vectors $c\in \mathbb{R}^n$, $b\in \mathbb{R}^{m},$ $c\in \mathbb{R}^n$, and the proper cone $\mathcal{K}$ are given problem data. The 
+where $x\in \mathbb{R}^n$ , $y\in \mathbb{R}^m$ and $s\in \mathbb{R}^n$ are the variables; and $m\times n$ real matrix $A$, vectors $c\in \mathbb{R}^n$, $b\in \mathbb{R}^{m},$ $c\in \mathbb{R}^n$, and the proper cone $\mathcal{K}$ are given problem data. 
+
+\rem
+We say $\mathcal{K}$ is a proper cone if it is a cone and is closed, convex, pointed and has nonempty interior (see the Definition \ref{defProperCone} and the Example \ref{ExProperCones} in the Appendix). The 
 \begin{equation}
 {K}^* = \{z\ |\ \forall x\in\mathcal{K}, \ x^Tz\geq 0\},
 \end{equation} 
-denotes the dual cone of $\mathcal{K}$ (see The Section about Cones in Appendix \ref{Cones}).
+denotes the dual cone of $\mathcal{K}$ (see the Example \ref{ExDualCones} in the Appendix).
 
 Conic programming contains, but is not limited to, any problems combined from LP, SOCP and SDP programs. 
 For example 
@@ -934,12 +960,12 @@ For example
 & x=(x^1,\dots ,x^k) \in \mathcal{K} = (\mathcal{K}^1,\dots ,\mathcal{K}^k),
 \end{array} 
 \end{equation}
-where the variable $x=(x^1, \dots, x^k)^T$ is the Cartesian product of the variables $x^i$, constrained by various LP, SOCP or SDP constraints 
+where the variable $x=(x^1, \dots, x^k)^T$ is the Cartesian product of the variables $x^i$, constrained by various proper cone constraints, i.e. LP, SOCP or SDP constraints 
 $A^ix^i=b$, $x_i\in \mathcal{K}^i$, where each $\mathcal{K}^i$ is either nonegative orthant, second order cone or semidefinite cone.
 
 
-This is due to the fact, that all cones we have talked about so far are proper cones (i.e. nonegative orthant $\mathbb{R}^n_+$, second order cone $\mathbb{Q}^n$ and semidefinite cone $\mathbb{S}^n_+$ as a subset of $ \mathbb{R}^{n(n+1)/2}$ ). 
-For proper cones it holds that their Cartesian product is again proper cone (see Proposition \ref{ConesCartesianProduct} and Example \ref{ExProperCones} in the Appendix).  
+This is due to the fact, that all cones we have talked about so far are proper cones: nonegative orthant $\mathbb{R}^n_+$, second order cone $\mathbb{Q}^n$ and semidefinite cone $\mathbb{S}^n_+$ as a subset of $ \mathbb{R}^{n(n+1)/2}$, copositive cone $\mathbb{C}^n$ or completely positive cone $\mathbb{P}^n$ (see Example \ref{ExProperCones} in the Appendix). 
+For proper cones it holds that their Cartesian product is again proper cone [\ref{GoldfarbSOCP}, \ref{PokornaSOCPDipl}].  
 
 \section{Dual problems}
 
@@ -1133,7 +1159,7 @@ Thus we obtain the following SDP as second dual of QCQP
 
 \chapter{Relaxations}
 \label{ChapterRelaxations}
-It was mentioned in the beginning that our strategy is to relax the nonconvex QCQPs (\ref{qcqp}) to easier problem. Let us first explore what is a relaxation and how can it be useful. 
+It was mentioned in the beginning that our strategy is to relax the nonconvex QCQPs (\ref{qcqp}) with computationally tractable problem. Let us first explore what is a relaxation and how can it be useful. 
 
 Relaxation is usually freely understood as an optimization problem which is obtained by relaxing (loosening) some constraints or even by approximating objective function with a different one. The goal is to obtain a problem which is easier to solve, but still carries some kind of information about the original one. For example, solving the relaxation may give an approximation of the original problem solution.
 
@@ -1342,26 +1368,18 @@ $$
 
 These relaxations are expected to provide weaker bounds in less time compared to SDP relaxations. In fact, SOCP relaxations are often constructed as further relaxations of SDP relaxations. So, in certain sense, one can see that SOCP relaxations are never tighter than their SDP counterparts. [\ref{BurerKimKojimaFasterWeakerRelax}]
 
-Using the procedure from section \ref{SectionSOCP}, any convex instance of QCQP can be formulated as SOCP. Therefore we can consider any convex quadratic relaxation as SOCP relaxation. 
-Specifically, a convex QCQP relaxation may be represented as 
-\begin{equation}
-\label{CvxQCQP} 
-\begin{array}{ll}
-\mbox{minimize}& x^TB_0x + b_0^Tx + \beta_0\\
-\mbox{subject to}& x^TB_kx + b_k^Tx + \beta_i \leq 0, \  (k = 1,\dots ,l)
-\end{array} 
-\end{equation}
-where all $B_k\succeq 0$ for $k=0,\dots ,l$. We say that (\ref{CvxQCQP}) is SOCP relaxation of QCQP (\ref{qcqp}) if any $x$ feasible in (\ref{qcqp}) is also feasible in (\ref{CvxQCQP}) and $x^TB_0x+b_0^Tx + \beta_0 \leq x^TP_0x+q_0^Tx+r_0$ holds.
+Using the procedure from section \ref{SectionSOCP}, any CQP (an convex instance of QCQP) can be formulated as SOCP. Therefore we can consider any convex quadratic relaxation as SOCP relaxation. In fact, a CQP problems are usually solved using conic primal-dual algorithms for SOCP.
 
-A possible approach to forming such a SOCP (or convex QP) relaxation is by further relaxing the SDP relaxation 
-\begin{equation}
-\label{SDPRelaxSOCPsection}
-\begin{array}{ll}
-\mbox{minimize}& P_0\bullet X + q_0^Tx + r_0,\\
-\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
-& X\succeq xx^T.
-\end{array} 
-\end{equation}
+
+A possible approach to forming such a SOCP (or convex QP) relaxation is by further relaxing the SDP relaxation (\ref{SDPrelax2}).
+%\begin{equation}
+%\label{SDPRelaxSOCPsection}
+%\begin{array}{ll}
+%\mbox{minimize}& P_0\bullet X + q_0^Tx + r_0,\\
+%\mbox{subject to}& P_k\bullet X+ q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m)\\
+%& X\succeq xx^T.
+%\end{array} 
+%\end{equation}
 
 The reason why this is even considered is that solving SDP is computationally costly operation and even if it offers better bounds it may not be the best option. For example in the branch and bound procedure one needs to solve a large sequence of relaxations in order to obtain the optimal solution (see the Section \ref{SectionBranchAndBound} about branch and bound).
 
@@ -1369,8 +1387,11 @@ In this section we will introduce strategies for further loosening of the SDP re
 
 \subsection{SOCP relaxation of semidefinite constraint}
 
-Semidefinite constraint $X-xx^T\succeq 0$  in (\ref{SDPRelaxSOCPsection}) is equivalent to $C\bullet(X-xx^T)\geq 0$ for all $C\in S^n_+$. Using this fact, authors of  [\ref{KimKojimaSOCPofNoncvxQOP}] propose SOCP relaxation of the semidefinite constraint $X-xx^T\succeq 0$ by replacing it with multiple constraints of the form 
-$$x^TC_ix-C_i\bullet X \leq 0 \ \ \ (i=1,\dots ,t).$$ 
+Semidefinite constraint $X-xx^T\succeq 0$  in (\ref{SDPrelax2}) is equivalent to $C\bullet(X-xx^T)\geq 0$ for all $C\in S^n_+$. Using this fact, authors of  [\ref{KimKojimaSOCPofNoncvxQOP}] propose SOCP relaxation of the semidefinite constraint $X-xx^T\succeq 0$ by replacing it with multiple constraints of the form 
+\begin{equation}
+\label{SOCPrelaxedSemidefiniteConstraint}
+x^TC_ix-C_i\bullet X \leq 0 \ \ \ (i=1,\dots ,t).
+\end{equation}
 Since $C_i\succeq 0$, these are convex quadratic constraints and using the procedure described earlier (in the Section \ref{SectionRelBtwSOCPandQCQP}) one can formulate them equivalently as a second order cone constraints of the form
 \begin{equation}
 \label{SOCPRelaxOfPSDconstraint}
@@ -1392,17 +1413,13 @@ where $L_i$ is obtained from the Choelsky decomposition of $C_i = L_iL_i^T.$
 \label{SOCPeigenVals}
 \lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_l \geq 0 > \lambda_{l+1} \geq \dots \geq \lambda_n,
 \end{equation}
-be the eigenvalues of the matrix $P$ and let $u_1,\dots, u_n$ be the corresponding eigenvectors, such that 
-\begin{equation}
-\label{SOCPeigenVects}
-\Vert u_i \Vert_2 = 1 \ (i = 1,\dots , n) \ \ \mbox{ and } \ \ u_i^Tu_j = 0 \ (i\neq j).
-\end{equation}
-Then $P = \sum_{j = 1}^{h}\lambda_j u_ju_j^T,$  and any matrix of the either form 
-\begin{eqnarray}
-C^+  &=  &  \sum_{j \in J} \lambda_j  u_ju_j^T \ \ \mbox{ for } J \subseteq \{ 1,\dots , l\}, \\
-C^-  &=  - & \sum_{j \in J} \lambda_j u_ju_j^T \ \ \mbox{ for } J \subseteq \{ l+1,\dots , n\},
-\end{eqnarray}
-is positive semidefinite and can be used in $x^TCx-C\bullet X \leq 0$ constraint.
+be the eigenvalues of the matrix $P$ and let $u_1,\dots, u_n$ be the corresponding orthonormal eigenvectors.
+Then spectral decomposition $P = \sum_{j = 1}^{h}\lambda_j u_ju_j^T$ implies that $C = C^+ - C^-$, where matrices
+\begin{eqnarray*}
+C^+  &=  &  \sum_{j \in J} \lambda_j  u_ju_j^T \ \ \mbox{ for } J = \{ 1,\dots , l\}, \\
+C^-  &=  - & \sum_{j \in J} \lambda_j u_ju_j^T \ \ \mbox{ for } J = \{ l+1,\dots , n\},
+\end{eqnarray*}
+are positive semidefinite. The matrices $C^+$ and $C^-$ can be used in (\ref{SOCPRelaxOfPSDconstraint}) rewriting $x^TCx-C\bullet X \leq 0$ constraint. We will use this idea later.
 
 
 
@@ -1426,7 +1443,7 @@ x^Tu_iu_i^Tx - u_iu_i^T\bullet X \leq 0 \ (i = 1,\dots ,l),
 
 \subsection{SOCP in the original variable}
 
-The SOCP relaxation introduced above has avoided the semidefinite constraint but still includes a matrix variable $X$ from the SDP which increases size of the problem dramatically (from $n$ to $n+ n(n+1)/2$). In [\ref{KimKojimaSOCPofNoncvxQOP}] authors also introduce a general relaxation scheme to obtain SOCP relaxation of QCQP (\ref{qcqp}) in the original variable space $x\in \mathbb{R}^n$. First they assume that objective function is linear (otherwise we can add new variable $t\geq x^TP_0x + q_0^T + r_0$ and then minimize $t$). Then each $P_k$ is written as 
+The SOCP relaxation introduced above has avoided the semidefinite constraint but still includes a matrix variable $X$ from the SDP which increases size of the problem dramatically (from $n$ to $n+ n(n+1)/2$). In [\ref{KimKojimaSOCPofNoncvxQOP}] authors also introduce a general relaxation scheme to obtain SOCP relaxation of nonconvex QCQP (\ref{qcqp}) in the original variable space $x\in \mathbb{R}^n$. First they assume that objective function is linear (otherwise we can add new variable $t\geq x^TP_0x + q_0^T + r_0$ and then minimize $t$). Then each $P_k$ is written as 
 $$P_k=P_k^+ -P_k^-, \ \ \mbox{where } \ P_k^+, P_k^- \succeq 0, \ \ k=1,\dots ,m.$$ 
 So that each constraint can be expressed as 
 \begin{equation}
@@ -1455,7 +1472,7 @@ quadratic inequality constraint together with constraints of the form $x^TCx-C\b
 \label{SOCPsingleQconst}
 x^TPx + q^Tx + r\leq 0.
 \end{equation}
-Let the eigenvalues $\lambda_i$ and eigenvectors $u_i$ of $P$ for $(i = 1,\dots ,n)$ be as above, see (\ref{SOCPeigenVals}) and (\ref{SOCPeigenVects}). And let $ P = P^+ - P^-$ with 
+Let the eigenvalues $\lambda_i$ and eigenvectors $u_i$ of $P$ for $(i = 1,\dots ,n)$ be as above, see (\ref{SOCPeigenVals}). And let $ P = P^+ - P^-$ with 
 \begin{equation}
 P^+ = \sum_{j = 1}^{l}\lambda_j u_ju_j^T\succeq 0 \ \ , \ \ P^-  = -\sum_{j = l+1}^{n}\lambda_j u_ju_j^T\succeq 0,
 \end{equation}
@@ -1505,7 +1522,7 @@ x^TP^+x - P^+\bullet X \leq 0, \\
 x^Tu_ju_j^Tx - u_ju_j^T\bullet X \leq 0, \ (j = l+1,\dots ,n).
 \end{array}
 \end{equation}
-Suppose $(x,X) \in \mathbb{R}^n\times \mathbb{S}^n$ satisfy this relaxation, then $x$ and $z_j = u_j^TXu_j$ for $j = l+1,\dots ,n$ satisfy (\ref{SOCPrelax3}). So we may see (\ref{SOCPrelax3}) as further relaxation of (\ref{SOCPrelax4}).
+Suppose $(x,X) \in \mathbb{R}^n\times \mathbb{S}^n$ satisfies this relaxation, then $x$ and $z_j = u_j^TXu_j$ for $j = l+1,\dots ,n$ satisfy (\ref{SOCPrelax3}). So we may see (\ref{SOCPrelax3}) as further relaxation of (\ref{SOCPrelax4}).
 Therefore it will provide weaker bounds, however it will take less time to solve because of the smaller variable space.  
 For further details about this approach see  [\ref{KimKojimaSOCPRelaxOfPSDconstr}, \ref{KimKojimaSOCPofNoncvxQOP}].
 
@@ -1514,10 +1531,9 @@ For further details about this approach see  [\ref{KimKojimaSOCPRelaxOfPSDconstr
 \section{Mixed SOCP-SDP relaxation}
 \label{SectionMixedSocpSDP}
 
-In [\ref{BurerKimKojimaFasterWeakerRelax}] authors Burer, Kim and Kojima have introduced compromise, relaxation of the QCQP (\ref{qcqp}) somewhere between SDP and SOCP. We will describe their approach with the special case they provide as introduction.
+In [\ref{BurerKimKojimaFasterWeakerRelax}] authors Burer, Kim and Kojima have introduceda SOCP-SDP compromise, relaxation of the QCQP (\ref{qcqp}) somewhere between SDP and SOCP. We will describe their approach with the special case they provide as introduction.
 We are dealing with QCQP (\ref{qcqp})
 \begin{equation}
-\label{mixedSOCPSDP_begining qcqp}
 \begin{array}{ll}
 \mbox{minimize}& x^TP_0x + q_0^Tx + r_0 \\
 \mbox{subject to}& x^TP_kx + q_k^Tx + r_k \leq 0, \  (k = 1,\dots ,m).
@@ -1542,7 +1558,7 @@ which has following SOCP-SDP relaxation
 \end{array} 
 \end{equation}
 Notice that other than $X\succeq xx^T$, the only variables in $X$ to appear in the program are diagonal elements $X_{jj}$.
-Also when $\lambda_k>0$, one can see that with fixed $x$ the diagonal entries of $X$ can be made arbitrarily large to satisfy all constraints. As well when $\lambda_0>0$, an arbitrary large diagonal entry of $X$ will push the objective to $-\infty .$ Therefore, in general, $X_{jj}$ should be bounded to form a sensible relaxation. In the paper [\ref{BurerKimKojimaFasterWeakerRelax}] they suppose that $x_j\in [0,1]$ and use $X_{jj}\leq x_j$ to establish boundedness. 
+Also when $\lambda_k>0$, one can see that with fixed $x$ the diagonal entries of $X$ can be made arbitrarily large to satisfy all constraints. Moreover, when $\lambda_0>0$, an arbitrary large diagonal entry of $X$ will push the objective to $-\infty .$ Therefore, in general, $X_{jj}$ should be bounded to form a sensible relaxation. In the paper [\ref{BurerKimKojimaFasterWeakerRelax}] they suppose that $x_j\in [0,1]$ and use $X_{jj}\leq x_j$ to establish boundedness. 
 
 \rem In general, if the feasible region is bounded, then there can be introduced box constraints $l_j\leq x_j \leq u_j$ and $X_{jj}$ can be bounded for example by multiplying these two inequalities 
 \begin{equation}
@@ -1555,7 +1571,7 @@ x_ju_j + x_jl_j - l_ju_j \geq X_{jj},
 where $x_jx_j$ was replaced by $X_{jj}$. This is valid since equality $X = xx^T$ holds for every solution of the original problem. 
 \medskip
 
-Following proposition from [\ref{GronePSDcompletions}] gives equivalent formulation of $X\succeq xx^T$ constraint, only in terms of $x$ and diagonal entries of $X$.
+The following proposition from [\ref{GronePSDcompletions}] gives an equivalent formulation of $X\succeq xx^T$ constraint, only in terms of $x$ and diagonal entries of $X$.
 
 \prop[{[\ref{GronePSDcompletions}]}]
 \label{PropGronePSDcompletion} Given a vector $x$ and scalars $X_{11},\dots ,X_{nn}$, there exists
@@ -1624,6 +1640,8 @@ It is clear that $(P_k + D_k)\succeq 0$ for each of these choices, for first one
 $$P_k+D_k =  -\lambda_{min}(\bar{P_k}(\mathcal{C}))I - \bar{P}_k(\mathcal{C})\succeq 0.$$
 
 Authors in [\ref{BurerKimKojimaFasterWeakerRelax}] introduce an algorithm which improves this choice of $D_k$.
+
+
 
 \section{LP relaxation of QCQP}
 \label{SectionLPRelaxationsOfQCQP}
@@ -1741,7 +1759,7 @@ However, it is possible to relax it with the finite number of these linear inequ
 \end{equation}
 for some finite set of vectors $V$.
 
-The usual approach is declaring such PSD cuts with regard to a feasible solution $\bar{Y}$ of the relaxation (\ref{PSDcutsLPrelax}) (for example $\bar{Y}$ may be the optimal solution of (\ref{PSDcutsLPrelax})). If $\bar{Y}$ is not positive semidefinite, then such vectors $v$ can be added to $V$, that will cut off $\bar{Y}$ from the feasible set by adding the inequalities $v^TYv\geq 0$ - that is why it is called PSD cut. 
+The usual approach is declaring such PSD cuts with respect to a feasible solution $\bar{Y}$ of the relaxation (\ref{PSDcutsLPrelax}) (for example $\bar{Y}$ may be the optimal solution of (\ref{PSDcutsLPrelax})). If $\bar{Y}$ is not positive semidefinite, then such vectors $v$ can be added to $V$, that will cut off $\bar{Y}$ from the feasible set by adding the inequalities $v^TYv\geq 0$ - that is why it is called PSD cut. 
 
 Hopefully, we would like to restrict the feasible set this way to tighten the gap between the optimal value of the LP relaxation (\ref{PSDcutsLPrelax}) and the optimal value of the SDP relaxation. For example by cutting off the optimal solutions of the actual LP relaxation.
 
@@ -1841,28 +1859,28 @@ is well known that “mixed” SDP/LP problems involving large numbers of inequa
 are computationally challenging, and reducing the work to solve such problems is an area of ongoing
 algorithmic research. In [\ref{SheraliEnhancingRLT}] they propose enhancing the RLT relaxation with PSD cuts as linear relaxations of the semidefinite constraint. Also adding a SOCP relaxation of semidefinite constraint into lift and project LP relaxation proposed in [\ref{KimKojimaSOCPofNoncvxQOP}] offers a way to avoid the cost of combining SDP and LP constraints.
 
-\subsection{Best D.C. decompositions}
-TODO: complete this subsection!
-
-Another interesting approach for strengthening the SDP relaxation was proposed in [\ref{ZhengDCdecomp}]. 
-They restrict to the problems with convex quadratic constraints and nonconvex objective, i.e. the matrices $P_1,\dots, P_k$ are assumed to be positive semidefinite. 
-\begin{equation}
-P_k\succeq 0 \ \mbox{ for }\  k = 1\dots m. 
-\end{equation} 
-Let $v_i$ for $i=1,\dots ,p$ be nonzero vectors in $\mathbb{R}^n$ and suppose that there exists $\lambda \in \mathbb{R}^p_+$ and $\mu \in \mathbb{R}^m_+$ such that 
-\begin{equation}
-P_0 + \sum_{i = 1}^p\lambda_i v_iv_i^T  - \sum_{i = 1}^m \mu_i P_i \succeq 0,
-\end{equation}
-Then they decompose the nonconvex objective $f_0(x) = x^TP_0x + q_0^Tx + r_0 $ as D.C. (difference of convex functions) 
-\begin{equation}
-%f_0(x) = 
-x^T\left( P_0 + \sum_{i = 1}^p\lambda_i v_iv_i^T  + \sum_{i = 1}^m \mu_i P_i\right)x  - \sum_{i = 1}^p\lambda_i (v_i^Tx)^2  - \sum_{i = 1}^m \mu_i x^TP_ix + q_0^Tx + r_0.
-\end{equation}
-After that they convexify the objective by underestimating the nonconvex terms $-\sum_{i = 1}^p\lambda_i (v_i^Tx)^2$ and  $ - \sum_{i = 1}^m \mu_i x^TP_ix$ with a (convex) piecewise linear function, 
-
-
-and show that optimal choice of parameters $\lambda, \mu$ can be reduced to semidefinite program and show that the resulting SDP has dual equivalent to 
-standard SDP (\ref{SDPrelax2}) strengthened with additional valid inequalities.
+%\subsection{Best D.C. decompositions}
+%TODO: complete this subsection!
+%
+%Another interesting approach for strengthening the SDP relaxation was proposed in [\ref{ZhengDCdecomp}]. 
+%They restrict to the problems with convex quadratic constraints and nonconvex objective, i.e. the matrices $P_1,\dots, P_k$ are assumed to be positive semidefinite. 
+%\begin{equation}
+%P_k\succeq 0 \ \mbox{ for }\  k = 1\dots m. 
+%\end{equation} 
+%Let $v_i$ for $i=1,\dots ,p$ be nonzero vectors in $\mathbb{R}^n$ and suppose that there exists $\lambda \in \mathbb{R}^p_+$ and $\mu \in \mathbb{R}^m_+$ such that 
+%\begin{equation}
+%P_0 + \sum_{i = 1}^p\lambda_i v_iv_i^T  - \sum_{i = 1}^m \mu_i P_i \succeq 0,
+%\end{equation}
+%Then they decompose the nonconvex objective $f_0(x) = x^TP_0x + q_0^Tx + r_0 $ as D.C. (difference of convex functions) 
+%\begin{equation}
+%%f_0(x) = 
+%x^T\left( P_0 + \sum_{i = 1}^p\lambda_i v_iv_i^T  + \sum_{i = 1}^m \mu_i P_i\right)x  - \sum_{i = 1}^p\lambda_i (v_i^Tx)^2  - \sum_{i = 1}^m \mu_i x^TP_ix + q_0^Tx + r_0.
+%\end{equation}
+%After that they convexify the objective by underestimating the nonconvex terms $-\sum_{i = 1}^p\lambda_i (v_i^Tx)^2$ and  $ - \sum_{i = 1}^m \mu_i x^TP_ix$ with a (convex) piecewise linear function, 
+%
+%
+%and show that optimal choice of parameters $\lambda, \mu$ can be reduced to semidefinite program and show that the resulting SDP has dual equivalent to 
+%standard SDP (\ref{SDPrelax2}) strengthened with additional valid inequalities.
 
 
 
@@ -1934,13 +1952,13 @@ x &=& (x_1,u)\in\mathbb{R}^{n+1}_+ \\
 Q_0 &=& \left(\begin{array}{rr} 0 & c^T \\ c & Q\end{array}\right) \in\mathbb{S}^{n+1},\\
 H_0 &=& \left(\begin{array}{rr} 1 & 0^T \\ 0 & O\end{array}\right) \in\mathbb{S}^{n+1}, \\
 Q_{01} &=& \left(\begin{array}{rr} b^Tb & b^TA \\ A^Tb & A^TA\end{array}\right) \in\mathbb{S}^{n+1},\\
-Q_{ij} &=& \left(\begin{array}{cc} 0 & 0^T \\ 0 & C_{ij} + C{ji}\end{array}\right) \in\mathbb{S}^{n+1},\\
+Q_{ij} &=& \left(\begin{array}{cc} 0 & 0^T \\ 0 & C_{ij} + C{ij}^T\end{array}\right) \in\mathbb{S}^{n+1},\\
 C_{ij} &=& \begin{array}{l} \mbox{the } n\times n\mbox{ matrix with } (i,j)\mbox{-th element 1/2}\\ \mbox{and 0 elsewhere.} \end{array}
 \end{eqnarray}
 
 
 
-Since the matrices $Q_{ij}$ for $ij=0,\dots, n$ are nonegative, $Q_{ij}\bullet xx^T\geq 0 $ holds for any $x\in \mathbb{R}^n_+$. Hence, the set of equalities $Q_{ij}\bullet xx^T = 0$ can be combined into a single equality $H_1\bullet xx^T = 0, $ where $H_1 = \sum_{i,j=0}^n Q_{ij}.$
+Since the matrices $Q_{ij}$ for $(i,j)\in\{(0,1)\}\cup \mathcal{E}$ are nonegative, $Q_{ij}\bullet xx^T\geq 0 $ holds for any $x\in \mathbb{R}^n_+$. Hence, the set of equalities $Q_{ij}\bullet xx^T = 0$ can be combined into a single equality $H_1\bullet xx^T = 0, $ where $H_1 = \sum Q_{ij}$ through $(i,j)\in\{(0,1)\}\cup \mathcal{E}.$
 Consequently they obtain simplified problem
 
 \begin{equation}
@@ -1963,7 +1981,7 @@ which is equivalent to (\ref{BinaryQP2}).  Here we can equivalently replace $xx^
 \end{array}
 \end{equation}
 where $\Gamma\subseteq\mathcal{K}$. The cone $\mathcal{K}$ can be chosen as any of the 
- $\Gamma, \ \mathbb{P}^n ,\ \mathbb{S}^n \cap \mathbb{N}^n , \ \mathbb{S}^n , \ \mathbb{S}^n + \mathbb{N}^n , \ \mathbb{C}^n. $ However, it is usually chosen as $\mathbb{S}^n \cap \mathbb{N}^n$ resulting in doubly nonnegative (DNN) relaxation.
+ $\Gamma, \ \mathbb{P}^n ,\ \mathbb{S}^n \cap \mathbb{N}^n , \ \mathbb{S}^n , \ \mathbb{S}^n + \mathbb{N}^n , \ \mathbb{C}^n $ (see the Proposition \ref{ConesInclusionsProp}). However, it is usually chosen as $\mathbb{S}^n \cap \mathbb{N}^n$ resulting in doubly nonnegative (DNN) relaxation.
 
 The idea behind this particular reformulation of \ref{BinaryQP2} is that its Lagrangian relaxation 
 \begin{eqnarray}
@@ -2006,7 +2024,7 @@ Consider the following binary polynomial optimization problem
 \end{equation}
 
 
-Let $K = \{ x\in \mathbb{R}^n \ p_k(x)\leq 0, \ k=1,\dots ,m \}$. Strenghtening a relaxation of $K$, is done by adding additional variables and constraints in order to make this relaxation tighter. The final (and unreachable) goal is to have a convex relaxation of the feasible region exactly $conv(K \cap {0,1}^n)$ (the best possible convex relaxation).  The idea is enforcing a local constraints on greater neighbourhoods in each round. 
+Let $K = \{ x\in \mathbb{R}^n \ p_k(x)\leq 0, \ k=1,\dots ,m \}$. Strenghtening a relaxation of $K$, is done by adding additional variables and constraints in order to make this relaxation tighter. The final (and unreachable) goal is to have a convex relaxation of the feasible region exactly $conv(K \cap \{0,1\}^n)$ (the best possible convex relaxation).  The idea is enforcing a local constraints on greater neighbourhoods in each round. 
 
 Let us first introduce the notation. The $r$-th degree polynomial $p(x):\mathbb{R}^n\rightarrow\mathbb{R}$ in basis 
 \begin{equation}
@@ -2089,7 +2107,7 @@ authors discuss hard instances of binary problems and state a conjecture that at
 
 \chapter{The maximum cut problem}
 
- In this chapter we are going to explore one of the classical problems of combinatorial optimization - the maximum cut problem. First we will state the problem and show that it can be formulated as QCQP. Then we will describe in detail the famous analysis by Goemans and Williamson [\ref{GoemansWilliamsonMaxCut}] showing its SDP relaxation gives 0.878 approximation bound. 
+ The aim of this chapter is to explore one of the classical problems of combinatorial optimization - the maximum cut problem. First we will state the problem and show that it can be formulated as nonconvex QCQP. Then we will describe in detail the famous analysis by Goemans and Williamson [\ref{GoemansWilliamsonMaxCut}] showing its SDP relaxation gives 0.878 approximation bound. 
  
 In the end of this section we will describe how each of the relaxations mentioned in the Chapter \ref{ChapterRelaxations} can be applied to max cut problem. And provide a computational comparison of these approaches.
 
@@ -2097,7 +2115,7 @@ In the end of this section we will describe how each of the relaxations mentione
 
 
 
-We have chosen this particular problem for two reasons. First reason is kind of historical, because the tight bound for the semidefinite relaxation by Goemans and Williamson [\ref{GoemansWilliamsonMaxCut}] seems to be the initial motivation for the extensive research of semidefinite relaxations, algorithms for semidefinite programming and convex relaxations of other combinatorial problems. The second reason is the simplicity of the problem formulation and ease of adapting the general relaxation methods for QCQP.
+We have chosen this particular problem for two reasons. The first reason is kind of historical, because the tight bound for the semidefinite relaxation by Goemans and Williamson [\ref{GoemansWilliamsonMaxCut}] seems to be the initial motivation for the extensive research of semidefinite relaxations, algorithms for semidefinite programming and convex relaxations of other combinatorial problems. The second reason is the simplicity of the problem formulation and ease of adapting the general relaxation methods for QCQP.
 
 Since the semidefinite relaxation of max cut is somehow considered as benchmark for evaluating the performance of other relaxation methods, 
 most of the approaches mentioned in the Chapter \ref{ChapterRelaxations} have been already computationally compared with SDP relaxation on the instances of the max cut problem. However, we believe that an cross comparison of all these relaxation might be also an insightful observation.
@@ -2204,11 +2222,11 @@ They propose simple randomized algorithm, which we will refer to as GW-algorithm
 \item Generate $r$ uniformly distributed on the unit sphere $S^n$.
 \item Set $S = \{i\ | \ v_i^Tr \geq 0\}.$
 \end{enumerate}
-In other words in step 2, the random hyperplane through the origin is chosen. In step 3 we form a partitions based on the separation of the vectors $v_i$ by the hyperplane. The sets $S$ and $\bar{S}$ are formed by indices of vectors lying "above" and "bellow" the hyperplane, respectively.
+In other words, in the step 2, a random hyperplane through the origin is chosen. In step 3 we form a partitions based on the separation of the vectors $v_i$ by the hyperplane. The sets $S$ and $\bar{S}$ are formed by indices of vectors lying "above" and "bellow" the hyperplane, respectively.
 
-\prop 
+\prop [{[\ref{GoemansWilliamsonMaxCut}]}]
 \label{maxcutProp}
-Let $\omega$ be the value of the cut produced by the above algorithm and $E[\omega]$ its expected value. Authors show that
+Let $\omega$ be the value of the cut produced by the above GW-algorithm and $E[\omega]$ its expected value. Authors show that
 \begin{equation}
 \label{maxcutExp1}
 E[\omega] = 	\frac{1}{\pi}\sum_{i<j}w_{ij}\arccos(v_i^Tv_j ), 
@@ -2296,7 +2314,7 @@ It holds that matrix $X:= BB^T$ has elements $ X_{ij} = v_i^Tv_j $ for each $i,j
 Since $v_i\in S^n$ are unit vectors, the diagonal entries of $X$ are ones, $X_{ii} = v_i^Tv_i = 1$.
 We can find such $X$ by solving following SDP and extract unit vectors $v_i$ from Choelsky decomposition $X = BB^T$.
 \begin{equation}
-\label{maxcutRelax2}
+\label{MaxCutSDPRelax}
 \begin{array}{ll}
 \mbox{maximize} & \frac{1}{4}L\bullet X, \\
 \mbox{subject to} & diag(X) = e \\
@@ -2325,16 +2343,8 @@ First introduce a new variable $X = xx^T$ in (\ref{maxcut2})  and rewrite this c
 \end{array}
 \end{equation}
 However, each of the constraints $e_ie_i^T\bullet X = 1$ is equivalent to $X_{ii} = 1$, altogether giving $diag(X) = e$, here $diag(X)$ denotes the diagonal of the matrix $X$.
-What is more, relaxing the nonconvex rank 1 constraint we obtain the SDP relaxation 
-\begin{equation}
-\label{MaxCutSDPRelax}
-\begin{array}{ll}
-\mbox{maximize} & \frac{1}{4}L\bullet X, \\
-\mbox{subject to} & diag(X) = e \\
-&	X\succeq 0.
-\end{array}
-\end{equation} 
-Let us consider a more general problem where there is also a linear term in objective. We will show that this is in fac
+Relaxing the nonconvex rank 1 constraint we obtain  (\ref{MaxCutSDPRelax}). 
+
 
 \subsubsection{Adding RLT constraints}
 Since max cut is symmetric in a sense that objective value for $x$ and $-x$ are equal, there is no loss of generality if we fix $x_1 = 1$, i.e. first vertex will belong to $S$. 
@@ -2628,14 +2638,14 @@ We have the following mixed SOCP-SDP relaxation
 \end{equation}
 
 In the special case when $r = n$ we have splitting
-$L = (\bar{D}_L - \lambda_{max}\bar{D}_LI) + (D_L + \lambda_{max}\bar{D}_LI),$
+$L = (\bar{D}_L - \lambda_{max}(\bar{D}_L)I) + (D_L + \lambda_{max}(\bar{D}_L)I),$
 where $D_L$ denotes the diagonal matrix with diagonal entries of $L$
-and $\bar{D}_L = L - D_l$ denotes its complement.
+and $\bar{D}_L = L - D_L$ denotes its complement.
 Using that $diag(X) = e$ the resulting relaxation for this splitting is
 \begin{equation}
 \label{MaxCutMixedSocpSdpN}
 \begin{array}{ll}
-\mbox{maximize} & \frac{1}{4}\left[ \ x^T(\bar{D}_L - \lambda_{max}\bar{D}_LI)x + (e^TD_L + \lambda_{max}n) \ \right], \\
+\mbox{maximize} & \frac{1}{4}\left[ \ x^T(\bar{D}_L - \lambda_{max}(\bar{D}_L)I)x + (e^TD_L + \lambda_{max}(\bar{D}_L)n) \ \right], \\
 \mbox{subject to} & x_i^2 \leq 1, \ (i=1,\dots ,n).
 \end{array}
 \end{equation}
@@ -2680,7 +2690,7 @@ Let $X_1$ denote the first column of $X$. Putting $x_1 = 1$ into the original co
 Therefore, even if we do not use variable $x$ explicitly, we can still form RLT constraints building links between first column (or first row due to symmetry) and the rest of the matrix $X$.
 
 
-Since $x\in \mathbb{R}^n$ represents original variable $x\{0,1\}^n$ we can use box constraints 
+Since $x\in \mathbb{R}^n$ represents original variable $x\in \{0,1\}^n$ we can use box constraints 
 $-e \leq x \leq e$
 and obtain following RLT constraints linking $X$ and $X_1$ variables, as in (\ref{RLTrelax1}).
 The resulting relaxation is (the matrix inequalities are considered element-wise)
@@ -2948,7 +2958,7 @@ dnn3d
 
 Since we are going to compare a long list of methods, we did not manage to optimize their implementations, nor solving algorithms for each one of them. While we are using the {\tt cvx library} with the {\tt SeDuMi} solver, the quality of bounds should not be affected by the flaws of our implementation up to the presented precision. However, the running times are largely affected, since we are not using the best known state of the art algorithms for each class of methods, but only an universal solver which is more suitable for some classes then for the others. Namely LP and SDP relaxations are expected to have good performance because those are widely used classes. On the other hand, SOCP and DNN relaxations will probably take much more time to solve then they would need using a specialized algorithms and efficient implementations.
 
-\rem We would like to highlight especially that our poor time performance of the pair DNN3p-DNN3d is purely due to our implementation. Recently an efficient algorithms for solving this pair of problems have been proposed by Arima, Kim, Kojima and Toh [\ref{KimKojimaLagrangianDNNRelaxation1}, \ref{ArimaKimKojimaRobustLagrangianDNN}]. Their reported performance seems to be superior to SDP both in time and quality of the bounds.
+\rem We would like to emphasize especially that our poor time performance of the pair DNN3p-DNN3d is purely due to our implementation. Recently an efficient algorithms for solving this pair of problems have been proposed by Arima, Kim, Kojima and Toh [\ref{KimKojimaLagrangianDNNRelaxation1}, \ref{ArimaKimKojimaRobustLagrangianDNN}]. Their reported performance seems to be superior to SDP both in time and quality of the bounds.
 
 Therefore, in the comparison we will focus firstly on the quality of the produced bounds and secondly on the running time.
 
@@ -2985,12 +2995,12 @@ For each instance the optimal value was obtained by our branch and bound method.
 For a small density $10\%$ most of the produced bounds were exact (see Figure \ref{comp0_d10_n20}). 
 As the density grows, the portion of exact bounds decreases. In the other graphs with density $50\%$ very few exact bounds were achieved.
 
-In the figures \ref{comp0_d50_n20}, \ref{comp0_d50_n30}, \ref{comp0_d50_n40}, we can see that adding the valid RLT inequalities (sdp rlt, lp3, lp4) or triangle inequalities (sdp tri, socp3, lp2, lp4), improves bounds but also increases the run time.
+In the figures \ref{comp0_d50_n20}, \ref{comp0_d50_n30}, we can see that adding the valid RLT inequalities (sdp rlt, lp3, lp4) or triangle inequalities (sdp tri, socp3, lp2, lp4), improves bounds but also increases the run time.
 
 Suprisingly, SOCP relaxations (socp1, socp2, socp3) have very poor performance, at least in our implementation.
 
 
-Now lets focus on the changes with the size of the problem. In the figures \ref{comp0_d50_n20}, \ref{comp0_d50_n30}, \ref{comp0_d50_n40} one can see that while quality of the bounds stays about the same, the time complexity for some of the methods grows rapidly. Namely the SOCP relaxation with triangle inequalities (socp3) probably due to triangle inequalities and DNN relaxations (dnn2, dnn3p, dnn3d) - due to not using an efficient algorithm for DNN. From the practical reasons we are going to exclude these methods from further considerations on medium sized problems.
+Now lets focus on the changes with the size of the problem. In the figures \ref{comp0_d50_n20}, \ref{comp0_d50_n30} one can see that while quality of the bounds stays about the same, the time complexity for some of the methods grows rapidly. Namely the SOCP relaxation with triangle inequalities (socp3) probably due to triangle inequalities and DNN relaxations (dnn2, dnn3p, dnn3d) - due to not using an efficient algorithm for DNN. From the practical reasons we are going to exclude these methods from further considerations on medium sized problems.
 
 \begin{center}
 \begin{figure}
@@ -3002,21 +3012,16 @@ Now lets focus on the changes with the size of the problem. In the figures \ref{
 \includegraphics[scale=0.27]{img/comp0_d50_n20.jpg}
 \caption[Comparison of relaxations - small, dense instances of max cut 1]{Comparison of the relaxation methods for the small sized random generated instances max cut with density $50\%$ and $n=20$.}
 \label{comp0_d50_n20}
-\end{figure}
-\end{center}
 
-
-\begin{center}
-\begin{figure}
 \includegraphics[scale = 0.27]{img/comp0_d50_n30.jpg}
 \caption[Comparison of relaxations - small, dense instances of max cut 2]{Comparison of the relaxation methods for the small sized random generated instances max cut with density $50\%$ and $n=30$.}
 \label{comp0_d50_n30}
 \end{figure}
-\begin{figure}
-\includegraphics[scale=0.27]{img/comp0_d50_n40.jpg}
-\caption[Comparison of relaxations - small, dense instances of max cut 3]{Comparison of the relaxation methods for the small sized random generated instances max cut with density  $50\%$ and $n=40$.}
-\label{comp0_d50_n40}
-\end{figure}
+%\begin{figure}
+%\includegraphics[scale=0.27]{img/comp0_d50_n40.jpg}
+%\caption[Comparison of relaxations - small, dense instances of max cut 3]{Comparison of the relaxation methods for the small sized random generated instances max cut with density  $50\%$ and $n=40$.}
+%\label{comp0_d50_n40}
+%\end{figure}
 \end{center}
 
 
@@ -3032,6 +3037,9 @@ An interesting observation is that for some methods (sdp rlt, sdp tri, socp2, lp
 \includegraphics[scale=0.27]{img/comp1.jpg}
 \caption[Comparison of relaxations - medium, dense instances of max cut]{Comparison of the relaxation methods on the medium sized max cut Rudy instances {\tt g\_05\_60, g\_05\_80,} from the Biq Mac library [\ref{BiqMacLib}], with density  $50\%$, unit edge weights and $n=60,\ 80$.} 
 \label{comp1}
+\includegraphics[scale=0.27]{img/comp1_segments.jpg}
+\caption[Comparison of relaxations - a time-precision trade off]{A time-precision trade off on rudy instances for $n=80$.}
+\label{comp1TradeOff}
 \end{figure}
 \end{center}
 
@@ -3042,28 +3050,88 @@ Similar to the small instances, SOCP methods (socp1, socp2) do not produce reaso
 \subsection{Large scale instances}
 
 In this section we are going to compare only fast methods (sdp, lp1, lp3, mix1, mix2 and  mixr for $r=50,20,10,5$) to see how the performance changes when problems grow large $n=100, 200, \dots ,600$.
+
+For this comparison (in the Figures \ref{comp3}, \ref{comp3size}) we did not know the optimal values (it would be almost impossible for us to compute them), hence, we have approximated the relative errors as relative errors against the best obtained bound, which was for each instance the bound produced by SDP relaxation. We will prove later that this relation always holds for SDP and mixed SOCP-SDP relaxation.
+
+In the Figure \ref{comp3} one can see that from the mixed methods the best bounds are produced by mix2 relaxation which has also one of the shortest run times. 
+
+
+We offer also a problem-size breakdown of this experiment in the Figure \ref{comp3size} where it is clear that mix2 is superior for all sizes of problems. Moreover, that for all of the methods have more-less stable quality of the bounds and increasing run time for growing $n$.
+
+
+% Comparing the different densities, we saw that relative error is a little higher for the sparse instances. It may be caused by the improved quality of sdp bounds for sparse instances. 
+ 
+
+
 \begin{center}
 \begin{figure}
 \includegraphics[scale=0.27]{img/comp3.jpg}
 \caption[Comparison of relaxations - large, dense instances of max cut 1]{Comparison of the relaxation methods on the large max cut instances with density  $50\%$, integer edge weights between 1 and 50, $n=100,200\dots ,600$. The relative error is approximated using SDP relaxation as benchmark and computing errors relatively to the bounds produced by sdp.} 
 \label{comp3}
-\end{figure}
-\end{center}
 
-For this comparison (in the Figure \ref{comp3}) we did not know the optimal values (it would be almost impossible for us to compute them), hence, we have approximated the relative errors as relative errors against the best obtained bound, which was for each instance the bound produced by SDP relaxation. We will prove later that this always holds for SDP and mixed SOCP-SDP relaxation.
-
-\begin{center}
-\begin{figure}
 \includegraphics[scale=0.27]{img/comp_mix_n_100-600.jpg}
 \caption[Comparison of relaxations - large, dense instances of max cut 2]{Comparison of the mixed relaxation methods on the large max cut instances with density  $50\%$, integer edge weights between 1 and 50, $n=100,200\dots ,600$. The relative error is approximated using SDP relaxation as benchmark and computing errors relatively to the bounds produced by sdp. Lines are connecting the mean values for each size and mothod.} 
 \label{comp3size}
 \end{figure}
 \end{center}
+%\begin{center}
+%\begin{figure}
+%\begin{minipage}{1\textwidth}
+%\includegraphics[scale=0.27]{img/comp3_sparse.jpg}
+%\caption[Comparison of relaxations - large, sparse instances of max cut 1]{Comparison of the relaxation methods on the large max cut instances with density  $10\%$, integer edge weights between 1 and 50, $n=100,200\dots ,600$. The relative error is approximated using SDP relaxation as benchmark and computing errors relatively to the bounds produced by sdp.} 
+%\label{comp3_sparse}
+%\end{minipage}
+%\end{figure}
+%\end{center}
+
+
+
+\subsection{Relation of Mix and SDP}
+
+In the following, we would like to demonstrate that these mixed SOCP-SDP relaxations are for max cut never stronger then SDP relaxation. 
+
+Let $L = L^- + L^+$ be a splitting of $L$ with $L^-\preceq 0.$
+We will consider a general mixed SOCP-SDP relaxation of (\ref{maxcut3}).
+\begin{equation}
+\label{MaxCutMixedRelaxGeneral}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{4}\left[ X_1^TL^-X_1 + L^+\bullet X \right], \\
+\mbox{subject to} &  diag(X) = e, \\
+			& X\succeq 0,
+\end{array}
+\end{equation}
+where $X_1$ denotes first column of $X$. We will refer to this problem as MIX.
+
+\rem Notice that all of the mixed methods (mix1, mix2, mixr for any $r$) are included in this formulation for a certain choice of splitting $L^+, L^-$. Using the fact that $L^+\bullet X$ reduces to $Tr(L^+)$ when $L^+$ is diagonal yields an equivalent formulation.
+
+
+
+\thm Consider an instance of QCQP \ref{qcqp}. Denote $\nu(SDP), \ \nu(Mix)$ the optimal values of the SDP relaxation (\ref{MaxCutSDPRelax}) and mixed SOCP-SDP relaxation MIX (\ref{MaxCutMixedRelaxGeneral}) respectively. It holds that $\nu(SDP)\leq \nu(MIX)$.
+\rm
+\begin{proof}
+Notice, that both relaxations have same feasible set $F = \{X\in \mathbb{S}^n \ \vert \ diag(x) = e,\ X\succeq 0.\}$. We will show that for any $X\in F$ the objective value of SDP is at most the objective value of MIX. Indeed
+\begin{equation}
+\label{ProofRelationMixSDP}
+\begin{array}{rcl}
+L\bullet X - ( X_1^TL^-X_1 + L^+\bullet X) 
+& = & L^-\bullet X - X_1^TL^-X_1 \\ 
+&=&  L^-\bullet (X - X_1 X_1^T) \\ 
+&\leq & 0.
+\end{array}
+\end{equation}
+The inequality hods because $L^-\preceq 0$ and $X-X_1X_1^T\succeq 0$,
+since from $X\succeq 0$ and Schur complement lemma (see \ref{SchurCompl} in the Appendix) we have $X\succeq X_1X_1^T.$ 
+\end{proof}
+
+\rem Using the difference (\ref{ProofRelationMixSDP}) expressed in he previous proof, we can bound a a difference of $\nu(MIX)-\nu(SDP)$ in tho following way. Let $\hat{X}, \hat{X}_1$ be the optimal solution of MIX with the objective $\nu(MIX)$. Then $\hat{X}$ is also a feasible solution of SDP with the objective $\nu_{SDP}(\hat{X})$ such that
+$$\nu(MIX)\geq \nu(SDP) \geq \nu_{SDP}(\hat{X})\geq \nu(MIX) + \frac{1}{4}L^-\bullet (\hat{X} - \hat{X}_1 \hat{X}_1^T).$$
+Hence, if $\vert L^-\bullet (\hat{X} - \hat{X}_1 \hat{X}_1^T)\vert$ is small, the the bound of MIX is guaranteed to be very close to bound produced by SDP. 
 
 
 
 
-\newpage
+
+
 \section{Branch and bound}
 \label{SectionBranchAndBound}
 
@@ -3072,34 +3140,112 @@ For this comparison (in the Figure \ref{comp3}) we did not know the optimal valu
 We will first describe a general idea of the branch and bound algorithms.  uppose we are dealing with minimization problem.
 
 The basic idea of this method is to divide and conquer. There are 3 basics steps we will do repeatedly. Branch, compute bounds and prune.
-\begin{itemize}
-\item Branch. First divide by branching the original problem into the smaller subproblems i.e. by partitioning the feasible set. 
- In combinatorial (discrete) problems this can be done by fixing a variable. For example if $x_l \in \{0,1\}$, then by fixing $x_l=1$ and $x_l=0$ respectively, the problem is divided into two subproblems with one less free variable. 
 
-Although, the branch and bound algorithms are mostly developed and used for solving combinatorial problems, it is also possible to adapt then for general QCQP. Whenever the feasible set is compact, the branching can be done by subdividing the feasible region into the Cartesian product of triangles and rectangles (see [\ref{LinderothSimplicialBranchAndBound}, \ref{RaberSimplicialBranchAndBound}]). 
+\textbf{Branch.} First divide by branching the original problem into the smaller subproblems i.e. by partitioning the feasible set. 
+ In combinatorial (discrete) problems this can be done by fixing a variable. For example if $x_l \in \{0,1\}$, then by fixing $x_l=1$ and $x_l=0$ respectively, the problem is divided into two subproblems with one less free variable $x_{-l} \in \{0,1\}^n.$
 
 
-\item Compute bounds. The lower bounds should be established for each branch. Usually this is done by solving the relaxed problem for each subproblem. 
+\textbf{Compute bounds.} The lower bounds should be established for each branch. Usually this is done by solving the relaxed problem for each subproblem. 
 An upper bound is computed on the optimal value, this can be done by finding a feasible solution for chosen subproblem. It is often extracted from the solution of the relaxed problem using a projection or rounding procedure.
 
-\item Prune. Having both lower and upper bounds, conquer by pruning all the branches with lower bound greater then global upper bound. The optimal solution is surely not in these branches.
+\textbf{Prune.} Having both lower and upper bounds, conquer by pruning all the branches with lower bound greater then global upper bound. The optimal solution is surely not in these branches.
 
-\item Repeat. This process is repeated by branching the remaining subproblems, computing the new (better) lower bounds for these smaller problems, improving the upper bound and further pruning the problem tree.
-\end{itemize}
+\textbf{Repeat.} This process is repeated by branching the remaining subproblems, computing the new (better) lower bounds for these smaller problems, improving the upper bound and further pruning the problem tree.
 
 One can use more or less clever techniques to decide when, how and which subproblems to branch or how and when to compute bounds.
 Using stronger relaxations for bounding steps results in increased computation time, but hopefully less iterations are needed since better bounds allow to cut branches earlier.  On the other hand weaker relaxations are computed faster so they let us do more iterations and explore much greater portion of the problem tree. The greater number of iterations increases chances for guessing the optimal solution as well as obtaining good lower bounds for problems that are small enough.
 
+\subsection{Our branch and bound framework}
+
+We will be branching the problem tree by fixing the variables $x_i$.
+At the beginning the only fixed variable is $x_1=1$. This is without loss of generality, because if there is an optimal solution $\hat{x}$ then $-\hat{x}$ having the same objective value is also an optimal solution. 
+
+
+\subsubsection{Problem formulations}
+Each problem solved during the branch and bound procedure will be represented by sets of indices fixed to 1 and -1:  
+$$P = \{i\in V \ \vert \ x_i =1 \ \mbox{is fixed} \}, \ \ \ \
+N = \{i\in V \ \vert \ x_i =-1 \  \mbox{is fixed} \}, $$
+with $P\cap N = \emptyset.$ 
+Let us denote the set of known indices $K = P\cup N$ and set of unknown indices $U = V\setminus K$. 
+
+%Suppose that only first $k$ vertices are fixed, i.e. $K = \{1,\dots ,k\}$. This is without loss of generality, since this can be achieved by renaming vertices. 
+
+Now the objective $x^TLx/4$ of the problem (\ref{maxcut3}) with fixed indices reduces to 
+\begin{eqnarray*}
+\frac{1}{4}x^TLx &=& \frac{1}{4}(x_K^T , x_U^T )
+\left(\begin{array}{rr} L_{KK} & L_{KU} \\ L_{KU} & L_{UU} \end{array}\right)\left(\begin{array}{c} x_K \\ x_U \end{array}\right) \\
+&=& \frac{1}{4} \left[ x^T_UL_{UU}x_U +2x^T_KL_{KU}x_U + x^T_KL_{KK}x_K \right].
+\end{eqnarray*}
+The resulting problem of the size $n-k$ with variable $x_U\in\{0,1\}^n$ 
+is 
+\begin{equation}
+\begin{array}{ll}
+\mbox{maximize } & \frac{1}{4} \left[ x^T_UL_{UU}x_U +2x^T_KL_{KU}x_U + x^T_KL_{KK}x_K \right], \\
+\mbox{subject to } & x_U\in\{0,1\}^n.
+\end{array}
+\end{equation}
+
+
+It has following SDP relaxation 
+\begin{equation}
+\begin{array}{ll}
+\mbox{maximize } & \frac{1}{4} \left[ L_{UU}\bullet X_{UU} +2x^T_KL_{KU}x_U + x^T_KL_{KK}x_K \right], \\
+\mbox{subject to } & diag(X_{UU}) = 1, \\
+				& X_{UU}\succeq x_Ux_U^T.
+\end{array}
+\end{equation}
+
+And following mixed SOCP-SDP relaxation (mix2)
+\begin{equation}
+\begin{array}{ll}
+\mbox{maximize} & \frac{1}{4}\left[ \ x_U^T(\bar{D}_{LU} - \lambda_{max}(\bar{D}_{LU})I)x_U  + 2x^T_KL_{KU}x_U \ +  \ \right. \\
+	& \left. \ \ \ + \ x^T_KL_{KK}x_K + e^TD_{LU} + \lambda_{max}(\bar{D}_{LU})(n-k)  \ \right], \\
+\mbox{subject to} &  x_i^2 \leq 1, \ (i=1,\dots ,n),
+\end{array}
+\end{equation}
+where $D_{LU}$ is the $n-k\times n-k$ diagonal matrix  with diagonal entries of $L_{UU}$, $\bar{D}_{LU} = L_{UU} - D_{LU}$ is its complement and $\lambda_{max}(\bar{D}_{LU})$ denotes the largest positive eigenvalue of $\bar{D}_{LU}.$
+
+
+\subsubsection{Branching}
+For the branching we have tried many approaches, of which the most reasonable seemed to be fixing either vertices with large degrees (in the remaining graph) to sparsify the residual graph or the vertices with the greatest contribution to the scalar term $x_K^TL_{KK}x_K$ after being fixed.
+
+Both of these approaches are heuristics, first one aims to simplify the graph, the second one tries to secure large part of the objective as soon as possible. That suggest a compromise of these may be a good idea. That is in each node we will randomly decide either with probability $p_{d}$ to branch by the degree and with probability $1-p_d$ to branch by the weight of contribution.
+
+It seem that for dense graphs larger $p_d$ works better, on the other hand for sparse graphs, smaller $p_d$ gives better results.
+
+\subsubsection{Producing lower bounds}
+For the SDP relaxation we will use the rounding algorithm by Goemans and Williamson [\ref{GoemansWilliamsonMaxCut}] (see the Section \ref{SectionGoemansAndWIlliamson}). For the mixed relaxation we will use simple rounding of $x$ to $sign(x)$.
+
+\rem We have tried to develop another rounding procedures for mix2, especially we have considered creating creating matrix $X\succeq 0$ with $diag(X) = e$ such that $x$ would be its first column, in order to use the GW-algorithm for SDP with guaranteed 0.878 performance. We tried to construct $X$ such that .... TODO!?
+
+
+\subsection{Branch and bound comparison}
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.27]{img/bnb_mix_n40_d50_1.jpg}
+\caption[Branch and bound for mixed SOCP-SDP relaxation]{Branch and bound for mixed SOCP-SDP relaxation. }
+
+\includegraphics[scale=0.27]{img/bnb_sdp_n40_d50_1.jpg}
+\caption[Branch and bound for SDP relaxation]{Branch and bound for SDP relaxation. }
+\end{figure}
+\end{center}
+
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=1]{img/bnb_mix_n40_d50_2.jpg}
+\caption[Branch and bound for mixed SOCP-SDP relaxation]{Branch and bound for mixed SOCP-SDP relaxation. \\ \textbf{TODO: draw them in one graph!!!}}
+
+\includegraphics[scale=0.30]{img/bnb_sdp_n40_d50_2.jpg}
+\caption[Branch and bound for SDP relaxation]{Branch and bound for SDP relaxation. }
+\end{figure}
+\end{center}
 
 
 
 
-%\newpage
-%\appendix
-%\chapter{Ch1}
-%\section{appendix1}
-%\defi blablba
-%\thm blablbalb
+
 
 \begin{appendix}
 
@@ -3152,7 +3298,7 @@ The cone $\mathcal{K}\subseteq \mathbb{R}^n$ is a proper cone if it has followin
 \item $\mathcal{K}$ is closed
 \item $\mathcal{K}$ is convex (for any $\theta_1,\theta_2\geq 0$ and $x_1,x_2\in\mathcal{K}$ also $\theta_1x_1 + \theta_2x_2 \in\mathcal{K}$)
 \item $\mathcal{K}$ has nonempty interior  ($int \ \mathcal{K} \neq \emptyset$)
-\item $\mathcal{K}$ is pointed (does not contain whole line, i.e. if $\pm x\in \mathcal{K}$, then $x=0$).
+\item $\mathcal{K}$ is pointed (does not contain any line, i.e. if $\pm x\in \mathcal{K}$, then $x=0$).
 \end{itemize}
 
 \defi[Dual cone]
@@ -3165,15 +3311,15 @@ If  $\mathcal{K} =  \mathcal{K}^*$ we say cone $\mathcal{K}$ is selfdual.
 
 
 
-In the following section we will need to use the Separating hyperplane theorem.
-\thm[Separating hyperplane {[\ref{BoydCvxOpt}]}] 
-\label{SeparatingHyperplaneThm}
-Let $C\subseteq \mathbb{R}^n$ be a closed convex set and let $x_0\notin C$. 
-Then there exists $a \in \mathbb{R}^n$, $a\neq 0$ and $b\in \mathbb{R}$, such that 
-$a^Tx\geq b$ $\forall x\in C$ and $a^Tx_0<b$.
-\begin{proof}
-Since this theorem is well known, we only refer to proof in the literature see i.e. [\ref{BoydCvxOpt}]. 
-\end{proof}
+%In the following section we will need to use the Separating hyperplane theorem.
+%\thm[Separating hyperplane {[\ref{BoydCvxOpt}]}] 
+%\label{SeparatingHyperplaneThm}
+%Let $C\subseteq \mathbb{R}^n$ be a closed convex set and let $x_0\notin C$. 
+%Then there exists $a \in \mathbb{R}^n$, $a\neq 0$ and $b\in \mathbb{R}$, such that 
+%$a^Tx\geq b$ $\forall x\in C$ and $a^Tx_0<b$.
+%\begin{proof}
+%Since this theorem is well known, we only refer to proof in the literature see i.e. [\ref{BoydCvxOpt}]. 
+%\end{proof}
 
 \prop[{[\ref{PokornaSOCPDipl}]}] \label{DualConePropertiesProp}
 Following holds for dual cone $\mathcal{K}^*$
@@ -3196,26 +3342,26 @@ x^T(\theta_1z_1 + \theta_2z_2) = \theta_1x^Tz_1 + \theta_2x^Tz_2 \geq 0,
 which implies convexity of $\mathcal{K}^*$.% since $z_1,z_2$ were arbitrary points of $\mathcal{K}^*$.
 
 \item Let $\{z_n\}_{n=1}^\infty$ be a convergent sequence of points in $\mathcal{K}^*$, such that 
-$z_n\rightarrow z$. It is enough to show that $z\in \mathcal{K}^*.$  Indeed, for any $x\in \mathcal{K}$ and positive integer $n$ we have $x^Tz_n \geq 0$, therefore
+$z_n\rightarrow z$. It is sufficient to show that $z\in \mathcal{K}^*.$  Indeed, for any $x\in \mathcal{K}$ and positive integer $n$ we have $x^Tz_n \geq 0$, therefore
 $\lim_{n\rightarrow \infty} x^Tz_n = x^Tz \geq 0$. Hence $z\in \mathcal{K}^*.$
 
-\item Let $int \ \mathcal{K}\neq \emptyset$. It is enough to prove that $\mathcal{K}^* \cup (-\mathcal{K}*) = \{0\}.$ Let $y\in \mathcal{K}^* \cup (-\mathcal{K}*)$, then 
-$x^Ty = 0 $ for all $x\in \mathcal{K}$. Since $int \ \mathcal{K}\neq \emptyset$, there exist open ball $B\subset \mathcal{K}$. For contradiction suppose that $y\neq 0$, then there is $u\in \mathbb{R}^n$ such that $y^Tu>0$. Now take any $x\in B$ and $\alpha>0$ such that $x+\alpha u\in B$, we have 
+\item Let $int \ \mathcal{K}\neq \emptyset$. It suffices to prove that $\mathcal{K}^* \cap (-\mathcal{K}*) = \{0\}.$ Let $y\in \mathcal{K}^* \cap (-\mathcal{K}*)$, then 
+$x^Ty = 0 $ for all $x\in \mathcal{K}$. Since $int \ \mathcal{K}\neq \emptyset$, there exist open ball $B\subset \mathcal{K}$. By contradiction, suppose that $y\neq 0$, then there is $u\in \mathbb{R}^n$ such that $y^Tu>0$. Now take any $x\in B$ and $\alpha>0$ such that $x+\alpha u\in B$, we have 
 $$ 0 = y^T(x+\alpha u) = y^Tx + \alpha y^Tu = 0 + \alpha y^Tu > 0,$$
 and that is a contradiction.
 
 
 \item Denote $\bar{\mathcal{K}}$ the closure of $\mathcal{K}$ and let $\bar{\mathcal{K}}$ be pointed, i.e. 
-$\bar{\mathcal{K}} \cap \left(-\bar{\mathcal{K}}\right) = \{0\}$. First, we will show that $0\notin conv(S^n\cup \bar{\mathcal{K}}).$ By contradiction, if $0\in conv(S^n\cup \bar{\mathcal{K}})$ then there are some 
-$x^1,\dots ,x^m \in \left(S^n\cup \bar{\mathcal{K}}\right)$ and 
-$theta_1,\dots \theta_m \geq 0$, such that $\sum_{i=1}^m = 1$ and $ 0 = \sum_{i=1}^m \theta_ix^i$.
+$\bar{\mathcal{K}} \cap \left(-\bar{\mathcal{K}}\right) = \{0\}$. First, we will show that $0\notin conv(S^n\cap \bar{\mathcal{K}}).$ By contradiction, if $0\in conv(S^n\cap \bar{\mathcal{K}})$ then there are some 
+$x^1,\dots ,x^m \in \left(S^n\cap \bar{\mathcal{K}}\right)$ and 
+$\theta_1,\dots \theta_m \geq 0$, such that $\sum_{i=1}^m = 1$ and $ 0 = \sum_{i=1}^m \theta_ix^i$.
 Let $j$ be an index for which $\theta_j\neq 0$ (there must be at least one such index). Then 
 \begin{equation*}
 \theta_jx^j \in \bar{\mathcal{K}} \ \mbox{ and } \ -\theta_jx^j= \sum_{i\neq j} \theta_ix^i \in \bar{\mathcal{K}}.
 \end{equation*}
-This is a contradiction, because  $\bar{\mathcal{K}}$ is pointed, hence $0\notin conv(S^n\cup \bar{\mathcal{K}}).$
-Since $conv(S^n\cup \bar{\mathcal{K}})$ is closed and convex, by separating hyperplane theorem \ref{SeparatingHyperplaneThm} there exists nonzero $a\in \mathbb{R}^n$ and $b\in \mathbb{R}$ such that 
-$a^Tx \geq b$ for any $x\in (S^n\cup \bar{\mathcal{K}})$ and $a^T0<b$. Therefore $b>0$ and for any nonzero $y\in  \bar{\mathcal{K}}$, since the $y/\Vert y\Vert \in (S^n\cup \bar{\mathcal{K}})$
+This is a contradiction, because  $\bar{\mathcal{K}}$ is pointed, hence $0\notin conv(S^n\cap \bar{\mathcal{K}}).$
+Since $conv(S^n\cap \bar{\mathcal{K}})$ is closed and convex, by separating hyperplane theorem (see [\ref{BoydCvxOpt}]) there exists nonzero $a\in \mathbb{R}^n$ and $b\in \mathbb{R}$ such that 
+$a^Tx \geq b$ for any $x\in (S^n\cap \bar{\mathcal{K}})$ and $a^T0<b$. Therefore $b>0$ and for any nonzero $y\in  \bar{\mathcal{K}}$, since the $y/\Vert y\Vert \in (S^n\cap \bar{\mathcal{K}})$
 we have 
 $$a^Ty = \Vert y \Vert a^T \frac{y}{\Vert y\Vert} \geq \Vert y\Vert b > 0,$$
 hence $a\in \mathcal{K}^*$.  
@@ -3237,7 +3383,7 @@ The inclusion $\mathcal{K} \subseteq \mathcal{K}^{**}$ follows directly from the
 
 Next we will show the second inclusion  $\mathcal{K}^{**} \subseteq \mathcal{K}$ by contradiction.
 Suppose that there is $z \in \mathcal{K}^{**}$ with $z \notin \mathcal{K}$.
-Since $\mathcal{K}$ is closed and convex, there is a hyperplane separating $z$ and $\mathcal{K}$ (see Theorem \ref{SeparatingHyperplaneThm}), i.e. there is an $a \in \mathbb{R}^n, $ such that 
+Since $\mathcal{K}$ is closed and convex, there is a hyperplane separating $z$ and $\mathcal{K}$ (see [\ref{BoydCvxOpt}]), i.e. there is an $a \in \mathbb{R}^n, $ such that 
 $$ a^Tz <0  \ \mbox{ and } \ a^Tx\geq 0, \ \forall x\in\mathcal{K}.$$
 The second inequality implies that $a\in \mathcal{K}^*$, but then  $ a^Tz <0 $ contradicts $z\in \mathcal{K}^{**}$.
 
@@ -3246,22 +3392,22 @@ All in all,  we have $\mathcal{K}^{**} = \mathcal{K}$.
 
 
 
-
-\prop[{[\ref{PokornaSOCPDipl}]}] 
-\label{ConesCartesianProduct}
-Let $\mathcal{K} = \mathcal{K}_1 \times \cdots \times \mathcal{K}_m $ be a Cartesian product of cones. Then
-\begin{enumerate}
-\item $\mathcal{K}$ is a cone.
-\item If $\mathcal{K}_1, \cdots ,\mathcal{K}_m $ are convex cones, then $\mathcal{K}$ is convex.
-\item If $\mathcal{K}_1, \cdots ,\mathcal{K}_m $ are selfdual cones, then $\mathcal{K}$ is selfdual.
-\item If $\mathcal{K}_1, \cdots ,\mathcal{K}_m $ are proper cones, then $\mathcal{K}$ is proper.
-\end{enumerate} 
-\begin{proof}
-See [\ref{PokornaSOCPDipl}].
-\end{proof}
-
-
-
+%
+%\prop[{[\ref{PokornaSOCPDipl}]}] 
+%\label{ConesCartesianProduct}
+%Let $\mathcal{K} = \mathcal{K}_1 \times \cdots \times \mathcal{K}_m $ be a Cartesian product of cones. Then
+%\begin{enumerate}
+%\item $\mathcal{K}$ is a cone.
+%\item If $\mathcal{K}_1, \cdots ,\mathcal{K}_m $ are convex cones, then $\mathcal{K}$ is convex.
+%\item If $\mathcal{K}_1, \cdots ,\mathcal{K}_m $ are selfdual cones, then $\mathcal{K}$ is selfdual.
+%\item If $\mathcal{K}_1, \cdots ,\mathcal{K}_m $ are proper cones, then $\mathcal{K}$ is proper.
+%\end{enumerate} 
+%\begin{proof}
+%See [\ref{PokornaSOCPDipl}].
+%\end{proof}
+%
+%
+%
 
 
 %TODO Figures
@@ -3388,7 +3534,7 @@ Not the other inclusion. Let $M\notin \mathbb{S}^n_+$ be a symmetric $n\times n$
 
 Therefore $\mathbb{S}^n_+ = (\mathbb{S}^n_+)^*$
 
-\item First we will show $(\mathbb{P}^n)^* = \mathbb{C}^n$. From the definition, using the inner product $Tr(M^TP) = M \bullet P = svec(M)^T svec(P)$ we have
+\item First we will show $(\mathbb{P}^n)^* = \mathbb{C}^n$. From the definition, using the inner product $Tr(M^TP) = M \bullet P,$ we have
 $$ (\mathbb{P}^n)^* = \{ M \in \mathbb{S}^n \ \vert \ M\bullet P\geq 0, \ \forall P\in \mathbb{P}^n \}. $$
 
 Observe that for any $C\in \mathbb{C}^n$ and $P = \in \mathbb{P}^n,$ $P = \sum x^ix^{iT}$ it holds that 
@@ -3432,6 +3578,13 @@ The last equality holds from Proposition \ref{PropSecondDualofClosedCOne}, becau
 %\\ \url{http://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf}
 \label{BoydCvxOpt}
 %
+\item L. Tuncel, \it  Polyhedral and Semidefinite Programming Methods in Combinatorial Optimization. \rm  Fields Institute Monograph Series, AMS, Vol.FIM-27, 2010
+\label{FieldsMono}
+%
+\item L. El Ghaoui, \it Introduction to Convex Optimization. \rm
+A course EE 227A website on UC Berkeley, available online: 
+\url{https://inst.eecs.berkeley.edu/~ee227a/fa10/login/index.html}
+\label{IntroToCvxOptBerkley}
 
 
 
