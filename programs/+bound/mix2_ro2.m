@@ -1,4 +1,4 @@
-function [lb, ub, xf, utime, ltime] = mixedSocpSdp2(W,P)
+function [lb, ub, xf, utime, ltime] = mix2_ro2(W,P)
 % returns lower bound lb, upper bound ub and the feasible solution xu
 % which generates ub for the problem
 % min x^TWx, s.t. x is in {-1,1}^n, 
@@ -57,7 +57,48 @@ utime = toc;
                             
 % Rounding 1 - trivial boound.
 tic;
-xl = bound.triv_bound(x);
+
+alpha = 1 - x.^2;
+beta = alpha;
+ri = zeros(n,1);
+ci = zeros(n,1);
+vi = zeros(n,1);
+count = 1;
+
+
+[~,ordW] = sort(min(W(U,U)-diag(diag(W(U,U))) ));
+for i = ordW(1:end-1), 
+    if (beta(i)>0), 
+        [col,indC] = sort(W(U(i),U([1:(i-1),(i+1):end])));
+        for j = 1:length(col),
+            if beta(indC(j))>0, 
+                ri(count) = i;
+                ci(count) = indC(j);
+                if beta(indC(j))>beta(i),
+                    vi(count) = beta(i)/2;
+                    beta(indC(j)) = beta(indC(j)) - beta(i);
+                    beta(i) = 0;
+                    count = count + 1;
+                    break;  
+                else
+                    vi(count) = beta(indC(j))/2;
+                    beta(i) = beta(i) - beta(indC(j));
+                    beta(indC(j)) = 0;
+                    count = count +1;
+                end
+            end
+        end
+    end
+end
+ri = ri(vi~=0);
+ci = ci(vi~=0);
+vi = vi(vi~=0);
+B = sparse([ri;ci],[ci;ri],[vi;vi],n,n);
+
+
+% Y = [1, x'; x, (diag(alpha) - diag(alpha - ones(n,1)))*x*x'];
+Y = [1, x'; x, x*x' + diag(alpha) - B];
+xl = bound.GW_lbound(Y,W(U,U),1000);
 
 
 xf = zeros(N,1);

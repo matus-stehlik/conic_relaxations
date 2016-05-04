@@ -5,15 +5,17 @@ P = struct('pos', [1], 'neg', [], 'lbound', -inf , 'ubound', inf);
 Results3 = table;
 cvx_clear;
 
-m = 4;
+m = 10;
+density = 0.1;
 
-for n = 100:100:600
+for n = 400:100:400
     for i = 1:m, %1:m 
-         B = round(rand(n)/1.5).*round(rand(n)*25);
-         B = B' + B;
-         B = B - diag(diag(B))  ;
-         L = diag(B*ones(n,1)) -  B;
 
+        B = round(rand(n)/(2-2*density)).*round(rand(n)*25);
+        B = B - diag(diag(B))  ;
+        B = triu(B)' + triu(B);
+        L = diag(B*ones(n,1)) -  B;
+        W = L/4;
 
         W = L/4;
 
@@ -27,26 +29,34 @@ for n = 100:100:600
         bound.sdp(ones(100),P); % warm up so that processor is already preparer
         sprintf('mock_sdp %d.%d done',[n,i])
         
-        [result.sdp_lb, result.sdp_ub, xf, result.sdp_utime, result.sdp_ltime] = bound.sdp(W,P); 
-        sprintf('sdp %d.%d done',[n,i])
-        [result.lp1_lb, result.lp1_ub, xf, result.lp1_utime, result.lp1_ltime] = bound.lp1(W,P);
-        sprintf('lp1 %d.%d done',[n,i])
-        [result.lp3_lb, result.lp3_ub, xf, result.lp3_utime, result.lp3_ltime] = bound.lp3(W,P);
-        sprintf('lp3 %d.%d done',[n,i])
-        [result.mix1_lb, result.mix1_ub, xf, result.mix1_utime, result.mix1_ltime] = bound.mixedSocpSdp(W,P);
-        sprintf('mix1 %d.%d done',[n,i])
-        [result.mix2_lb, result.mix2_ub, xf, result.mix2_utime, result.mix2_ltime] = bound.mixedSocpSdp2(W,P);
-        sprintf('mix2 %d.%d done',[n,i])
-        [result.mixr50_lb, result.mixr50_ub, xf, result.mixr50_utime, result.mixr50_ltime] = bound.mixedSocpSdpr(W,P,50);
-        sprintf('mixr50 %d.%d done',[n,i])
-        [result.mixr20_lb, result.mixr20_ub, xf, result.mixr20_utime, result.mixr20_ltime] = bound.mixedSocpSdpr(W,P,20);
-        sprintf('mixr20 %d.%d done',[n,i])
-        [result.mixr10_lb, result.mixr10_ub, xf, result.mixr10_utime, result.mixr10_ltime] = bound.mixedSocpSdpr(W,P,10);
-        sprintf('mixr10 %d.%d done',[n,i])
-        [result.mixr5_lb, result.mixr5_ub, xf, result.mixr5_utime, result.mixr5_ltime] = bound.mixedSocpSdpr(W,P,5);
-        sprintf('mixr5 %d.%d done',[n,i])
+%         [result.sdp_lb, result.sdp_ub, xf, result.sdp_utime, result.sdp_ltime] = bound.sdp(W,P); 
+%         sprintf('sdp %d.%d done',[n,i])
+%         [result.lp1_lb, result.lp1_ub, xf, result.lp1_utime, result.lp1_ltime] = bound.lp1(W,P);
+%         sprintf('lp1 %d.%d done',[n,i])
+%         [result.lp3_lb, result.lp3_ub, xf, result.lp3_utime, result.lp3_ltime] = bound.lp3(W,P);
+%         sprintf('lp3 %d.%d done',[n,i])
+%         [result.mix1_lb, result.mix1_ub, xf, result.mix1_utime, result.mix1_ltime] = bound.mixedSocpSdp(W,P);
+%         sprintf('mix1 %d.%d done',[n,i])
+%         [result.mix2_lb, result.mix2_ub, xf, result.mix2_utime, result.mix2_ltime] = bound.mixedSocpSdp2(W,P);
+%         sprintf('mix2 %d.%d done',[n,i])
+%         [result.mixr50_lb, result.mixr50_ub, xf, result.mixr50_utime, result.mixr50_ltime] = bound.mixedSocpSdpr(W,P,50);
+%         sprintf('mixr50 %d.%d done',[n,i])
+%         [result.mixr20_lb, result.mixr20_ub, xf, result.mixr20_utime, result.mixr20_ltime] = bound.mixedSocpSdpr(W,P,20);
+%         sprintf('mixr20 %d.%d done',[n,i])
+%         [result.mixr10_lb, result.mixr10_ub, xf, result.mixr10_utime, result.mixr10_ltime] = bound.mixedSocpSdpr(W,P,10);
+%         sprintf('mixr10 %d.%d done',[n,i])
+%         [result.mixr5_lb, result.mixr5_ub, xf, result.mixr5_utime, result.mixr5_ltime] = bound.mixedSocpSdpr(W,P,5);
+%         sprintf('mixr5 %d.%d done',[n,i])
 
 
+    [result.sdp_lb, result.sdp_ub, xf, result.sdp_utime, result.sdp_ltime] = bound.sdp(W,P); 
+    sprintf('sdp %d.%d done',[n,i])
+    [result.mix2_ro1_lb, result.mix2_ro1_ub, xf, result.mix2_ro1_utime, result.mix2_ro1_ltime] = bound.mix2_ro1(W,P);
+    sprintf('mix2_ro1 %d.%d done',[n,i])
+    [result.mix2_ro2_lb, result.mix2_ro2_ub, xf, result.mix2_ro2_utime, result.mix2_ro2_ltime] = bound.mix2_ro2(W,P);
+    sprintf('mix2_ro2 %d.%d done',[n,i])
+    [result.mix2_ro3_lb, result.mix2_ro3_ub, xf, result.mix2_ro3_utime, result.mix2_ro3_ltime] = bound.mix2_ro3(W,P);
+    sprintf('mix2_ro3 %d.%d done',[n,i])
 
     Results3 = [Results3; struct2table(result)];
     save('results3.mat', 'Results3');
@@ -55,7 +65,7 @@ for n = 100:100:600
 end
 
 %Results3.optVal = optVals;
-Results3(:,[1,2, end,4:4:end])
+Results3(:,[1, 2:4:end])
 
 %%
 

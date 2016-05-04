@@ -1,4 +1,4 @@
-function [lb, ub, xf, utime, ltime] = mixedSocpSdp2(W,P)
+function [lb, ub, xf, utime, ltime] = mix2_ro1(W,P)
 % returns lower bound lb, upper bound ub and the feasible solution xu
 % which generates ub for the problem
 % min x^TWx, s.t. x is in {-1,1}^n, 

@@ -1,4 +1,4 @@
-function [lb, ub, xf, utime, ltime] = mixedSocpSdp2(W,P)
+function [lb, ub, xf, utime, ltime] = mix2_ro3(W,P)
 % returns lower bound lb, upper bound ub and the feasible solution xu
 % which generates ub for the problem
 % min x^TWx, s.t. x is in {-1,1}^n, 
@@ -57,8 +57,10 @@ utime = toc;
                             
 % Rounding 1 - trivial boound.
 tic;
-xl = bound.triv_bound(x);
 
+beta = 1 - x.^2;
+Y = [1, x'; x, x*x'+diag(beta)]; 
+xl = bound.GW_lbound(Y,W(U,U),100);
 
 xf = zeros(N,1);
 xf(U) = xl;

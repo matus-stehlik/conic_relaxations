@@ -1,4 +1,4 @@
-function [lb, ub, xf, utime, ltime] = mixedSocpSdp2(W,P)
+function [lb, ub, xf] = mix2_ro1(W,P)
 % returns lower bound lb, upper bound ub and the feasible solution xu
 % which generates ub for the problem
 % min x^TWx, s.t. x is in {-1,1}^n, 
@@ -19,8 +19,6 @@ wk = W(U,K)*xk;     % M(2:end,1)
 
 % if all the variables are set, we dont need any optimization
 if numel(K) == N,
-    utime = -1;
-    ltime = -1;
     ub = w0;
     lb = w0;
     xf = xk;
@@ -33,8 +31,6 @@ end
 % which can be simplified to min trace(MY), s.t. diag(Y)=1 and Y is PSD
 % where M = [w0,wk';wk,W(U,U)]
 cvx_solver sedumi
-
-tic;
 wd = diag(W(U,U));
 
 % compute the largest eigenvalue 
@@ -51,12 +47,12 @@ cvx_begin
          x.^2 <= 1        
 cvx_end
 
-ub = cvx_optval  ;  % from sdp we have obtained lower bound
-utime = toc;
+ub = floor(cvx_optval)  ;  % from sdp we have obtained lower bound
+
 
                             
 % Rounding 1 - trivial boound.
-tic;
+
 xl = bound.triv_bound(x);
 
 
@@ -67,5 +63,5 @@ lb1 = xl'*W(U,U)*xl + 2*wk'*xl+ w0 ;
 lb2 = lb1 - 4*wk'*xl;
 [lb,ind] = max([lb1,lb2]);
 if ind==2, xf(U) = -xf(U); end
-ltime = toc;
+
 end

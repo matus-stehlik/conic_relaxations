@@ -36,7 +36,7 @@ cvx_solver sedumi
 
 tic;
 % compute the largest eigenvalue 
-lam = eigs(W(U,U),1);
+lam = eigs(W(U,U),1)+1e-10; %a slight correction due to stability
 
 cvx_begin
     cvx_quiet(true);

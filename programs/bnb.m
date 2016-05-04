@@ -1,4 +1,4 @@
-function [x,optVal, topIter] = bnb(W)
+function [x,optVal, topIter, Iter] = bnb(W, bound_fun)
 % input: W symmetric n × n matrix
 % output: x in {-1, 1}^n optimal solution, optVal optimal value
 
@@ -11,21 +11,20 @@ Q(1) = struct('pos', [1], 'neg', [2], 'lbound', -inf , 'ubound', inf);  % proble
 Q(2) = struct('pos', [1 2], 'neg', [], 'lbound', -inf, 'ubound', inf);    
 NoProblems = 2; % number of problems in Q
 Iter = 0;
-maxIter = 1000;
+maxIter = 3000;
 ConsidProblems = ones(maxIter,1);
 excluded = 0;
 
-figure(1);
+figure;
 hold on;
 
 while ~isempty(Q) && Iter<maxIter,
 Iter = Iter + 1;   
-if mod(Iter,20)== 0, 
-    Best_Known_so_far = zbk
-    NoProblems
+if mod(Iter,100)== 0, 
+    Iter
 end
 % remove problem P from Q having zlb minimal
-P = Q(1)
+P = Q(1);
 Q(1) = [];
 NoProblems = NoProblems -1;
 
@@ -37,7 +36,8 @@ end
 % determine xi to branch for P              
                                                          
 %i = branch.triv_branch(P,W);
-i = branch.w_branch(P,W);
+i = branch.degree_branch(P,W);
+% i = branch.w_branch(P,W);
 if i ~= -1, %we can branch
 
     % branch and add new problems to Q
@@ -47,16 +47,16 @@ if i ~= -1, %we can branch
 
     % it may be possible to optimize, since P and P1 differ only in 1
     % fixed variable 
-    [P.lbound,P.ubound, xf] = bound.sdp_bound(W,P);
-    if P.ubound < zbk,
-        zbk = P.ubound
+    [P.lbound,P.ubound, xf] = bound_fun(W,P);
+    if P.lbound >zbk,
+        zbk = P.lbound;
         xbk = xf;
         topIter = Iter;
     end
 
-    [P1.lbound,P1.ubound, xf] = bound.sdp_bound(W,P1);
-    if P1.ubound < zbk,
-        zbk = P1.ubound
+    [P1.lbound,P1.ubound, xf] = bound_fun(W,P1);
+    if P1.lbound > zbk,
+        zbk = P1.lbound;
         xbk = xf;
         topIter = Iter;
     end
@@ -65,7 +65,7 @@ if i ~= -1, %we can branch
     if NoProblems > 0,
         
         for i = NoProblems:-1:1, 
-            if Q(i).lbound > zbk
+            if Q(i).ubound <= zbk
                 excluded = excluded + 2^(1 - numel(Q(i).pos) - numel(Q(i).neg));
                 Q(i) = [];
                 NoProblems = NoProblems-1;
@@ -73,13 +73,13 @@ if i ~= -1, %we can branch
             end
         end 
     end
-    if P1.lbound < zbk,
+    if P1.ubound > zbk,
         Q(end+1) = P1;
         NoProblems = NoProblems + 1;
     else
         excluded = excluded + 2^(1 - length(P1.pos) - length(P1.neg));
     end
-    if P.lbound < zbk,
+    if P.ubound > zbk,
         Q(end+1) = P;
         NoProblems = NoProblems + 1;
     else
@@ -87,7 +87,7 @@ if i ~= -1, %we can branch
     end
 
     % zotriedime list problémov
-    [temp, ind] = sort([Q.lbound]);
+    [temp, ind] = sort(-[Q.ubound]);
     Q = Q(ind);
     
     ConsidProblems(Iter) = ConsidProblems(Iter) - excluded;
@@ -104,15 +104,23 @@ if i ~= -1, %we can branch
 end
 end %while
 
+
 hold off
-figure;
-plot(1:Iter,ConsidProblems(1:Iter));
+figure(4);
+hold on;
+if strcmp(func2str(bound_fun), 'bound.sdp_bnb'), 
+    plot(1:Iter,ConsidProblems(1:Iter), 'b', 'LineWidth',2);
+else if strcmp(func2str(bound_fun),'bound.mix2_bnb'),
+        plot(1:Iter,ConsidProblems(1:Iter), 'r', 'LineWidth',2);
+    else
+        plot(1:Iter,ConsidProblems(1:Iter), 'LineWidth',2);
+    end
+end
+hold off;
 
 % return solution
 x = xbk;
 optVal = zbk;
-topIter
-Iter
 
 return;
 

@@ -64,8 +64,8 @@ for i = 1:r,
     A((floor((i-1)*n/r)+1):floor(i*n/r),(floor((i-1)*n/r)+1):floor(i*n/r)) = 0;    
 end
 lambda = eig(A);
-lam = lambda(end);
-B = A - lam*eye(n); 
+lam = lambda(end)+ 1e-10; %correction to keep B negative semidefinite
+B = A - lam*eye(n)-eye(n); 
 
 D = sparse(W(U,U)-B); % the block diagonal matrix by the second shift of A
 
@@ -79,8 +79,8 @@ cvx_begin
     cvx_quiet(true);
     variable x(n,1)
     variable X(n,n) symmetric 
-   variable S(r)
-    maximize ( w0+ +2*wk'*x + sum(S) + x'*(B)*x ) 
+   variable S(r,1)
+    maximize ( w0 + 2*wk'*x + sum(S) + x'*(B)*x ) 
     subject to 
          x.^2 <= 1
          diag(X) == 1
