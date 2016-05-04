@@ -187,6 +187,7 @@ Comenius University, Bratislava
 \hfill\mfplacedate
 \eject % EOP i
 
+
 \includepdf{img/zadanie_en.pdf}
 
 
@@ -228,7 +229,7 @@ V Bratislave dňa 4. 5. 2016
 
 \medskip
 
-STEHLÍK, Matúš: {\it Kónické relaxácie}. Diplomová práca. Univerzita Komenského v Bratislave, Fakulta matematiky, fyziky a informatiky, Katedra matematickej analýzy a numerickej matematiky. Školiteľ: RNDr. Mária Trnovská PhD., Bratislava, 2016, ... strán.
+STEHLÍK, Matúš: {\it Kónické relaxácie}. Diplomová práca. Univerzita Komenského v Bratislave, Fakulta matematiky, fyziky a informatiky, Katedra matematickej analýzy a numerickej matematiky. Školiteľ: RNDr. Mária Trnovská PhD., Bratislava, 2016, 80 strán.
 
 \bigskip
 
@@ -236,7 +237,7 @@ STEHLÍK, Matúš: {\it Kónické relaxácie}. Diplomová práca. Univerzita Kom
 Diplomová práca sa venuje možnostiam relaxácie nekonvexných kvadratických optimalizačných úloh pomocou tried kónického programovania. Práca ponúka prehľad metód pre vytváranie kónických relaxácii. Podrobne sa venuje ich aplikácii na problém maximálneho rezu v grafe a porovnaniu ich efektivity na pri riešení tohto problému.
 
 
-Prvá kapitola uvádza triedy kónického programovania a vzťahy medzi nimi. V druhej kapitole sú zhrnuté metódy relaxovania pomocou uvedených tried. Tretia kapitola rozoberá aplikácie relaxačných techník na problém maximálneho rezu, kotré sú porovnané pomocou numerických experimentov v štvrtej kapitole. Dodatok uvádza základy teórie kužeľov a na príkladoch ukazuje vlastnosti kužeľov používaných v práci.
+%Prvá kapitola uvádza triedy kónického programovania a vzťahy medzi nimi. V druhej kapitole sú zhrnuté metódy relaxovania pomocou uvedených tried. Tretia kapitola rozoberá aplikácie relaxačných techník na problém maximálneho rezu, kotré sú porovnané pomocou numerických experimentov v štvrtej kapitole. Dodatok uvádza základy teórie kužeľov a na príkladoch ukazuje vlastnosti kužeľov používaných v práci.
 
 
 \bigskip
@@ -249,13 +250,16 @@ Prvá kapitola uvádza triedy kónického programovania a vzťahy medzi nimi. V 
 
 \medskip
 
-STEHLÍK, Matúš: {\it Conic relaxations}. Master thesis. Comenius University in Bratislava, Faculty of mathematics, physics and informatics, Department of mathematical analysis and numerical mathematics. Advisor:  RNDr. Mária Trnovská PhD., Bratislava, 2016, ... pages.
+STEHLÍK, Matúš: {\it Conic relaxations}. Master thesis. Comenius University in Bratislava, Faculty of mathematics, physics and informatics, Department of mathematical analysis and numerical mathematics. Advisor:  RNDr. Mária Trnovská PhD., Bratislava, 2016, 80 pages.
 
 \bigskip
+This master's thesis explores the possibility of relaxation of the nonlinear quadratic
+optimization problems using the conic programming classes. The thesis offers a
+survey of techniques used for constructing conic relaxations.
+The aforementioned techniques are applied to the max-cut problem and their performance on several different  instances of this problem is compared.
 
-This master's thesis explores the possibility of relaxation of the nonlinear quadratic optimization problems using the conic programming classes. The thesis offers a survey of techniques used for constructing conic relaxations. Explores in detail their applications to the maximum cut problem and compares their performance on the instances of this problem.
-
-First chapter introduces conic optimization classes and the relations between them. Second chapter surveys the methods of relaxation with conic programs. Third chapter analyses application of the relaxation techniques to the maximum cut probem, which are numerically compared in the fourth chapter. The appendix covers basic theory of cones with examples showing the properties of the cones used throughout the thesis. 
+%
+%First chapter introduces conic optimization classes and the relations between them. Second chapter surveys the methods of relaxation with conic programs. Third chapter analyses application of the relaxation techniques to the maximum cut probem, which are numerically compared in the fourth chapter. The appendix covers basic theory of cones with examples showing the properties of the cones used throughout the thesis. 
 
 
 \bigskip
@@ -365,9 +369,9 @@ However, solving a DNN relaxation using a standard SDP solver is computationally
 %% in this thesis
 In this thesis we will examine techniques for creating convex relaxations which can be applied to general QCQP or to some nonconvex subclass of QCQP such as binary quadratic programs. 
 
-In the first chapter we will introduce convex optimization classes (LP, SOCP, SDP, CP and CCP) and relations between them. To conclude this chapter we will present a general conic programming class which includes all of previously mentioned programs as a special cases. 
+In the first chapter we will introduce convex optimization classes (LP, SOCP, SDP, CP and CCP) and relations between them. To conclude this chapter we will present a general conic programming class which includes all of previously mentioned programs as a special case. 
 
-The second chapter will describe relaxations and relaxation techniques. In the beginning we will propose our own definition to formally capture what is considered as relaxation in this thesis (not exclusively). Next we will discuss options for relaxing the nonconvex QCQP with problems in all conic classes mentioned in the first chapter, including the approaches for construction of valid inequalities. In the end of the chapter we will present a relaxation hierarchy by Lasserre.
+The second chapter will describe relaxation techniques. In the beginning we will propose our own definition to formally capture what is considered as relaxation in this thesis (not exclusively). Next we will discuss options for relaxing the nonconvex QCQP with problems in all conic classes mentioned in the first chapter, including the approaches for construction of valid inequalities. In the end of the chapter we will present a relaxation hierarchy by Lasserre.
 
 The third chapter we will explore the maximum cut problem. As a motivation, we will present the famous result by Goemans and Williamson giving the 0.878 approximation guarantee for SDP relaxation. Next we will apply most of the relaxation methods from chapter 2, to formulate relaxations of max-cut. The relaxations will also include triangle inequalities - the problem specific valid inequalities for max-cut.
 
@@ -433,7 +437,7 @@ SDP &-& Semidefinite program \\
 CP &-& Copositive program \\
 CPP &-& Completely positive program \\
 & & \\ 
-%BnB &-& Branch and Bound 
+%BnB &-& Branch and Bound 	
 \end{tabular}
 
 
@@ -445,7 +449,7 @@ CPP &-& Completely positive program \\
 
 In this section we will introduce basic optimization classes mentioned above, in particular  linear programming (LP), second order cone programming  (SOCP), or semidefinite programming (SDP). We will state the problems in standard forms and their duals. The dual problems will be only mentioned here and will be derived in the next section. We will also show that LP is subclass of convex QCQP, convex QCQP is subclass of SOCP, and SOCP is subclass of SDP, i.e.
 \begin{equation*}
-LP\subset CQP \subset SOCP \subset SDP \subset QCQP .
+LP\subset CQP \subset SOCP \subset SDP. %\subset QCQP 
 \end{equation*}
 
 As a sources for this chapter we refer to [\ref{BoydCvxOpt},\ref{IntroToCvxOptBerkley}] as general sources and specifically to SOCP [\ref{KimKojimaSOCPofNoncvxQOP}, \ref{GoldfarbSOCP}, \ref{PokornaSOCPDipl}], SDP [\ref{HandbookSDP}, \ref{KimKojimaSOCPofNoncvxQOP}], CP and CPP [\ref{ArimaKimKojimaQCQPforCPP}, \ref{BurerCPPreprOfBinLCQP}, \ref{DurCopositiveSurvey}].
@@ -2342,7 +2346,7 @@ Keeping only the best solution will (probably) get the objective at least as goo
 
 \subsection{Semidefinite relaxation of the max-cut}
 
-Now the last arising question is how do we solve the relaxed problem (\ref{maxcutRelax1})? 
+Now the last arising question is how do we solve the relaxed problem (\ref{maxcutRelax1})
 Let us remind the formulation of the relaxed problem
 \begin{equation*}
 \begin{array}{ll}
@@ -3023,6 +3027,47 @@ After this round we will choose only fast methods to compare using the large sca
 
 Last but not least, we will introduce the branch and bound framework, which provides a way to solve (not only) combinatorial problems to optimality using bounds obtained by solving relaxed problems. Additionally we will try to compare the performance of chosen methods in this procedure for max-cut.
 
+
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.27]{img/comp0_d50_n20.jpg}
+\caption[Comparison of relaxations - small, dense instances of max-cut 1]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density $50\%$ and $n=20$.}
+\label{comp0_d50_n20}
+
+\includegraphics[scale = 0.27]{img/comp0_d50_n30.jpg}
+\caption[Comparison of relaxations - small, dense instances of max-cut 2]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density $50\%$ and $n=30$.}
+\label{comp0_d50_n30}
+\end{figure}
+%\begin{figure}
+%\includegraphics[scale=0.27]{img/comp0_d50_n40.jpg}
+%\caption[Comparison of relaxations - small, dense instances of max-cut 3]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density  $50\%$ and $n=40$.}
+%\label{comp0_d50_n40}
+%\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale = 0.27]{img/comp0_d10_n20.jpg}
+\caption[Comparison of relaxations - small, sparse instances of max-cut]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density $10\%$ and $n=20$. On the logarithmic scale we only see nonzero relative errors. All missing red circles represent the exact bounds.}
+\label{comp0_d10_n20}
+\end{figure}
+
+
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.27]{img/comp1.jpg}
+\caption[Comparison of relaxations - medium, dense instances of max-cut]{Comparison of the relaxation methods on the medium sized max-cut Rudy instances {\tt g\_05\_60, g\_05\_80,} from the Biq Mac library [\ref{BiqMacLib}], with density  $50\%$, unit edge weights and $n=60,\ 80$.} 
+\label{comp1}
+\includegraphics[scale=0.27]{img/comp1_segments.jpg}
+\caption[Comparison of relaxations - a time-precision trade off]{A time-precision trade off on rudy instances for $n=80$.}
+\label{comp1TradeOff}
+\end{figure}
+
+
+
 \section{Single bound comparison}
 
 As noted above, in the comparison we will focus on the quality of the bounds (relative errors) and the speed (running time) of given methods.
@@ -3054,41 +3099,9 @@ Suprisingly, SOCP relaxations (socp1, socp2, socp3) have very poor performance, 
 
 Now lets focus on the changes with the size of the problem. In the figures \ref{comp0_d50_n20}, \ref{comp0_d50_n30} one can see that while quality of the bounds stays about the same, the time complexity for some of the methods grows rapidly. Namely the SOCP relaxation with triangle inequalities (socp3) and DNN relaxations (dnn2, dnn3p, dnn3d). The former grows rapidly probably due to large number of triangle inequalities and the latter due to not using an efficient algorithm for DNN. From the practical reasons we are going to exclude these methods from further considerations on medium sized problems.
 
-\begin{center}
-\begin{figure}
-\includegraphics[scale = 0.27]{img/comp0_d10_n20.jpg}
-\caption[Comparison of relaxations - small, sparse instances of max-cut]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density $10\%$ and $n=20$. On the logarithmic scale we only see nonzero relative errors. All missing red circles represent the exact bounds.}
-\label{comp0_d10_n20}
-\end{figure}
-\end{center}
 
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.27]{img/comp0_d50_n20.jpg}
-\caption[Comparison of relaxations - small, dense instances of max-cut 1]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density $50\%$ and $n=20$.}
-\label{comp0_d50_n20}
 
-\includegraphics[scale = 0.27]{img/comp0_d50_n30.jpg}
-\caption[Comparison of relaxations - small, dense instances of max-cut 2]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density $50\%$ and $n=30$.}
-\label{comp0_d50_n30}
-\end{figure}
-%\begin{figure}
-%\includegraphics[scale=0.27]{img/comp0_d50_n40.jpg}
-%\caption[Comparison of relaxations - small, dense instances of max-cut 3]{Comparison of the relaxation methods for the small sized random generated instances max-cut with density  $50\%$ and $n=40$.}
-%\label{comp0_d50_n40}
-%\end{figure}
-
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.27]{img/comp1.jpg}
-\caption[Comparison of relaxations - medium, dense instances of max-cut]{Comparison of the relaxation methods on the medium sized max-cut Rudy instances {\tt g\_05\_60, g\_05\_80,} from the Biq Mac library [\ref{BiqMacLib}], with density  $50\%$, unit edge weights and $n=60,\ 80$.} 
-\label{comp1}
-\includegraphics[scale=0.27]{img/comp1_segments.jpg}
-\caption[Comparison of relaxations - a time-precision trade off]{A time-precision trade off on rudy instances for $n=80$.}
-\label{comp1TradeOff}
-\end{figure}
 
 \subsection{Medium sized instances}
 
@@ -3104,22 +3117,6 @@ One can see the time-precision trade off for the methods close to axes. Also it 
 The empty space for the high precision - medium speed methods can be filled either by including only a portion of the valid inequalities, or as we suggest later, by using the fast relaxation methods in the branch and bound framework.
 
 
-
-
-\subsection{Large scale instances}
-
-In this section we are going to compare only fast methods (sdp, lp1, lp3, mix1, mix2 and  mixr for $r=50,20,10,5$) to see how the performance changes when problems grow large $n=100, 200, \dots ,600$.
-
-For this comparison (in the Figures \ref{comp3}, \ref{comp3size}) we did not know the optimal values (it would be almost impossible for us to compute them), hence, we have approximated the relative errors as relative errors against the best obtained bound, which was for each instance the bound produced by SDP relaxation. We will prove later that this relation always holds for SDP and mixed SOCP-SDP relaxation.
-
-In the Figure \ref{comp3} one can see that from the mixed methods the best bounds are produced by mix2 relaxation which has also one of the shortest run times. 
-
-
-We offer also a problem-size breakdown of this experiment in the Figure \ref{comp3size} where it is clear that mix2 is superior for all sizes of problems. Moreover, that for all of the methods have more-less stable quality of the bounds and increasing run time for growing $n$.
-
-
-% Comparing the different densities, we saw that relative error is a little higher for the sparse instances. It may be caused by the improved quality of sdp bounds for sparse instances. 
- 
 
 
 \begin{center}
@@ -3142,6 +3139,43 @@ We offer also a problem-size breakdown of this experiment in the Figure \ref{com
 %\end{minipage}
 %\end{figure}
 %\end{center}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{img/compbnb_n40_d50_cons4.jpg}
+\caption[Branch and bound comparison of the relaxation methods]{Branch and bound comparison of the relaxation methods SDP and mixed SOCP-SDP relaxation, on 3 random generated instances. }
+\label{Figurebnb3}
+\end{figure}
+
+
+
+\begin{figure}
+\centering 
+
+\includegraphics[scale=0.27]{img/bnb_mix_n40_d50_1.jpg}
+\caption[Branch and bound for mixed SOCP-SDP relaxation]{Branch and bound for mixed SOCP-SDP relaxation. }
+\label{FigureBnb1mix}
+
+\includegraphics[scale=0.27]{img/bnb_sdp_n40_d50_1.jpg}
+\caption[Branch and bound for SDP relaxation]{Branch and bound for SDP relaxation. }
+\label{Figurebnb1sdp}
+\end{figure}
+
+
+\subsection{Large scale instances}
+
+In this section we are going to compare only fast methods (sdp, lp1, lp3, mix1, mix2 and  mixr for $r=50,20,10,5$) to see how the performance changes when problems grow large $n=100, 200, \dots ,600$.
+
+For this comparison (in the Figures \ref{comp3}, \ref{comp3size}) we did not know the optimal values (it would be almost impossible for us to compute them), hence, we have approximated the relative errors as relative errors against the best obtained bound, which was for each instance the bound produced by SDP relaxation. We will prove later that this relation always holds for SDP and mixed SOCP-SDP relaxation.
+
+In the Figure \ref{comp3} one can see that from the mixed methods the best bounds are produced by mix2 relaxation which has also one of the shortest run times. 
+
+
+We offer also a problem-size breakdown of this experiment in the Figure \ref{comp3size} where it is clear that mix2 is superior for all sizes of problems. Moreover, that for all of the methods have more-less stable quality of the bounds and increasing run time for growing $n$.
+
+
+% Comparing the different densities, we saw that relative error is a little higher for the sparse instances. It may be caused by the improved quality of sdp bounds for sparse instances. 
+ 
 
 
 
@@ -3242,27 +3276,7 @@ Columns: opt - optimal value or the best solution found, topIter - a number of i
 \end{table}
 
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.25]{img/compbnb_n40_d50_cons4.jpg}
-\caption[Branch and bound comparison of the relaxation methods]{Branch and bound comparison of the relaxation methods SDP and mixed SOCP-SDP relaxation, on 3 random generated instances. }
-\label{Figurebnb3}
-\end{figure}
-
-
-
-\begin{figure}
-\centering 
-
-\includegraphics[scale=0.27]{img/bnb_mix_n40_d50_1.jpg}
-\caption[Branch and bound for mixed SOCP-SDP relaxation]{Branch and bound for mixed SOCP-SDP relaxation. }
-\label{FigureBnb1mix}
-
-\includegraphics[scale=0.27]{img/bnb_sdp_n40_d50_1.jpg}
-\caption[Branch and bound for SDP relaxation]{Branch and bound for SDP relaxation. }
-\label{Figurebnb1sdp}
-\end{figure}
-
+%%%% tu boli obrazky
 
 We will be branching the problem tree by fixing the variables $x_i$.
 At the beginning the only fixed variable is $x_1=1$. This is without loss of generality, because if there is an optimal solution $\hat{x}$ then $-\hat{x}$ having the same objective value is also an optimal solution. 
@@ -3924,9 +3938,7 @@ Numerical Methods and Algorithms Vol.4 2005
 \item R. Grone, C. Johnson, E. Sá, H. Wolkowicz, \it Positive definite completions of partial hermitian matrices, \rm 
 Linear Algebra Applications, Vol.58, pp 109-124, 1984
 \label{GronePSDcompletions}
-%
-%TODO schur complement reference zheng
-%TODO knizka od veducej
+
 
 
 \end{enumerate}
